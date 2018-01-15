@@ -28,7 +28,10 @@ class Cryptocompare_api extends CI_Model {
 				"Kraken" => 1,
 				"YoBit" => 1,
 				"Bittrex" => 1,
-				"Kucoin" => 1
+				"Kucoin" => 1,
+				"Liqui" => 1,
+				"Coinbase" => 1
+
 			);
 			foreach ($exchanges as $k => $v) {
 				$sql = "UPDATE markets SET active = ".$this->db->escape($v)." WHERE name = ".$this->db->escape($k);
@@ -160,6 +163,7 @@ class Cryptocompare_api extends CI_Model {
         }
 
         public function generatePrices() {
+        	$this->getBitcoinValue();
         	$cryptocomparePrice = new Cryptocompare\Price();
 				$sql = "SELECT 
 				        	mp.market_id, 
@@ -277,6 +281,15 @@ class Cryptocompare_api extends CI_Model {
         	$sql = "INSERT INTO last_update (lastupdate) VALUES (".$this->db->escape(time()).")";
         	$this->db->query($sql);
         	return TRUE;
+        }
+
+        public function getBitcoinValue() {
+        	date_default_timezone_set('America/Los_Angeles');
+        	$cryptocomparePrice = new Cryptocompare\Price();
+			$getPrice = $cryptocomparePrice->getSinglePrice("1","BTC","USD","Coinbase","false");
+			$sql = "INSERT INTO bitcoin_value (fiat,cost,updated) VALUES ('USD', ".$this->db->escape($getPrice->USD).", ".$this->db->escape(time()).")";
+			$this->db->query($sql);
+			return TRUE;
         }
 
 
