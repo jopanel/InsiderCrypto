@@ -10,7 +10,7 @@ class Cryptocompare_api extends CI_Model {
 		░░░░ ░░░░░░░▀█▄█▄███▀░░░ ▀█▄█▄███
         */
 
-		private $timeoutPeriod = 10; // how many seconds to wait before checking for new pricing data
+		private $timeoutPeriod = 2; // how many minutes to wait before checking for new pricing data
 		private $weeksBeforeReset = 1; // how many weeks to wait until check for new market/currency/pairs
 		private $daysBeforeDisable = 3; // amount of days to wait before deactivating a market pair based on last update
 
@@ -21,11 +21,6 @@ class Cryptocompare_api extends CI_Model {
 			$exchanges = array(
 				"Poloniex" => 1,
 				"Binance" => 1,
-				"Bithumb" => 1,
-				"Coinone" => 1,
-				"HitBTC" => 1,
-				"Bitfinex" => 1,
-				"Kraken" => 1,
 				"YoBit" => 1,
 				"Bittrex" => 1,
 				"Kucoin" => 1,
@@ -42,10 +37,10 @@ class Cryptocompare_api extends CI_Model {
 
         public function build() {
         	date_default_timezone_set('America/Los_Angeles');
-        	ini_set('max_execution_time', 900);
-        	set_time_limit(900);
+        	ini_set('max_execution_time', 0);
+        	set_time_limit(0);
         	// check if the last call is older than timeout period
-        	$timeoutPeriod = time() - $this->timeoutPeriod;
+        	$timeoutPeriod = strtotime("-".$this->timeoutPeriod." minutes");
         	$sql = "SELECT lastupdate FROM last_update ORDER BY id DESC LIMIT 1";
         	$query = $this->db->query($sql);
         	if ($query->num_rows() > 0) {
@@ -200,6 +195,7 @@ class Cryptocompare_api extends CI_Model {
 	        			$sortcalls[$k]["symbols"] = $v["symbols"];
 	        			$sortcalls[$k]["symbols_id"] = $v["symbols_id"];
 	        		}
+	        		
 	        		$calls = [];  
 	        		foreach ($sortcalls as $k => $v) {
 	        			// get the special keyname by symbols
@@ -211,20 +207,46 @@ class Cryptocompare_api extends CI_Model {
 	        				"market" => $v["market"],
 	        				"market_id" => $v["market_id"],
 	        				"symbols" => $v["symbols"],
-	        				"symbols_id" => $v["symbols_id"]
-	        			);
+	        				"symbols_id" => $v["symbols_id"],
+	        				"currency" => array(),
+	        				"currency_id" => array()
+	        			); 
+	        		}
+	        		foreach ($sortcalls as $k => $v) {
+	        			// get the special keyname by symbols
+	        			$symbolKey = "";
+	        			foreach ($v["symbols_id"] as $vv) {
+	        				$symbolKey .= $vv;
+	        			}
 	        			$calls[$v["market_id"].$symbolKey]["currency"][] = $v["currency"];
 	        			$calls[$v["market_id"].$symbolKey]["currency_id"][] = $v["currency_id"];
 	        		}
-	        		//echo "total amount of calls method 2: ".count($calls);
-	        		// echo "<pre>";
-	        		// var_dump($calls);
-	        		// echo "</pre>";
-	        		// exit();
+	        		// echo "total amount of calls method 2: ".count($calls);
+	        		 
+	        		// after testing, i found that arrays that carry over 50 currencies per call fail receiving error "fsyms param is invalid. (fsyms length is higher than maxlength: 300)". To fix this, I must split up large calls.
+	        		$calls = $this->cleanPriceData($calls);
 	        		$sortcalls = null;
+	        		$callcounter = 0;
 	        		foreach ($calls as $k => $v) {
+	        			$callcounter += 1;
+	        			if ($callcounter == 51) {
+	        				sleep(1);
+	        				$callcounter = 1;
+	        			}
 	        			$getPrices = $cryptocomparePrice->getMultiPriceFull("1", $v["currency"], $v["symbols"],$v["market"], false); 
 	        			$disableDate = strtotime("-".$this->daysBeforeDisable." days");
+	        			/*if (!isset($getPrices->RAW) || empty($getPrices->RAW)) {
+	        				echo "total currencies in call: ".count($v["currency"]);
+	        				echo "<br> currency: <br>";
+	        				echo "<pre>";
+	        				var_dump($v["currency"]);
+	        				echo "</pre>";
+	        				echo "<br><br><hr><br><br>";
+	        				echo "<pre>";
+	        				var_dump($getPrices);
+	        				echo "</pre>";
+	        				echo "<br>";
+	        			}*/
 	        			foreach ($getPrices->RAW as $currency => $pairSets) {
 	        				foreach ($pairSets as $pair => $pairData) {
 	        					// obtain the currency_id and symbol_id
@@ -281,6 +303,32 @@ class Cryptocompare_api extends CI_Model {
         	$sql = "INSERT INTO last_update (lastupdate) VALUES (".$this->db->escape(time()).")";
         	$this->db->query($sql);
         	return TRUE;
+        }
+
+        public function cleanPriceData($calls=array()) {
+        	$output = [];
+        	foreach ($calls as $k => $v) {
+        		if (count($v["currency"]) > 50) { 
+        			$keybuilder = $k + 1;
+        			$counter = -1;
+        			foreach ($v["currency"] as $key => $val) {
+        				$counter += 1;
+        				if ($counter == 50) {
+        					$counter = 0;
+        					$keybuilder += 1;
+        				}
+        				$output[$keybuilder]["market"] = $v["market"];
+        				$output[$keybuilder]["market_id"] = $v["market_id"];
+        				$output[$keybuilder]["symbols"] = $v["symbols"];
+        				$output[$keybuilder]["symbols_id"] = $v["symbols_id"];
+        				$output[$keybuilder]["currency"][] = $val;
+        				$output[$keybuilder]["currency_id"][] = $v["currency_id"][$key];
+        			}
+        		} else {
+        			$output[] = $v;
+        		}
+        	}
+        	return $output;
         }
 
         public function getBitcoinValue() {

@@ -20,6 +20,30 @@ class General_model extends CI_Model {
                 }
                 return $randomString;
         }
+
+        public function getProgramCost() {
+            $sql = 'select p.price FROM price_chart p
+                    LEFT JOIN currency c ON c.id = p.currency_id
+                    LEFT JOIN markets m ON m.id = p.market_id 
+                    LEFT JOIN symbols s ON s.id = p.symbol_id 
+                    WHERE c.abbr = "LSK" AND m.name = "Poloniex" AND s.abbr = "BTC"
+                    ORDER BY p.id DESC 
+                    LIMIT 1';
+            $query = $this->db->query($sql);
+            if ($query->num_rows() > 0) {
+                $lsk_price = $query->row()->price;
+            } else {
+                $lsk_price = 0.0021; // cant get accurate lsk price, fuck it - 1/14/2018
+            }
+            $sql = "SELECT cost FROM bitcoin_value WHERE fiat = 'USD' ORDER BY id DESC LIMIT 1";
+            $query = $this->db->query($sql);
+            if ($query->num_rows() > 0) {
+                $bitcoin_value = $query->row()->cost;
+            } else {
+                $bitcoin_value = 14000; // cant get accurate bitcoin price, fuck it - 1/14/2018
+            }
+            return round(((300 / $bitcoin_value) / $lsk_price),2)+0.1;
+        }
  
         public function register($postData=null) {
             $error = 0;

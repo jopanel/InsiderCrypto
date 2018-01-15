@@ -36,7 +36,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="row">
           <div class="col-md-8 mx-auto">
             <h2 class="section-heading">Make smarter trades, profit faster, gain everyday.</h2>
-            <p>Our app is available on any mobile device! Download now to get started!</p>
+            <p>We offer this tool at a low cost of <?=$programcost?> Lisk. We currently only accept Lisk at the moment. You must first <a style="text-decoration: none !important;
+color: blue !important;" href="<?=base_url()?>access/register">register</a> with us. Add your Lisk public key wallet address to your account, then send the funds through that account. Activation is automatic.</p>
             <div class="badges">
               <a class="badge-link" href="#"><img src="img/google-play-badge.svg" alt=""></a>
               <a class="badge-link" href="#"><img src="img/app-store-badge.svg" alt=""></a>
@@ -49,8 +50,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <section class="features" id="features">
       <div class="container">
         <div class="section-heading text-center">
-          <h2>Unlimited Features, Unlimited Fun</h2>
-          <p class="text-muted">Check out what you can do with this app theme!</p>
+          <h2>Cross-Exchange Analysis, Pair Calculations</h2>
+          <p class="text-muted">Our AI finds not only cross-exchange differences, it also finds profits that can be made buying/selling cross-exchange with multiple currency pairs. Such as buying X coin on one exchange, selling at another exchange for ETH, and so on.</p>
           <hr>
         </div>
         <div class="row">
@@ -73,33 +74,29 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="container-fluid">
               <div class="row">
                 <div class="col-lg-6">
-                  <div class="feature-item">
-                    <i class="icon-screen-smartphone text-primary"></i>
-                    <h3>Device Mockups</h3>
-                    <p class="text-muted">Ready to use HTML/CSS device mockups, no Photoshop required!</p>
+                  <div class="feature-item"> 
+                    <h3>Pair Trading</h3>
+                    <p class="text-muted">Finding pairs on the same exchange and multiple exchanges that allow you to make profit. Such as buying X coin with ETH and selling for BTC, re-buying ETH with BTC, repeat.</p>
                   </div>
                 </div>
                 <div class="col-lg-6">
-                  <div class="feature-item">
-                    <i class="icon-camera text-primary"></i>
-                    <h3>Flexible Use</h3>
-                    <p class="text-muted">Put an image, video, animation, or anything else in the screen!</p>
+                  <div class="feature-item"> 
+                    <h3>Customizable Options</h3>
+                    <p class="text-muted">We offer a variety of exchanges we monitor and obtain market data from. We allow you to customize what markets you wish to make gains on. You can set thresholds for gain % and set email notifications.</p>
                   </div>
                 </div>
               </div>
               <div class="row">
                 <div class="col-lg-6">
-                  <div class="feature-item">
-                    <i class="icon-present text-primary"></i>
-                    <h3>Free to Use</h3>
-                    <p class="text-muted">As always, this theme is free to download and use for any purpose!</p>
+                  <div class="feature-item"> 
+                    <h3>Arbitrage Analysis</h3>
+                    <p class="text-muted">Analyzing multiple exchanges customized by you we find currencies that you can buy low, transfer to another exchange, and sell for a profit based on % gains thresholds you set.</p>
                   </div>
                 </div>
                 <div class="col-lg-6">
-                  <div class="feature-item">
-                    <i class="icon-lock-open text-primary"></i>
-                    <h3>Open Source</h3>
-                    <p class="text-muted">Since this theme is MIT licensed, you can use it commercially!</p>
+                  <div class="feature-item"> 
+                    <h3>Smart AI Learning</h3>
+                    <p class="text-muted">Each major pair, major arbitrage, and other major gains is tracked. The data is monitored and analyzed for patterns which helps it produce better results over time.</p>
                   </div>
                 </div>
               </div>
@@ -112,35 +109,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <section class="cta">
       <div class="cta-content">
         <div class="container">
-          <h2>Stop waiting.<br>Start building.</h2>
-          <a href="#contact" class="btn btn-outline btn-xl js-scroll-trigger">Let's Get Started!</a>
+          <h2>Stop waiting.<br>Start earning.</h2>
+          <a href="#signup" class="btn btn-outline btn-xl js-scroll-trigger">Get Started!</a>
         </div>
       </div>
       <div class="overlay"></div>
-    </section>
-
-    <section class="contact bg-primary" id="contact">
-      <div class="container">
-        <h2>We
-          <i class="fa fa-heart"></i>
-          new friends!</h2>
-        <ul class="list-inline list-social">
-          <li class="list-inline-item social-twitter">
-            <a href="#">
-              <i class="fa fa-twitter"></i>
-            </a>
-          </li>
-          <li class="list-inline-item social-facebook">
-            <a href="#">
-              <i class="fa fa-facebook"></i>
-            </a>
-          </li>
-          <li class="list-inline-item social-google-plus">
-            <a href="#">
-              <i class="fa fa-google-plus"></i>
-            </a>
-          </li>
-        </ul>
-      </div>
     </section>
 

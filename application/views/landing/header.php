@@ -51,7 +51,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               <a class="nav-link js-scroll-trigger" href="#features">Features</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="<?=base_url()?>login">Login</a>
+              <a class="nav-link js-scroll-trigger" href="<?=base_url()?>access/login">Login</a>
             </li>
           </ul>
         </div>
