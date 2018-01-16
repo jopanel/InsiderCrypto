@@ -12,7 +12,7 @@ class Api extends CI_Controller {
 
 	public function update($type=null, $password="") {
 		$this->load->model('Cryptocompare_api'); 
-		$this->Cryptocompare_api->build(); 
+		$this->Cryptocompare_api->build();  
 	}
 
 }

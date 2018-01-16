@@ -235,8 +235,18 @@ class Cryptocompare_api extends CI_Model {
 	        			}
 	        			$getPrices = $cryptocomparePrice->getMultiPriceFull("1", $v["currency"], $v["symbols"],$v["market"], false); 
 	        			$disableDate = strtotime("-".$this->daysBeforeDisable." days");
-	        			/*if (!isset($getPrices->RAW) || empty($getPrices->RAW)) {
-	        				echo "total currencies in call: ".count($v["currency"]);
+	        			if (!isset($getPrices->RAW) || empty($getPrices->RAW)) {
+	        				if (!isset($getPrices->Message) || empty($getPrices->Message)) {
+	        					$sql = "INSERT INTO api_errors (error, json, created) VALUES ('No Message, Price API', ".$this->db->escape(json_encode($v)).", ".$this->db->escape(time()).")";
+	        					$this->db->query($sql);
+	        				} else {
+	        					if ($this->handle_price_error($getPrices->Message, $v) == FALSE) {
+	        						$sql = "INSERT INTO api_errors (error, json, created) VALUES ('Price API', ".$this->db->escape(json_encode($getPrices)).", ".$this->db->escape(time()).")";
+									$this->db->query($sql);
+	        					}
+	        				}
+	        				
+	        				/*echo "total currencies in call: ".count($v["currency"]);
 	        				echo "<br> currency: <br>";
 	        				echo "<pre>";
 	        				var_dump($v["currency"]);
@@ -245,59 +255,61 @@ class Cryptocompare_api extends CI_Model {
 	        				echo "<pre>";
 	        				var_dump($getPrices);
 	        				echo "</pre>";
-	        				echo "<br>";
-	        			}*/
-	        			foreach ($getPrices->RAW as $currency => $pairSets) {
-	        				foreach ($pairSets as $pair => $pairData) {
-	        					// obtain the currency_id and symbol_id
-	        					$currency_id = 0;
-	        					$symbol_id = 0;
-	        					foreach ($v["currency"] as $keyNum => $cur) {
-	        						if ($cur == $pairData->FROMSYMBOL) {
-	        							$currency_id = $v["currency_id"][$keyNum];
-	        						}
-	        					}
-	        					foreach ($v["symbols"] as $keyNum => $sym) {
-	        						if ($sym == $pairData->TOSYMBOL) {
-	        							$symbol_id = $v["symbols_id"][$keyNum];
-	        						}
-	        					}
-	        					if ($currency_id > 0 && $symbol_id > 0) {
-	        						// check if last update is old and pair data should be disabled before continuing
-		        					if ($pairData->LASTUPDATE < $disableDate) {
-		        						$currency_id = $query->row()->currency_id;
-		        						$symbol_id = $query->row()->symbol_id;
-		        						$sql = "UPDATE markets_pairs SET active = '0' WHERE market_id = ".$this->db->escape($v["market_id"])." AND symbol_id = ".$this->db->escape($symbol_id)." AND currency_id = ".$this->db->escape($currency_id);
-		        						$this->db->query($sql);
-		        					} else {
-		        						$sql = "INSERT INTO price_chart 
-		        						(market_id, 
-		        						currency_id,
-		        						symbol_id,
-		        						price,
-		        						lastupdate,
-		        						price_low,
-		        						price_high,
-		        						changepct24hour,
-		        						volume24hour,
-		        						created) VALUES 
-		        						(".$this->db->escape($v["market_id"]).",
-		        						".$this->db->escape($currency_id).",
-		        						".$this->db->escape($symbol_id).",
-		        						".$this->db->escape($pairData->PRICE).",
-		        						".$this->db->escape($pairData->LASTUPDATE).",
-		        						".$this->db->escape($pairData->LOW24HOUR).",
-		        						".$this->db->escape($pairData->HIGH24HOUR).",
-		        						".$this->db->escape($pairData->CHANGEPCT24HOUR).",
-		        						".$this->db->escape($pairData->VOLUME24HOURTO).",
-		        						".$this->db->escape(time()).")";
-		        						$this->db->query($sql);
+	        				echo "<br>";*/
+	        			} else {
+	        				foreach ($getPrices->RAW as $currency => $pairSets) {
+		        				foreach ($pairSets as $pair => $pairData) {
+		        					// obtain the currency_id and symbol_id
+		        					$currency_id = 0;
+		        					$symbol_id = 0;
+		        					foreach ($v["currency"] as $keyNum => $cur) {
+		        						if ($cur == $pairData->FROMSYMBOL) {
+		        							$currency_id = $v["currency_id"][$keyNum];
+		        						}
 		        					}
-	        					} else {
-	        						// problem obtaining symbol_id and currency_id
-	        					}
-	        				}
+		        					foreach ($v["symbols"] as $keyNum => $sym) {
+		        						if ($sym == $pairData->TOSYMBOL) {
+		        							$symbol_id = $v["symbols_id"][$keyNum];
+		        						}
+		        					}
+		        					if ($currency_id > 0 && $symbol_id > 0) {
+		        						// check if last update is old and pair data should be disabled before continuing
+			        					if ($pairData->LASTUPDATE < $disableDate) {
+			        						$currency_id = $query->row()->currency_id;
+			        						$symbol_id = $query->row()->symbol_id;
+			        						$sql = "UPDATE markets_pairs SET active = '0' WHERE market_id = ".$this->db->escape($v["market_id"])." AND symbol_id = ".$this->db->escape($symbol_id)." AND currency_id = ".$this->db->escape($currency_id);
+			        						$this->db->query($sql);
+			        					} else {
+			        						$sql = "INSERT INTO price_chart 
+			        						(market_id, 
+			        						currency_id,
+			        						symbol_id,
+			        						price,
+			        						lastupdate,
+			        						price_low,
+			        						price_high,
+			        						changepct24hour,
+			        						volume24hour,
+			        						created) VALUES 
+			        						(".$this->db->escape($v["market_id"]).",
+			        						".$this->db->escape($currency_id).",
+			        						".$this->db->escape($symbol_id).",
+			        						".$this->db->escape($pairData->PRICE).",
+			        						".$this->db->escape($pairData->LASTUPDATE).",
+			        						".$this->db->escape($pairData->LOW24HOUR).",
+			        						".$this->db->escape($pairData->HIGH24HOUR).",
+			        						".$this->db->escape($pairData->CHANGEPCT24HOUR).",
+			        						".$this->db->escape($pairData->VOLUME24HOURTO).",
+			        						".$this->db->escape(time()).")";
+			        						$this->db->query($sql);
+			        					}
+		        					} else {
+		        						// problem obtaining symbol_id and currency_id
+		        					}
+		        				}
+		        			}
 	        			}
+	        			
 	        		}
 	        	}
         	$sql = "INSERT INTO last_update (lastupdate) VALUES (".$this->db->escape(time()).")";
@@ -338,6 +350,37 @@ class Cryptocompare_api extends CI_Model {
 			$sql = "INSERT INTO bitcoin_value (fiat,cost,updated) VALUES ('USD', ".$this->db->escape($getPrice->USD).", ".$this->db->escape(time()).")";
 			$this->db->query($sql);
 			return TRUE;
+        }
+
+        public function handle_price_error($error, $price_array) {
+        	// detect if pair doesnt exist, fix database for future calls
+        	if (strpos($error, 'market does not exist for this coin pair') !== false) {
+			    $createarr = explode("(", $error);
+				$prepare = str_replace(')', '', $createarr[1]);
+				$newarr = explode("-", $prepare);
+				$currency = $newarr[0];
+				$symbol = $newarr[1];
+				// find currency_id and symbol_id without using database
+					$symbol_id = 0;
+					$currency_id = 0;
+					foreach ($price_array["currency"] as $k => $v) {
+						if ($v == $currency) {
+							$symbol_id = $price_array["symbols_id"][$k];
+							$currency_id = $price_array["currency_id"][$k];
+						}
+					}
+				
+				if ($symbol_id > 0 && $currency_id > 0) {
+					$market_id = $price_array["market_id"];
+					$sql = "UPDATE markets_pairs SET active = '0' WHERE market_id = ".$this->db->escape($market_id)." AND symbol_id = ".$this->db->escape($symbol_id)." AND currency_id = ".$this->db->escape($currency_id);
+					$this->db->query($sql);
+					return TRUE;
+				} else {
+					return FALSE;
+				}
+			} else {
+				return FALSE; // will create more handlers when i find more errors
+			}
         }
 
 
