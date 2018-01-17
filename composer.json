@@ -24,10 +24,11 @@
 		"phpunit/phpunit": "6.2.*"
 	},
 	"autoload": {
-    "psr-4": {
-      "Lisk\\": [
-        "src/lisk",
-        "src/lib"
-      ]
-    }
+	    "psr-4": {
+	      "Lisk\\": [
+	        "src/lisk",
+	        "src/lib"
+	      ]
+	    }
+	}
 }
