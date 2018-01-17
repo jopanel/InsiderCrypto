@@ -25,34 +25,33 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div class="card card-register mx-auto mt-5">
       <div class="card-header">Register an Account</div>
       <div class="card-body">
-        <div class="alert alert-danger" role="alert">
-          <strong>Oh snap!</strong> Change a few things up and try submitting again.
-        </div>
-        <div class="alert alert-success" role="alert">
-          <strong>Well done!</strong> You successfully read this important alert message.
-        </div>
+        <div class="alert alert-danger" role="alert" style="<?=$style?>">
+          <?=$error?>
+        </div> 
         <form method="post" action="<?=base_url()?>access/register">
           <div class="form-group">
             <label>Chat Alias/Username</label>
-            <input class="form-control" type="text" placeholder="Username">
+            <input class="form-control" type="text" value="<?=$displayValues["username"]?>" placeholder="Username" name="username">
           </div>
           <div class="form-group">
             <label>Email address</label>
-            <input class="form-control" type="email" aria-describedby="emailHelp" placeholder="Enter email">
+            <input class="form-control" type="email" aria-describedby="emailHelp" value="<?=$displayValues["email"]?>" placeholder="Enter email" name="email">
           </div>
           <div class="form-group">
             <div class="form-row">
               <div class="col-md-6">
                 <label>Password</label>
-                <input class="form-control" type="password" placeholder="Password">
+                <input class="form-control" type="password" placeholder="Password" name="password">
               </div>
               <div class="col-md-6">
                 <label>Confirm password</label>
-                <input class="form-control" type="password" placeholder="Confirm password">
+                <input class="form-control" type="password" placeholder="Confirm password" name="password2">
               </div>
             </div>
           </div>
+          <p><small>Usernames are permanent. You may change your email once signed in however new email changes require validation.</small></p>
           <p>By registering you agree to our <a href="<?=base_url()?>docs/privacy">privacy policy</a> and <a href="<?=base_url()?>docs/terms">terms of service</a>.</p>
+          
           <input type="submit" class="btn btn-primary btn-block" value="Register">
         </form>
         <div class="text-center">

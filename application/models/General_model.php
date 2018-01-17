@@ -57,14 +57,15 @@ class General_model extends CI_Model {
         9 =  username or email exists already
         */
             $error = 0;
-            if (!isset($postData["username"]) || empty($postData["username"])) { $error = 2;} else { $username = $this->db->escape(strip_tags($postData["username"]));}
-            if (!isset($postData["password"]) || empty($postData["password"])) { $error = 3;} else { $password = strip_tags($postData["password"]);}
-            if (!isset($postData["password2"]) || empty($postData["password2"])) { $error = 4;} else { $password2 = strip_tags($postData["password2"]);}
-            if (!isset($postData["email"]) || empty($postData["email"])) { $error = 6;} else { $email = $this->db->escape(strip_tags($postData["email"]));}
+            if (!isset($postData["username"]) || empty($postData["username"])) { return 2;} else { $username = $this->db->escape(strip_tags($postData["username"]));}
+            if ($postData["username"] == ("administrator"  || "owner")) { return 2;}
+            if (!isset($postData["password"]) || empty($postData["password"])) { return 3;} else { $password = strip_tags($postData["password"]);}
+            if (!isset($postData["password2"]) || empty($postData["password2"])) { return 4;} else { $password2 = strip_tags($postData["password2"]);}
+            if (!isset($postData["email"]) || empty($postData["email"])) { return 6;} else { $email = $this->db->escape(strip_tags($postData["email"]));}
+            if ($error > 0) { return $error; }
             $verification_key = $this->db->escape($this->generateVerificationKey());
             $salt = $this->generateSalt();
-            if ($password !== $password2) { $error = 8; } else { $password = $this->db->escape(md5($salt.$password)); }
-            if ($error > 0) { return $error; }
+            if ($password !== $password2) { return 8; } else { $password = $this->db->escape(md5($salt.$password)); }
             $now = $this->db->escape(time());
             $sql = "SELECT * FROM users WHERE username = ".$username." OR email = ".$email;
             $query = $this->db->query($sql);
@@ -73,7 +74,7 @@ class General_model extends CI_Model {
             } else {
                 $sql2 = "INSERT INTO users (username,password,created,verification_key,email) VALUES ($username, $password, $now, $verification_key, $email)";
                 $this->db->query($sql2);
-                return TRUE;   
+                return 1;   
             }
         }
 
@@ -115,8 +116,10 @@ class General_model extends CI_Model {
         		$this->session->set_userdata("admin_id", $q->id);
         		$this->session->set_userdata("loggedin",1);
         		$ip = $this->getUserIP();
-        		$sql2 = "UPDATE users SET last_login = NOW(), ip = ".$this->db->escape($ip)." WHERE id = ".$q->id;
+        		$sql2 = "UPDATE users SET last_login = ".$this->db->escape(time()).", ip = ".$this->db->escape($ip)." WHERE id = ".$q->id;
         		$this->db->query($sql2);
+                $sql3 = "INSERT INTO users_ip_login (uid, ip, created) VALUES (".$this->db->escape($q->id).", ".$this->db->escape($ip).", ".$this->db->escape(time()).")";
+                $this->db->query($sql3);
         		return TRUE;
         	} else {
         		return FALSE;

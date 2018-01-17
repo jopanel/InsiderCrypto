@@ -50,6 +50,62 @@ class Access extends CI_Controller {
 	}
 
 	public function register() {
-		$this->load->view('main/register');
+		 /*
+        error list: 
+        2 = no username
+        3 = no password
+        4 = no password confirm
+        6 = no email
+        8 = passwords dont match
+        9 =  username or email exists already
+        */
+        $data["style"] = "display:none;";
+        $data["error"] = "";
+        $data["displayValues"] = array(
+        	"username" => "",
+        	"email" => ""
+        );
+        if ($this->input->post()) {
+        	$postData = $this->input->post();
+        	$callback = $this->General_model->register($postData);
+        	if ($callback == 1) {
+        		$this->load->view('main/register_success');
+        	} else {
+        		if ($callback == 2) {
+	        		$data["style"] = "";
+	        		$data["error"] = "No username provided.";
+	        		$data["displayValues"] = $postData;
+	        	}
+	        	if ($callback == 3) {
+	        		$data["style"] = "";
+	        		$data["error"] = "No password provided.";
+	        		$data["displayValues"] = $postData;
+	        	}
+	        	if ($callback == 4) {
+	        		$data["style"] = "";
+	        		$data["error"] = "No confirmation password provided.";
+	        		$data["displayValues"] = $postData;
+	        	}
+	        	if ($callback == 6) {
+	        		$data["style"] = "";
+	        		$data["error"] = "No email provided.";
+	        		$data["displayValues"] = $postData;
+	        	}
+	        	if ($callback == 8) {
+	        		$data["style"] = "";
+	        		$data["error"] = "Passwords do not match.";
+	        		$data["displayValues"] = $postData;
+	        	}
+	        	if ($callback == 9) {
+	        		$data["style"] = "";
+	        		$data["error"] = "Username or email exists already.";
+	        		$data["displayValues"] = $postData;
+	        	}
+	        	$this->load->view('main/register', $data);
+        	} 
+        } else {
+        	$this->load->view('main/register', $data);
+        }
+		
 	}
 }
