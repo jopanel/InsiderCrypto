@@ -12,13 +12,22 @@
 	},
 	"require": {
 		"php": ">=5.3.7",
-		"loeken/cryptocompare-api-php-wrapper": "dev-master"
+		"loeken/cryptocompare-api-php-wrapper": "dev-master",
+		"tcdent/php-restclient": "^0.1.6",
+		"cb0/lisk-php-api": "^0.1.1"
 	}, 
 	"suggest": {
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"
 	},
 	"require-dev": {
 		"mikey179/vfsStream": "1.1.*",
-		"phpunit/phpunit": "4.* || 5.*"
-	}
+		"phpunit/phpunit": "6.2.*"
+	},
+	"autoload": {
+    "psr-4": {
+      "Lisk\\": [
+        "src/lisk",
+        "src/lib"
+      ]
+    }
 }

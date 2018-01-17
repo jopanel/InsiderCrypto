@@ -365,6 +365,12 @@ class Cryptocompare_api extends CI_Model {
 					$currency_id = 0;
 					foreach ($price_array["currency"] as $k => $v) {
 						if ($v == $currency) {
+							if (!isset($price_array["symbols_id"][$k])) {
+								return FALSE;
+							}
+							if (!isset($price_array["currency_id"][$k])) {
+								return FALSE;
+							}
 							$symbol_id = $price_array["symbols_id"][$k];
 							$currency_id = $price_array["currency_id"][$k];
 						}

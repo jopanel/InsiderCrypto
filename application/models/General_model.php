@@ -44,24 +44,34 @@ class General_model extends CI_Model {
             }
             return round(((300 / $bitcoin_value) / $lsk_price),2)+0.1;
         }
- 
+    
+        
         public function register($postData=null) {
+            /*
+        error list: 
+        2 = no username
+        3 = no password
+        4 = no password confirm
+        6 = no email
+        8 = passwords dont match
+        9 =  username or email exists already
+        */
             $error = 0;
             if (!isset($postData["username"]) || empty($postData["username"])) { $error = 2;} else { $username = $this->db->escape(strip_tags($postData["username"]));}
             if (!isset($postData["password"]) || empty($postData["password"])) { $error = 3;} else { $password = strip_tags($postData["password"]);}
             if (!isset($postData["password2"]) || empty($postData["password2"])) { $error = 4;} else { $password2 = strip_tags($postData["password2"]);}
-            if (!isset($postData["name"]) || empty($postData["name"])) { $error = 6;} else { $name = $this->db->escape(strip_tags($postData["name"]));}
+            if (!isset($postData["email"]) || empty($postData["email"])) { $error = 6;} else { $email = $this->db->escape(strip_tags($postData["email"]));}
             $verification_key = $this->db->escape($this->generateVerificationKey());
             $salt = $this->generateSalt();
             if ($password !== $password2) { $error = 8; } else { $password = $this->db->escape(md5($salt.$password)); }
             if ($error > 0) { return $error; }
             $now = $this->db->escape(time());
-            $sql = "SELECT * FROM users WHERE username = ".$username;
+            $sql = "SELECT * FROM users WHERE username = ".$username." OR email = ".$email;
             $query = $this->db->query($sql);
             if ($query->num_rows() > 0) {
                     return 9;
             } else {
-                $sql2 = "INSERT INTO users (username,password,created,verification_key,name) VALUES ($username, $password, $now, $verification_key, $name)";
+                $sql2 = "INSERT INTO users (username,password,created,verification_key,email) VALUES ($username, $password, $now, $verification_key, $email)";
                 $this->db->query($sql2);
                 return TRUE;   
             }
@@ -90,19 +100,17 @@ class General_model extends CI_Model {
 	   }
 
         public function login($postData) {
-        	if (!isset($postData["username"])) { return 2; }
-        	if (!isset($postData["password"])) { return 2; }
+        	if (!isset($postData["email"])) { return FALSE; }
+        	if (!isset($postData["password"])) { return FALSE; }
                 $salt = $this->generateSalt();
-        	$username = $this->db->escape(strip_tags($postData["username"]));
+        	$email = $this->db->escape(strip_tags($postData["email"]));
         	$password = $this->db->escape(strip_tags(md5($salt.$postData["password"])));
-        	$sql = "SELECT a.*, ag.name as 'role' FROM opa_admin a 
-            LEFT JOIN opa_admin_groups ag ON a.admin_group = ag.id
-            WHERE a.username = ".$username." AND a.password = ".$password;
+        	$sql = "SELECT a.* FROM users a 
+            WHERE a.email = ".$email." AND a.password = ".$password;
         	$query = $this->db->query($sql);
         	if ($query->num_rows() > 0) {
         		$q = $query->row();
-                $this->session->set_userdata("role", $q->role);
-        		$this->session->set_userdata("username",$q->username);
+        		$this->session->set_userdata("email",$q->email);
         		$this->session->set_userdata("verification_key",$q->verification_key);
         		$this->session->set_userdata("admin_id", $q->id);
         		$this->session->set_userdata("loggedin",1);
@@ -111,28 +119,26 @@ class General_model extends CI_Model {
         		$this->db->query($sql2);
         		return TRUE;
         	} else {
-        		return 2;
+        		return FALSE;
         	}
         }
 
         public function verifyUser() {
-        	if ($this->session->userdata("username") && $this->session->userdata("verification_key") && $this->session->userdata("loggedin")) {
-        		$sql = "SELECT * FROM opa_admin WHERE verification_key = ".$this->db->escape(strip_tags($this->session->userdata("verification_key")))." AND username = ".$this->db->escape(strip_tags($this->session->userdata("username")));
+        	if ($this->session->userdata("email") && $this->session->userdata("verification_key") && $this->session->userdata("loggedin")) {
+        		$sql = "SELECT * FROM users WHERE verification_key = ".$this->db->escape(strip_tags($this->session->userdata("verification_key")))." AND email = ".$this->db->escape(strip_tags($this->session->userdata("email")));
         		$query = $this->db->query($sql);
         		if ($query->num_rows() > 0) {
         			return TRUE;
         		} else {
-        			$this->logout();
-        			redirect(base_url()."login");
+        			return FALSE;
         		}
         	} else {
-        		$this->logout();
-        		redirect(base_url()."login");
+        		return FALSE;
         	}
         }
 
         public function logout() {
-        	$this->session->unset_userdata("username");
+        	$this->session->unset_userdata("email");
         	$this->session->unset_userdata("verification_key");
         	$this->session->unset_userdata("loggedin");
         	return TRUE;

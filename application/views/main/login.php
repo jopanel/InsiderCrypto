@@ -25,14 +25,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div class="card card-login mx-auto mt-5">
       <div class="card-header">Login</div>
       <div class="card-body">
-        <form>
+        <form method="post" action="<?=base_url()?>access/login">
+          <div class="alert alert-danger" role="alert" style="<?=$style?>">
+            <?php
+            if ($error == 1) { echo "Too Many Login Attempts"; }
+            if ($error == 2) { echo "Invalid Login Credentials."; }
+        ?>
+          </div>
           <div class="form-group">
             <label for="exampleInputEmail1">Email address</label>
-            <input class="form-control" type="email" aria-describedby="emailHelp" placeholder="Enter email">
+            <input class="form-control" type="email" name="email" aria-describedby="emailHelp" placeholder="Enter email">
           </div>
           <div class="form-group">
             <label for="exampleInputPassword1">Password</label>
-            <input class="form-control" type="password" placeholder="Password">
+            <input class="form-control" type="password" name="password" placeholder="Password">
           </div>
           <input type="submit" class="btn btn-primary btn-block" value="Login">
         </form>

@@ -25,7 +25,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div class="card card-register mx-auto mt-5">
       <div class="card-header">Register an Account</div>
       <div class="card-body">
-        <form>
+        <div class="alert alert-danger" role="alert">
+          <strong>Oh snap!</strong> Change a few things up and try submitting again.
+        </div>
+        <div class="alert alert-success" role="alert">
+          <strong>Well done!</strong> You successfully read this important alert message.
+        </div>
+        <form method="post" action="<?=base_url()?>access/register">
           <div class="form-group">
             <label>Chat Alias/Username</label>
             <input class="form-control" type="text" placeholder="Username">
