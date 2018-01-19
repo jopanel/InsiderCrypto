@@ -35,19 +35,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           </a>
         </li> 
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="History">
-          <a class="nav-link" href="#">
+          <a class="nav-link" href="<?=base_url()?>history">
             <i class="fa fa-fw fa-history"></i>
             <span class="nav-link-text">History</span>
           </a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Preferences">
-          <a class="nav-link" href="#">
+          <a class="nav-link" href="<?=base_url()?>control/preferences">
             <i class="fa fa-fw fa-cog"></i>
             <span class="nav-link-text">Preferences</span>
           </a>
         </li> 
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Account">
-          <a class="nav-link" href="#">
+          <a class="nav-link" href="<?=base_url()?>control/account">
             <i class="fa fa-fw fa-user"></i>
             <span class="nav-link-text">Account</span>
           </a>

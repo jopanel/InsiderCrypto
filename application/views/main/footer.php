@@ -23,10 +23,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               <span aria-hidden="true">×</span>
             </button>
           </div>
-          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+          <div class="modal-body">Are you sure you want to logout? You are only allowed the maximum of two IP addresses to be logged in within a 24 hour period.</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="login.html">Logout</a>
+            <a class="btn btn-primary" href="<?=base_url()?>logout">Logout</a>
           </div>
         </div>
       </div>
@@ -37,6 +37,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- Core plugin JavaScript-->
     <script src="<?=base_url()?>resources/main/vendor/jquery-easing/jquery.easing.min.js"></script>
     <!-- Custom scripts for all pages-->
+    
+    
     <script src="<?=base_url()?>resources/main/js/sb-admin.min.js"></script>
   </div>
 </body>
