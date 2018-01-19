@@ -36,8 +36,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="row">
           <div class="col-md-8 mx-auto">
             <h2 class="section-heading">Make smarter trades, profit faster, gain everyday.</h2>
-            <p>We offer this tool at a low cost of <?=$programcost?> Lisk. We currently only accept Lisk at the moment. You must first <a style="text-decoration: none !important;
-color: blue !important;" href="<?=base_url()?>access/register">register</a> with us. Add your Lisk public key wallet address to your account, then send the funds through that account. Activation is automatic.</p>
+            <p>We offer this tool at a low cost of <?=$programcost?> Lisk ($300 USD).</p>
+            <p> You must first <a style="text-decoration: none !important;
+color: blue !important;" href="<?=base_url()?>access/register">register</a> with us.</p>
             <div class="badges">
               <a class="badge-link" href="#"><img src="img/google-play-badge.svg" alt=""></a>
               <a class="badge-link" href="#"><img src="img/app-store-badge.svg" alt=""></a>

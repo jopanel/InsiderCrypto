@@ -11,6 +11,21 @@ class Welcome extends CI_Controller {
 			$this->load->view('landing/header');
 			$this->load->view('landing/welcome', $data);
 			$this->load->view('landing/footer');
+		} else {
+			if ($this->General_model->getPaidStatus() == TRUE) {
+				// paid and verified member
+				$head["navbartoggle"] = "sidenav-toggled";
+				$this->load->view('main/header', $head);
+				$this->load->view('main/dashboard');
+				$this->load->view('main/footer');
+
+			} else {
+				// unpaid membership
+				$head["navbartoggle"] = "";
+				$this->load->view('main/header', $head);
+				$this->load->view('main/unpaid-dashboard');
+				$this->load->view('main/footer');
+			}
 		}
 		
 	}

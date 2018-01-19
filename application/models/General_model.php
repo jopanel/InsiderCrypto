@@ -44,6 +44,27 @@ class General_model extends CI_Model {
             }
             return round(((300 / $bitcoin_value) / $lsk_price),2)+0.1;
         }
+
+        public function getPaidStatus() {
+            // firstly check if they are VIP status
+            $sql = "SELECT vip, id FROM users WHERE email = ".$this->db->escape($this->session->userdata("email"))." AND verification_key = ".$this->db->escape($this->session->userdata("verification_key"));
+            $query = $this->db->query($sql);
+            if ($query->num_rows() > 0) {
+                $vip = $query->row()->vip;
+                $uid = $query->row()->id;
+            } else {
+                return FALSE;
+            }
+            if ($vip == 1) { return TRUE; }
+            // not a VIP, must check if they have placed an order with us
+            $sql = "SELECT 1 FROM orders WHERE uid = ".$this->db->escape($uid)." AND confirmed = '1' AND amount_requested = amount_received";
+            $query = $this->db->query($sql);
+            if ($query->num_rows() > 0) {
+                return TRUE;
+            } else {
+                return FALSE;
+            }
+        }
     
         
         public function register($postData=null) {

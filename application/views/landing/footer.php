@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     <footer>
       <div class="container">
-        <p>&copy; 2018 Lenapo Solutions LLC.</p>
+        <p>&copy; 2018 Lenapo Solutions LLC. DBA Insider Crypto</p>
         <ul class="list-inline">
           <li class="list-inline-item">
             <a href="<?=base_url()?>docs/privacy">Privacy</a>
