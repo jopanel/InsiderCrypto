@@ -65,6 +65,23 @@ class General_model extends CI_Model {
                 return FALSE;
             }
         }
+
+        public function getUserData() {
+            $output = [];
+            $sql = "SELECT id, email, username, created, vip, COALESCE(lsk_address, '') as 'lsk_address' FROM users WHERE email = ".$this->db->escape($this->session->userdata("email"))." AND verification_key = ".$this->db->escape($this->session->userdata("verification_key"));
+            $query = $this->db->query($sql);
+            if ($query->num_rows() > 0) {
+                $output["email"] = $query->row()->email;
+                $output["created"] = $query->row()->created;
+                $output["vip"] = $query->row()->vip;
+                $output["username"] = $query->row()->username;
+                $output["lsk_address"] = $query->row()->lsk_address;
+                $dayago = strtotime("-1 day");
+                $sql = "SELECT ip FROM users_ip_login WHERE uid = ".$this->db->escape($query->row()->uid)." AND created > ".$this->db->escape($dayago)." GROUP BY ip";
+            }
+            
+            return $output;
+        }
     
         
         public function register($postData=null) {

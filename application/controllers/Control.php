@@ -43,8 +43,13 @@ class Control extends CI_Controller {
 					}
 				}
 				$head["navbartoggle"] = "";
+				if ($this->General_model->getPaidStatus() == TRUE) {
+					$data["paidstatus"] = TRUE;
+				} else {
+					$data["paidstatus"] = FALSE;
+				}
 				$this->load->view('main/header', $head);
-				$this->load->view('main/account_settings');
+				$this->load->view('main/account_settings', $data);
 				$this->load->view('main/footer');
 		}
 	}

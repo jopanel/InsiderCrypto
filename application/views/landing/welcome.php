@@ -9,7 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <div class="col-lg-7 my-auto">
             <div class="header-content mx-auto">
               <h1 class="mb-5">Insider Crypto provides you with AI generated arbitrage opportunities, cryptocurrency pair opportunities, and the ability to customize to your preferences.</h1>
-              <a href="#signup" class="btn btn-outline btn-xl js-scroll-trigger">Get Started</a>
+              <a href="<?=base_url()?>access/register" class="btn btn-outline btn-xl js-scroll-trigger">Get Started</a>
             </div>
           </div>
           <div class="col-lg-5 my-auto">
@@ -111,7 +111,7 @@ color: blue !important;" href="<?=base_url()?>access/register">register</a> with
       <div class="cta-content">
         <div class="container">
           <h2>Stop waiting.<br>Start earning.</h2>
-          <a href="#signup" class="btn btn-outline btn-xl js-scroll-trigger">Get Started!</a>
+          <a href="<?=base_url()?>access/register" class="btn btn-outline btn-xl js-scroll-trigger">Get Started!</a>
         </div>
       </div>
       <div class="overlay"></div>
