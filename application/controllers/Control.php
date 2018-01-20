@@ -48,6 +48,7 @@ class Control extends CI_Controller {
 				} else {
 					$data["paidstatus"] = FALSE;
 				}
+				$data["userdata"] = $this->General_model->getUserData();
 				$this->load->view('main/header', $head);
 				$this->load->view('main/account_settings', $data);
 				$this->load->view('main/footer');
