@@ -56,26 +56,29 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	    </div>
 
 	    <!-- START SECOND COLUMN --> 
-	    <div class="col">
-	    	<div class="card mb-3">
-	      		<div class="card-header">
-              </i> Update Lisk Address</div>
-              <div class="card-body"> 
+	    <?php if (empty($userdata["lsk_address"])) { ?>
+	    	<div class="col">
+		    	<div class="card mb-3">
+		      		<div class="card-header">
+	              </i> Update Lisk Address</div>
+	              <div class="card-body"> 
 
-              	<form method="post" action="">
-              	  <input type="hidden" name="action" value="changelskaddress">
-				  <div class="form-group">
-				    <label for="Address">Address</label>  
-				    <input type="text" name="address" placeholder="example: 4287319913737945577L" class="form-control">
-				    <small>Required <b><u>BEFORE</u></b> payment is made.</small>
-				  </div> 
-				  <div class="form-group">
-				  	<input type="submit" class="btn btn-primary" value="Update">
-				  </div>
-				</form>
+	              	<form method="post" action="">
+	              	  <input type="hidden" name="action" value="changelskaddress">
+					  <div class="form-group">
+					    <label for="Address">Address</label>  
+					    <input type="text" name="address" placeholder="example: 4287319913737945577L" class="form-control">
+					    <small>Required <b><u>BEFORE</u></b> payment is made.</small>
+					  </div> 
+					  <div class="form-group">
+					  	<input type="submit" class="btn btn-primary" value="Update">
+					  </div>
+					</form>
 
-              </div>
-            </div>
+	              </div>
+	            </div>
+	    <?php } ?>
+	    
 
 
 
@@ -91,22 +94,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               </div>
             </div>
 
+            <?php 
+            if ($userdata["vip"] == 1) { ?>
+	            <div class="card mb-3"> 
+	              <div class="card-body btn btn-success"> 
 
-            <div class="card mb-3"> 
-              <div class="card-body btn btn-danger"> 
+	              	VIP STATUS
 
-              	UNPAID SUBSCRIPTION
+	              </div>
+	            </div> 
+           <?php } else {
+	            if ($paidstatus == FALSE) { ?>
+	            	<div class="card mb-3"> 
+		              <div class="card-body btn btn-danger"> 
 
-              </div>
-            </div>
+		              	UNPAID SUBSCRIPTION
 
-            <div class="card mb-3"> 
-              <div class="card-body btn btn-success"> 
+		              </div>
+		            </div> 
+	           <?php } else { ?>
+	            	<div class="card mb-3"> 
+		              <div class="card-body btn btn-success"> 
 
-              	PAID SUBSCRIPTION
+		              	PAID SUBSCRIPTION
 
-              </div>
-            </div>
+		              </div>
+		            </div> 
+	           <?php }
+	        } ?>
 
             
 
@@ -129,19 +144,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               	<p>To change to a new email address you will receive an email verification on the new email. Your email will not be changed until the email is verified by clicking the link in the email. You will not be able to use "forgot password" function if you do not have access to your email address.</p> 
 
               	<strong>Join Date</strong>
-              	<p>11/11/2011</p>
+              	<p><?=date("m/d/Y", $userdata["created"])?></p>
 
               	<strong>Username</strong>
-              	<p></p>
+              	<p><?=$userdata["username"]?></p>
 
               	<strong>Email</strong>
-              	<p></p>
+              	<p><?=$userdata["email"]?></p>
 
               	<strong>Member Status</strong>
-              	<p></p>
+              	<p>
+              	<?php if ($userdata["vip"] == 1) { echo "VIP STATUS"; } else {
+              		if ($paidstatus == TRUE) { echo "PAID"; } else { echo "UNPAID"; }
+              	} ?>
+              	</p>
 
               	<strong>Logged In IP Addresses</strong>
-              	<p></p>
+              	<p><?php foreach ($userdata["ips"] as $v) { echo $v."<br>"; } ?></p>
 
               </div>
             </div>

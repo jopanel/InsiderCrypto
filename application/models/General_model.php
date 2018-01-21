@@ -77,10 +77,10 @@ class General_model extends CI_Model {
                 $output["username"] = $query->row()->username;
                 $output["lsk_address"] = $query->row()->lsk_address;
                 $dayago = strtotime("-1 day");
-                $sql = "SELECT ip FROM users_ip_login WHERE uid = ".$this->db->escape($query->row()->uid)." AND created > ".$this->db->escape($dayago)." GROUP BY ip";
+                $sql = "SELECT ip FROM users_ip_login WHERE uid = ".$this->db->escape($query->row()->id)." AND created > ".$this->db->escape($dayago)." GROUP BY ip"; 
                 $query2 = $this->db->query($sql);
                 if ($query2->num_rows() > 0) {
-                    foreach ($query->result_array() as $v) {
+                    foreach ($query2->result_array() as $v) {
                         $output["ips"][] = $v["ip"];
                     }
                 }
