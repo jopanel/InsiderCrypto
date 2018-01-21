@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitdda43e7544f5d6e6bdb73e8a53965881
+class ComposerStaticInit297dd0a38270dfa90050d09927eb4593
 {
     public static $files = array (
         'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
@@ -12,6 +12,8 @@ class ComposerStaticInitdda43e7544f5d6e6bdb73e8a53965881
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         '97be8d00d4e1b8596dda683609f3dce2' => __DIR__ . '/..' . '/tcdent/php-restclient/restclient.php',
+        '3f8bdd3b35094c73a26f0106e3c0f8b2' => __DIR__ . '/..' . '/sendgrid/sendgrid/lib/SendGrid.php',
+        '9dda55337a76a24e949fbcc5d905a2c7' => __DIR__ . '/..' . '/sendgrid/sendgrid/lib/helpers/mail/Mail.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -22,6 +24,10 @@ class ComposerStaticInitdda43e7544f5d6e6bdb73e8a53965881
         'W' => 
         array (
             'Webmozart\\Assert\\' => 17,
+        ),
+        'S' => 
+        array (
+            'SendGrid\\' => 9,
         ),
         'P' => 
         array (
@@ -58,6 +64,10 @@ class ComposerStaticInitdda43e7544f5d6e6bdb73e8a53965881
         'Webmozart\\Assert\\' => 
         array (
             0 => __DIR__ . '/..' . '/webmozart/assert/src',
+        ),
+        'SendGrid\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/sendgrid/php-http-client/lib',
         ),
         'Psr\\Http\\Message\\' => 
         array (
@@ -650,10 +660,10 @@ class ComposerStaticInitdda43e7544f5d6e6bdb73e8a53965881
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitdda43e7544f5d6e6bdb73e8a53965881::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitdda43e7544f5d6e6bdb73e8a53965881::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInitdda43e7544f5d6e6bdb73e8a53965881::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInitdda43e7544f5d6e6bdb73e8a53965881::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit297dd0a38270dfa90050d09927eb4593::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit297dd0a38270dfa90050d09927eb4593::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit297dd0a38270dfa90050d09927eb4593::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit297dd0a38270dfa90050d09927eb4593::$classMap;
 
         }, null, ClassLoader::class);
     }
