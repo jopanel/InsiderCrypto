@@ -15,4 +15,28 @@ class Api extends CI_Controller {
 		$this->Cryptocompare_api->build();  
 	}
 
+	public function unsubscribe($email=null) {
+		if ($email == null) {
+			echo "Sorry there was a problem.";
+		} else {
+			if ($this->General_model->unsubscribeEmail($email) == TRUE) {
+				echo "Successfully unsubscribed.";
+			} else {
+				echo "Sorry there was a problem.";
+			}
+		}
+	}
+
+	public function validate($email=null) {
+		if ($email == null) {
+			echo "Sorry there was a problem.";
+		} else {
+			if ($this->General_model->validateEmail($email) == TRUE) {
+				echo "Successfully unsubscribed.";
+			} else {
+				echo "Sorry there was a problem.";
+			}
+		}
+	}
+
 }

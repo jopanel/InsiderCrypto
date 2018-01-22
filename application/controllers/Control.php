@@ -35,12 +35,15 @@ class Control extends CI_Controller {
 		} else {
 				$data["error"] = "";
 				$data["error_style"] = "display: none;";
+				$data["success"] = "";
+				$data["success_style"] = "display:none;";
 				if ($this->input->post()) {
 					$postData = $this->input->post();
-					if ($this->General_model->modifyAccount($postData, $postData["action"]) == FALSE) {
-						$data["error"] = "There was a problem with your request";
-						$data["error_style"] = "";
-					}
+					$result = $this->General_model->modifyAccount($postData, $postData["action"]);
+					$data["error"] = $result["error"];
+					$data["error_style"] = $result["error_style"];
+					$data["success_style"] = $result["success_style"];
+					$data["success"] = $result["success"];
 				}
 				$head["navbartoggle"] = "";
 				if ($this->General_model->getPaidStatus() == TRUE) {
