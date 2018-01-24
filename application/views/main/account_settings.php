@@ -4,6 +4,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
   <div class="content-wrapper">
     <div class="container-fluid"> 
+    	<div class="alert alert-success" style="<?=$success_style?>" role="alert">
+		  <?=$success?>
+		</div>
+		<div class="alert alert-danger" style="<?=$error_style?>" role="alert">
+		  <?=$error?>
+		</div>
       <div class="row">
 	    <div class="col">
 
@@ -56,8 +62,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	    </div>
 
 	    <!-- START SECOND COLUMN --> 
-	    <?php if (empty($userdata["lsk_address"])) { ?>
+	    
 	    	<div class="col">
+	    		<?php if ($paidstatus == FALSE) { ?>
 		    	<div class="card mb-3">
 		      		<div class="card-header">
 	              </i> Update Lisk Address</div>
@@ -67,13 +74,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	              	  <input type="hidden" name="action" value="changelskaddress">
 					  <div class="form-group">
 					    <label for="Address">Address</label>  
-					    <input type="text" name="address" placeholder="example: 4287319913737945577L" class="form-control">
+					    <input type="text" name="address" placeholder="example: 4287319913737945577L" class="form-control" value="<?=$userdata["lsk_address"]?>">
 					    <small>Required <b><u>BEFORE</u></b> payment is made.</small>
 					  </div> 
 					  <div class="form-group">
 					  	<input type="submit" class="btn btn-primary" value="Update">
 					  </div>
 					</form>
+					<?php if (!empty($userdata["lsk_address"])) { ?>
+						<p>This should be you: <a href="https://explorer.lisk.io/address/<?=$userdata["lsk_address"]?>"><?=$userdata["lsk_address"]?></a></p>
+					<?php } ?>
+					
 
 	              </div>
 	            </div>
@@ -87,9 +98,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	      		<div class="card-header">
               <i class="fa fa-certificate"></i> Get Notifications</div>
               <div class="card-body"> 
-
+              	<form method="post" action="">
+              	<input type="hidden" name="action" value="validateemail">
+              	<input type="hidden" name="email" value="<?=$userdata["email"]?>"
               	<p>To receive notifications via email when new opporunities are found for your threshold and markets set you must validate your email address.</p>
-              	<center><p><button class="btn btn-primary" onClick="sendVerification()">Send Verification</button></p></center>
+              	<center><p><input class="btn btn-primary" value="Send Verification"></p></center>
+              </form>
 
               </div>
             </div>

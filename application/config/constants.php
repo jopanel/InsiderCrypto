@@ -83,6 +83,7 @@ defined('EXIT_USER_INPUT')     OR define('EXIT_USER_INPUT', 7); // invalid user 
 defined('EXIT_DATABASE')       OR define('EXIT_DATABASE', 8); // database error
 defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
-defined('sendgrid_api_key')      OR define('sendgrid_api_key', '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'); // highest
+defined('SENDGRID_API_KEY')      OR define('SENDGRID_API_KEY', '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'); 
+defined('SENDGRID_API_KEY_ID')      OR define('SENDGRID_API_KEY_ID', 'hwPVczmjR72fxNm-sJ1VdQ'); 
 
  

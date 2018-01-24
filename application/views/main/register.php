@@ -20,7 +20,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <link href="<?=base_url()?>resources/main/css/sb-admin.css" rel="stylesheet"> 
 </head>
 
-<body class="bg-dark">
+<body style="background-image: url(<?=base_url()?>resources/img/log-bg.jpg); background-position:center; background-color: #000;">
   <div class="container">
     <div class="card card-register mx-auto mt-5">
       <div class="card-header">Register an Account</div>

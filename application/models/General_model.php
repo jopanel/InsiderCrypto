@@ -92,6 +92,7 @@ class General_model extends CI_Model {
                 $output["vip"] = $query->row()->vip;
                 $output["username"] = $query->row()->username;
                 $output["lsk_address"] = $query->row()->lsk_address;
+                $output["uid"] = $query->row()->id;
                 $dayago = strtotime("-1 day");
                 $sql = "SELECT ip FROM users_ip_login WHERE uid = ".$this->db->escape($query->row()->id)." AND created > ".$this->db->escape($dayago)." GROUP BY ip"; 
                 $query2 = $this->db->query($sql);
@@ -107,26 +108,51 @@ class General_model extends CI_Model {
 
         public function modifyAccount($postData=array(), $action=null) {
             if (count($postData) == 0 || $action == null) { return FALSE; }
-            if ($action == "changeemail") {
+            $output = [];
+            $output["error"] = "";
+            $output["error_style"] = "display: none;";
+            $output["success"] = "";
+            $output["success_style"] = "display:none;";
+            $userData = $this->getUserData();
+            if ($action == "changeemail" || $action == "validateemail") {
                // check if a request has been sent to that email within the last day
-                
-
-
-                $from = new SendGrid\Email("Example User", "test@example.com");
-                $subject = "Sending with SendGrid is Fun";
-                $to = new SendGrid\Email("Example User", "test@example.com");
-                $content = new SendGrid\Content("text/plain", "and easy to do anywhere, even with PHP");
+                $body = $this->buildValidateEmail($postData["email"]);
+                $from = new SendGrid\Email("Insider Crypto", "support@insidercrypto.com");
+                $subject = "Validate Your Email Address";
+                $to = new SendGrid\Email($userData["username"], $postData["email"]);
+                $content = new SendGrid\Content("text/html", $body);
                 $mail = new SendGrid\Mail($from, $subject, $to, $content);
-
-                $apiKey = getenv('SENDGRID_API_KEY');
+                $apiKey = getenv(SENDGRID_API_KEY);
                 $sg = new \SendGrid($apiKey);
-
                 $response = $sg->client->mail()->send()->post($mail);
+                echo "<pre>";
+                var_dump($response);
+                echo "</pre>";
+                $output["success"] = "Success! We have sent an email to ".$postData["email"]." to validate your email.";
+                $output["success_style"] = "";
              } elseif ($action == "changepw") {
-
+                if (empty($postData["password"]) || !isset($postData["password"]) || empty($postData["password2"]) || !isset($postData["password2"])) { 
+                    $output["error"] = "You cannot have a blank password.";
+                    $output["error_style"] = "";
+                }
+                if ($postData["password"] == $postData["password2"]) {
+                    $salt = $this->generateSalt();
+                    $password = md5($salt.$postData["password"]);
+                    $sql = "UPDATE users SET password = ".$this->db->escape($password)." WHERE id = ".$this->db->escape($userData["uid"]);
+                    $this->db->query($sql);
+                    $output["success"] = "You have successfully changed your password.";
+                    $output["success_style"] = "";
+                } else {
+                    $output["error"] = "The passwords do not match.";
+                    $output["error_style"] = "";
+                }
             } elseif ($action == "changelskaddress") {
-
+                $sql = "UPDATE users SET lsk_address = ".$this->db->escape($postData["address"])." WHERE id = ".$this->db->escape($userData["uid"]);
+                $this->db->query($sql);
+                $output["success"] = "Updated your Lisk Address to ".$postData["address"];
+                $output["success_style"] = "";
             }
+            return $output;
         }
     
         
