@@ -37,6 +37,33 @@ class General_model extends CI_Model {
             return TRUE;
         }
 
+        public function getUserExchanges() {
+            $userData = $this->getUserData();
+            $output = [];
+            $sql = "SELECT p.market_id, m.name FROM markets_pairs p 
+                    LEFT JOIN markets m ON p.market_id = m.id 
+                    WHERE p.active = '1' AND m.active = '1'
+                    GROUP BY p.market_id";
+            $query = $this->db->query($sql);
+            if ($query->num_rows() > 0) {
+                foreach ($query->result_array() as $v) {
+                    $sql2 = "SELECT 1 FROM users_markets WHERE uid = ".$this->db->escape($userData["uid"])." AND market_id = ".$this->db->escape($v["market_id"]);
+                    $query2 = $this->db->query($sql2);
+                    if ($query2->num_rows() > 0) {
+                        $output[] = array("market_id" => $v["market_id"], "name" => $v["name"], "selected" => TRUE);
+                    } else {
+                        $output[] = array("market_id" => $v["market_id"], "name" => $v["name"], "selected" => FALSE);
+                    }
+                }
+            }
+            return $output;
+        }
+
+        public function modifyPreferences($postData=array(), $action=null) {
+            if (count($postData) == 0 || $action == null) { return FALSE; } 
+            
+        }
+
         public function getProgramCost() {
             $sql = 'select p.price FROM price_chart p
                     LEFT JOIN currency c ON c.id = p.currency_id
@@ -84,7 +111,7 @@ class General_model extends CI_Model {
 
         public function getUserData() {
             $output = [];
-            $sql = "SELECT id, email, username, created, vip, COALESCE(lsk_address, '') as 'lsk_address' FROM users WHERE email = ".$this->db->escape($this->session->userdata("email"))." AND verification_key = ".$this->db->escape($this->session->userdata("verification_key"));
+            $sql = "SELECT id, email, username, created, vip, COALESCE(lsk_address, ''), subscribed, notifications as 'lsk_address' FROM users WHERE email = ".$this->db->escape($this->session->userdata("email"))." AND verification_key = ".$this->db->escape($this->session->userdata("verification_key"));
             $query = $this->db->query($sql);
             if ($query->num_rows() > 0) {
                 $output["email"] = $query->row()->email;
@@ -93,6 +120,8 @@ class General_model extends CI_Model {
                 $output["username"] = $query->row()->username;
                 $output["lsk_address"] = $query->row()->lsk_address;
                 $output["uid"] = $query->row()->id;
+                $output["notifications"] = $query->row()->notifications;
+                $output["subscribed"] = $query->row()->subscribed;
                 $dayago = strtotime("-1 day");
                 $sql = "SELECT ip FROM users_ip_login WHERE uid = ".$this->db->escape($query->row()->id)." AND created > ".$this->db->escape($dayago)." GROUP BY ip"; 
                 $query2 = $this->db->query($sql);

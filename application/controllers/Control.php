@@ -64,6 +64,9 @@ class Control extends CI_Controller {
 		} else {
 				$data["error"] = "";
 				$data["error_style"] = "display: none;";
+				$data["paidstatus"] = $this->General_model->getPaidStatus();
+				$data["exchanges"] = $this->General_model->getUserExchanges();
+				$data["userdata"] = $this->General_model->getUserData();
 				if ($this->input->post()) {
 					$postData = $this->input->post();
 					if ($this->General_model->modifyPreferences($postData, $postData["action"]) == FALSE) {
