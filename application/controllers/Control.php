@@ -64,16 +64,16 @@ class Control extends CI_Controller {
 		} else {
 				$data["success"] = "";
 				$data["success_style"] = "display: none;";
-				$data["paidstatus"] = $this->General_model->getPaidStatus();
-				$data["exchanges"] = $this->General_model->getUserExchanges();
-				$data["userdata"] = $this->General_model->getUserData();
 				if ($this->input->post()) {
 					$postData = $this->input->post();
-					if ($this->General_model->modifyPreferences($postData, $postData["action"]) == FALSE) {
-						$data["success"] = "There was a problem with your request";
+					if ($this->General_model->modifyPreferences($postData, $postData["action"]) == TRUE) {
+						$data["success"] = "Success! Your preferences have been updated.";
 						$data["success_style"] = "";
 					}
 				}
+				$data["paidstatus"] = $this->General_model->getPaidStatus();
+				$data["exchanges"] = $this->General_model->getUserExchanges();
+				$data["userdata"] = $this->General_model->getUserData();
 				$head["navbartoggle"] = "";
 				$this->load->view('main/header', $head);
 				$this->load->view('main/account_preferences', $data);

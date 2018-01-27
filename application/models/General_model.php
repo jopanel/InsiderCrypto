@@ -61,7 +61,59 @@ class General_model extends CI_Model {
 
         public function modifyPreferences($postData=array(), $action=null) {
             if (count($postData) == 0 || $action == null) { return FALSE; } 
+            $userData = $this->getUserData();
+            if ($action == "set_notifications") {
 
+                if (!isset($postData["notifications"])) {
+                    $sql = "UPDATE users SET notifications = '0' WHERE id = ".$this->db->escape($userData["uid"]);
+                    $this->db->query($sql);
+                    return TRUE;
+                } else {
+                    $sql = "UPDATE users SET notifications = '1' WHERE id = ".$this->db->escape($userData["uid"]);
+                    $this->db->query($sql);
+                    return TRUE;
+                }
+
+            }
+
+            if ($action == "set_threshold") {
+
+                if (isset($postData["threshold"]) || !empty($postData["threshold"])) {
+                    $threshold = $postData["threshold"];
+                    if (!is_numeric($threshold)) {
+                        $threshold = 3;
+                    } elseif ($threshold < 3) {
+                        $threshold = 3;
+                    } elseif ($threshold > 99){
+                        $threshold = 99;
+                    }
+                }
+                $sql = "UPDATE users SET threshold = ".$this->db->escape($threshold)." WHERE id = ".$this->db->escape($userData["uid"]);
+                $this->db->query($sql);
+                return TRUE;
+            }
+
+            if ($action == "set_exchanges") {
+                $sql = "DELETE FROM users_markets WHERE uid = ".$this->db->escape($userData["uid"]);
+                $this->db->query($sql);
+                if (!isset($postData["exchanges"])) { return TRUE; }
+                $sql = "SELECT p.market_id, m.name FROM markets_pairs p 
+                    LEFT JOIN markets m ON p.market_id = m.id 
+                    WHERE p.active = '1' AND m.active = '1'
+                    GROUP BY p.market_id";
+                $query = $this->db->query($sql);
+                if ($query->num_rows() > 0) {
+                    foreach ($query->result_array() as $v) {
+                        foreach ($postData["exchanges"] as $x) {
+                            if ($x == $v["market_id"]) {
+                                $sql2 = "INSERT INTO users_markets (uid, market_id) VALUES (".$this->db->escape($userData["uid"]).", ".$this->db->escape($x).")";
+                                $this->db->query($sql2);
+                            }
+                        }
+                    }
+                }
+                return TRUE;
+            }
         }
 
         public function getProgramCost() {

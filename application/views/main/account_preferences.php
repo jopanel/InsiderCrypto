@@ -34,7 +34,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             }
                             echo "<td><label>".$v["name"]." <input type='checkbox' name='exchanges[]' value='".$v["market_id"]."'";
                             if ($v["selected"] == TRUE) {
-                              echo " selected";
+                              echo " checked";
                             }
                             echo "></label></td>";
                           }
@@ -76,7 +76,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <form method="post" action="">
                           <input type="hidden" name="action" value="set_notifications">
                           <p>
-                          <input type="checkbox" name="notifications" value="<?=$userdata["threshold"]?>"></p>
+                          <input type="checkbox" name="notifications" value="1" <?php 
+                          if ($userdata["notifications"] == 1) { echo "checked";}
+                          ?>></p>
                           <p><input type="submit" class="btn btn-primary" value="Set Notifications"></p>
                         </form>
                       </center>
