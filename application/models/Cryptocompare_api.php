@@ -150,7 +150,7 @@ class Cryptocompare_api extends CI_Model {
         			}
         		} 
         	}
-        	$this->activateExchanges(); 
+        	//$this->activateExchanges(); 
         	date_default_timezone_set('America/Los_Angeles');
         	$sql = "INSERT INTO last_update (lastupdate, reset) VALUES (".$this->db->escape(time()).", '1')";
         	$this->db->query($sql);
@@ -274,7 +274,7 @@ class Cryptocompare_api extends CI_Model {
 		        					}
 		        					if ($currency_id > 0 && $symbol_id > 0) {
 		        						// check if last update is old and pair data should be disabled before continuing
-			        					if ($pairData->LASTUPDATE < $disableDate) {
+			        					if ($pairData->LASTUPDATE < $disableDate || !isset($pairData->LASTUPDATE) || empty($pairData->LASTUPDATE)) {
 			        						$currency_id = $query->row()->currency_id;
 			        						$symbol_id = $query->row()->symbol_id;
 			        						$sql = "UPDATE markets_pairs SET active = '0' WHERE market_id = ".$this->db->escape($v["market_id"])." AND symbol_id = ".$this->db->escape($symbol_id)." AND currency_id = ".$this->db->escape($currency_id);

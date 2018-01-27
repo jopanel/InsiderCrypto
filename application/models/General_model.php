@@ -40,10 +40,11 @@ class General_model extends CI_Model {
         public function getUserExchanges() {
             $userData = $this->getUserData();
             $output = [];
-            $sql = "SELECT p.market_id, m.name FROM markets_pairs p 
-                    LEFT JOIN markets m ON p.market_id = m.id 
-                    WHERE p.active = '1' AND m.active = '1'
-                    GROUP BY p.market_id";
+            $sql = "SELECT p.market_id, m.name, count(p.id) FROM markets_pairs p 
+                    LEFT JOIN markets m ON p.market_id = m.id AND m.active = '1'
+                    WHERE p.active = '1'
+                                        AND EXISTS (SELECT 1 FROM price_chart pc WHERE pc.market_id = p.market_id)
+                    GROUP BY p.market_id;";
             $query = $this->db->query($sql);
             if ($query->num_rows() > 0) {
                 foreach ($query->result_array() as $v) {
@@ -79,7 +80,7 @@ class General_model extends CI_Model {
             if ($action == "set_threshold") {
 
                 if (isset($postData["threshold"]) || !empty($postData["threshold"])) {
-                    $threshold = $postData["threshold"];
+                    $threshold = strip_tags($postData["threshold"]);
                     if (!is_numeric($threshold)) {
                         $threshold = 3;
                     } elseif ($threshold < 3) {
@@ -97,10 +98,11 @@ class General_model extends CI_Model {
                 $sql = "DELETE FROM users_markets WHERE uid = ".$this->db->escape($userData["uid"]);
                 $this->db->query($sql);
                 if (!isset($postData["exchanges"])) { return TRUE; }
-                $sql = "SELECT p.market_id, m.name FROM markets_pairs p 
-                    LEFT JOIN markets m ON p.market_id = m.id 
-                    WHERE p.active = '1' AND m.active = '1'
-                    GROUP BY p.market_id";
+                $sql = "SELECT p.market_id, m.name, count(p.id) FROM markets_pairs p 
+                    LEFT JOIN markets m ON p.market_id = m.id AND m.active = '1'
+                    WHERE p.active = '1'
+                                        AND EXISTS (SELECT 1 FROM price_chart pc WHERE pc.market_id = p.market_id)
+                    GROUP BY p.market_id;";
                 $query = $this->db->query($sql);
                 if ($query->num_rows() > 0) {
                     foreach ($query->result_array() as $v) {
@@ -117,13 +119,11 @@ class General_model extends CI_Model {
         }
 
         public function getProgramCost() {
-            $sql = 'select p.price FROM price_chart p
-                    LEFT JOIN currency c ON c.id = p.currency_id
-                    LEFT JOIN markets m ON m.id = p.market_id 
-                    LEFT JOIN symbols s ON s.id = p.symbol_id 
-                    WHERE c.abbr = "LSK" AND m.name = "Poloniex" AND s.abbr = "BTC"
-                    ORDER BY p.id DESC 
-                    LIMIT 1';
+            $sql = "SELECT p.market_id, m.name, count(p.id) FROM markets_pairs p 
+                    LEFT JOIN markets m ON p.market_id = m.id AND m.active = '1'
+                    WHERE p.active = '1'
+                                        AND EXISTS (SELECT 1 FROM price_chart pc WHERE pc.market_id = p.market_id)
+                    GROUP BY p.market_id;";
             $query = $this->db->query($sql);
             if ($query->num_rows() > 0) {
                 $lsk_price = $query->row()->price;
