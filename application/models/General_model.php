@@ -61,7 +61,7 @@ class General_model extends CI_Model {
 
         public function modifyPreferences($postData=array(), $action=null) {
             if (count($postData) == 0 || $action == null) { return FALSE; } 
-            
+
         }
 
         public function getProgramCost() {
@@ -111,7 +111,7 @@ class General_model extends CI_Model {
 
         public function getUserData() {
             $output = [];
-            $sql = "SELECT id, email, username, created, vip, COALESCE(lsk_address, ''), subscribed, notifications as 'lsk_address' FROM users WHERE email = ".$this->db->escape($this->session->userdata("email"))." AND verification_key = ".$this->db->escape($this->session->userdata("verification_key"));
+            $sql = "SELECT id, email, username, created, vip, COALESCE(lsk_address, '') as 'lsk_address', subscribed, notifications, threshold FROM users WHERE email = ".$this->db->escape($this->session->userdata("email"))." AND verification_key = ".$this->db->escape($this->session->userdata("verification_key"));
             $query = $this->db->query($sql);
             if ($query->num_rows() > 0) {
                 $output["email"] = $query->row()->email;
@@ -122,6 +122,7 @@ class General_model extends CI_Model {
                 $output["uid"] = $query->row()->id;
                 $output["notifications"] = $query->row()->notifications;
                 $output["subscribed"] = $query->row()->subscribed;
+                $output["threshold"] = $query->row()->threshold;
                 $dayago = strtotime("-1 day");
                 $sql = "SELECT ip FROM users_ip_login WHERE uid = ".$this->db->escape($query->row()->id)." AND created > ".$this->db->escape($dayago)." GROUP BY ip"; 
                 $query2 = $this->db->query($sql);

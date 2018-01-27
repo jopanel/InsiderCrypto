@@ -62,21 +62,21 @@ class Control extends CI_Controller {
 		if ($this->General_model->verifyUser() == FALSE) {
 			redirect(base_url(), "auto");
 		} else {
-				$data["error"] = "";
-				$data["error_style"] = "display: none;";
+				$data["success"] = "";
+				$data["success_style"] = "display: none;";
 				$data["paidstatus"] = $this->General_model->getPaidStatus();
 				$data["exchanges"] = $this->General_model->getUserExchanges();
 				$data["userdata"] = $this->General_model->getUserData();
 				if ($this->input->post()) {
 					$postData = $this->input->post();
 					if ($this->General_model->modifyPreferences($postData, $postData["action"]) == FALSE) {
-						$data["error"] = "There was a problem with your request";
-						$data["error_style"] = "";
+						$data["success"] = "There was a problem with your request";
+						$data["success_style"] = "";
 					}
 				}
 				$head["navbartoggle"] = "";
 				$this->load->view('main/header', $head);
-				$this->load->view('main/account_preferences');
+				$this->load->view('main/account_preferences', $data);
 				$this->load->view('main/footer');
 		}
 	}
