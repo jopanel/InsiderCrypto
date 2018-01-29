@@ -60,6 +60,52 @@ class General_model extends CI_Model {
             return $output;
         }
 
+        public function getPaymentStep() {
+            $userData = $this->getUserData();
+            // steps:
+            // step 1 - check for lisk address
+            // step 2 - check if order needs to start
+            // step 3 - wait for user to insert transaction ID or start a new order
+            if (!isset($userData["lsk_address"]) || empty($userData["lsk_address"])) {
+                return 1;
+            }
+            if ($this->getUserOrders(true) == FALSE) {
+                return 2;
+            } else {
+                return 3;
+            }
+        }
+
+        public function getUserOrders($check=false) {
+            $output = [];
+            $userData = $this->getUserData();
+            $expiretime = strtotime("-30 minutes");
+            $sql = "SELECT * FROM orders WHERE uid = ".$this->db->escape($userData["uid"])." ORDER BY id DESC LIMIT 1";
+            $query = $this->db->query($sql);
+            if ($query->num_rows() > 0) {
+                foreach ($query->result_array() as $v) {
+                    $output = $v;
+                    if ($v["created"] > $expiretime) {
+                        if ($check == true) {
+                            return TRUE;
+                        }
+                        $output["expired"] = false;
+                    } else {
+                        if ($check == true) {
+                            return FALSE; // needs new order
+                        }
+                        $output["expired"] = true;
+                    }
+                }
+            } else {
+                if ($check == true) {
+                    return FALSE; // needs new order
+                }
+                $output["expired"] = true;
+            }
+            return $output;
+        }
+
         public function modifyPreferences($postData=array(), $action=null) {
             if (count($postData) == 0 || $action == null) { return FALSE; } 
             $userData = $this->getUserData();
@@ -119,11 +165,13 @@ class General_model extends CI_Model {
         }
 
         public function getProgramCost() {
-            $sql = "SELECT p.market_id, m.name, count(p.id) FROM markets_pairs p 
-                    LEFT JOIN markets m ON p.market_id = m.id AND m.active = '1'
-                    WHERE p.active = '1'
-                                        AND EXISTS (SELECT 1 FROM price_chart pc WHERE pc.market_id = p.market_id)
-                    GROUP BY p.market_id;";
+            $sql = 'select p.price FROM price_chart p
+                    LEFT JOIN currency c ON c.id = p.currency_id
+                    LEFT JOIN markets m ON m.id = p.market_id 
+                    LEFT JOIN symbols s ON s.id = p.symbol_id 
+                    WHERE c.abbr = "LSK" AND m.name = "Poloniex" AND s.abbr = "BTC"
+                    ORDER BY p.id DESC 
+                    LIMIT 1';
             $query = $this->db->query($sql);
             if ($query->num_rows() > 0) {
                 $lsk_price = $query->row()->price;

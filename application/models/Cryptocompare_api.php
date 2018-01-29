@@ -235,6 +235,14 @@ class Cryptocompare_api extends CI_Model {
 	        			}
 	        			$getPrices = $cryptocomparePrice->getMultiPriceFull("1", $v["currency"], $v["symbols"],$v["market"], false); 
 	        			$disableDate = strtotime("-".$this->daysBeforeDisable." days");
+	        			// echo "<pre>";
+	        			// var_dump($v);
+	        			// echo "</pre>";
+	        			// echo "<br><br><br>";
+	        			// echo "<pre>";
+	        			// var_dump($getPrices);
+	        			// echo "</pre>";
+	        			// exit();
 	        			if (!isset($getPrices->RAW) || empty($getPrices->RAW)) {
 	        				if (!isset($getPrices->Message) || empty($getPrices->Message)) {
 	        					$sql = "INSERT INTO api_errors (error, json, created) VALUES ('No Message, Price API', ".$this->db->escape(json_encode($v)).", ".$this->db->escape(time()).")";
@@ -275,8 +283,6 @@ class Cryptocompare_api extends CI_Model {
 		        					if ($currency_id > 0 && $symbol_id > 0) {
 		        						// check if last update is old and pair data should be disabled before continuing
 			        					if ($pairData->LASTUPDATE < $disableDate || !isset($pairData->LASTUPDATE) || empty($pairData->LASTUPDATE)) {
-			        						$currency_id = $query->row()->currency_id;
-			        						$symbol_id = $query->row()->symbol_id;
 			        						$sql = "UPDATE markets_pairs SET active = '0' WHERE market_id = ".$this->db->escape($v["market_id"])." AND symbol_id = ".$this->db->escape($symbol_id)." AND currency_id = ".$this->db->escape($currency_id);
 			        						$this->db->query($sql);
 			        					} else {

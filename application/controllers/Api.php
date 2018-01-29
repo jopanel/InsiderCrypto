@@ -39,4 +39,10 @@ class Api extends CI_Controller {
 		}
 	}
 
+	public function test() {
+		$cryptocomparePrice = new Cryptocompare\Price();
+		$getPrices = $cryptocomparePrice->getMultiPriceFull("1", array('42'), array('USD'),'Cryptsy', false); 
+		var_dump($getPrices);
+	}
+
 }
