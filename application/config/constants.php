@@ -85,5 +85,4 @@ defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automat
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 defined('SENDGRID_API_KEY')      OR define('SENDGRID_API_KEY', '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'); 
 defined('SENDGRID_API_KEY_ID')      OR define('SENDGRID_API_KEY_ID', 'hwPVczmjR72fxNm-sJ1VdQ'); 
-
- 
+ defined('LISK_SERVER') OR define('LISK_SERVER', 'https://wallet.lisk.4miners.net');

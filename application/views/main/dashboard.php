@@ -51,12 +51,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <?php } else { ?>
             <div class="jumbotron">
               <h1>Welcome, <?=$userData["username"]?> let's get started!</h1>
-              <p>Currently we are offering program access at <?=$programcost?> Lisk (LSK). This is a one time payment which allows you access to get our unique algorithim for abitrage deals, currency pair deals, chatbox, and future updates.</p>
+              <p>Currently we are offering program access as low as <?=$programcost["beginner"]?> Lisk (LSK). This is a one time payment which allows you access to get our unique algorithim for abitrage deals, currency pair deals, chatbox, and future updates.</p>
               <p>While we recognize there are other trading tools available that may seem to offer relatively the same solution we have a unique method to generate the data to you. We monitor and follow every possible opportunity we can find. With that data we use AI deep learning to provide you with the best information possible. </p>
               <p>Arbitrage, trade pairing, trading in general; takes time, money and its possible for trades to close a gap before you receive your money. Based on trends, currency networks, and our community we make sure that all of our users turn a profit.</p>
               <p>Trading, buying, and selling is all done on your own risk. We provide you with the data and it is up to you to act on it.</p>
               <p>Make some money and become a member today.</p> 
-              <p><b>Currently we are in BETA and all members will have VIP status FOR LIFE if we move to monthly payments. Join now and be an OG.</b></p>
               <center>
               <p><a class="btn btn-primary btn-lg" href="<?=base_url()?>payments/" role="button">Become Premium</a></p></center>
             </div>

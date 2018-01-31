@@ -64,7 +64,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	    <!-- START SECOND COLUMN --> 
 	    
 	    	<div class="col">
-	    		<?php if ($paidstatus == FALSE) { ?>
+	    		<?php if ($paidstatus == FALSE) { /* ?>
 		    	<div class="card mb-3">
 		      		<div class="card-header">
 	              </i> Update Lisk Address</div>
@@ -88,7 +88,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 	              </div>
 	            </div>
-	    <?php } ?>
+	    <?php  */ } ?>
 	    
 
 

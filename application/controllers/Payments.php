@@ -11,6 +11,8 @@ class Payments extends CI_Controller {
 				}
 				$data["paymentstep"] = $this->General_model->getPaymentStep();
 				$data["paidstatus"] = $this->General_model->getPaidStatus();
+				$data["order"] = $this->General_model->getUserOrders();
+				$data["programcost"] = $this->General_model->getProgramCost();
 				$head["navbartoggle"] = "";
 				$this->load->view('main/header', $head);
 				$this->load->view('main/payments',$data);
