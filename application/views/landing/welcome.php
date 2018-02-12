@@ -29,24 +29,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           </div>
         </div>
       </div>
-    </header>
-
-    <section class="download bg-primary text-center" id="signup">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-8 mx-auto">
-            <h2 class="section-heading">Make smarter trades, profit faster, gain everyday.</h2>
-            <p>We offer this tool at a low cost of <?=$programcost?> Lisk ($300 USD).</p>
-            <p> You must first <a style="text-decoration: none !important;
-color: blue !important;" href="<?=base_url()?>access/register">register</a> with us.</p>
-            <div class="badges">
-              <a class="badge-link" href="#"><img src="img/google-play-badge.svg" alt=""></a>
-              <a class="badge-link" href="#"><img src="img/app-store-badge.svg" alt=""></a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    </header> 
 
     <section class="features" id="features">
       <div class="container">

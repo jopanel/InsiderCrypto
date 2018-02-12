@@ -6,6 +6,12 @@ class Payments extends CI_Controller {
 
 	public function index()
 	{
+			if ($this->General_model->verifyUser() == FALSE) {
+				$data["programcost"] = $this->General_model->getProgramCost();
+				$this->load->view('landing/header');
+				$this->load->view('landing/welcome', $data);
+				$this->load->view('landing/footer');
+			} else {
 				if ($this->input->post()) {
 
 				}
@@ -17,6 +23,7 @@ class Payments extends CI_Controller {
 				$this->load->view('main/header', $head);
 				$this->load->view('main/payments',$data);
 				$this->load->view('main/footer');
+			}
 	}
 
 

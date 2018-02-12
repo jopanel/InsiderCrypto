@@ -45,7 +45,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#signup">Get Started</a>
+              <a class="nav-link js-scroll-trigger" href="<?=base_url()?>access/register">Get Started</a>
             </li>
             <li class="nav-item">
               <a class="nav-link js-scroll-trigger" href="#features">Features</a>
