@@ -44,11 +44,18 @@ class Api extends CI_Controller {
 		$output = [];
 		$output["error"] = 0;
 		$output["error_message"] = "";
-		if ($postData == null) { 
+		if ($this->General_model->verifyUser() == FALSE) {
 			$output["error"] = 1;
-			$output["error_message"] = "Input cannot be empty.";
+			$output["error_message"] = "User not authenticated.";
+		} else {
+			if ($postData == null) { 
+				$output["error"] = 1;
+				$output["error_message"] = "Input cannot be empty.";
+			} else {
+				$output = $this->General_model->sendChat($postData);
+			}
 		}
-		$this->General_model->sendChat($postData);
+		echo json_encode($output);		
 	}
 
 
