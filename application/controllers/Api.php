@@ -12,7 +12,8 @@ class Api extends CI_Controller {
 
 	public function update($type=null, $password="") {
 		$this->load->model('Cryptocompare_api'); 
-		$this->Cryptocompare_api->build();  
+		$done = $this->Cryptocompare_api->build();
+		var_dump($done);  
 	}
 
 	public function unsubscribe($email=null) {
@@ -37,6 +38,17 @@ class Api extends CI_Controller {
 				echo "Sorry there was a problem.";
 			}
 		}
+	}
+
+	public function sendChat($postData=null) { 
+		$output = [];
+		$output["error"] = 0;
+		$output["error_message"] = "";
+		if ($postData == null) { 
+			$output["error"] = 1;
+			$output["error_message"] = "Input cannot be empty.";
+		}
+		$this->General_model->sendChat($postData);
 	}
 
 

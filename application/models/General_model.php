@@ -92,7 +92,7 @@ class General_model extends CI_Model {
              // }
              // $output["result"] = $newresultarray;
             return $output;
-        } 
+        }
 
         private function toHuman($number) {
             return number_format(sprintf("%.8f", $number / 100000000), 2, '.', '');
@@ -102,6 +102,25 @@ class General_model extends CI_Model {
             $sql = "UPDATE users SET subscribed = '0' WHERE email = ".$this->db->escape($email);
             $this->db->query($sql);
             return TRUE;
+        }
+
+        public function getChat($last=null) {
+            $sql = "SELECT * FROM trollbox ORDER BY id DESC LIMIT 50";
+        }
+
+        public function sendChat($postData=array()) {
+            $output["error"] = 0;
+            $output["error_message"] = "";
+            if (!isset($postData["uid"]) || empty($postData["uid"])) { $output["error"] = 1; $output["error_message"] = "User not authenticated."; }
+            if (!isset($postData["message"]) || empty($postData["message"])) { $output["error"] = 1; $output["error_message"] = "Chat cannot be empty";}
+            $userData = $this->getUserData();
+            if ($userData["uid"] == $postData["uid"]) {
+                $sql = "INSERT INTO trollbox (uid, message, created) VALUES (".$this->db->escape(strip_tags((int)$postData["uid"])).", ".$this->db->escape(strip_tags($postData["message"])).", UNIX_TIMESTAMP())";
+                $this->db->query($sql);
+            } else {
+                 $output["error"] = 1; $output["error_message"] = "User not authenticated.";
+            }
+            return $output;
         }
 
         public function validateEmail($email) {

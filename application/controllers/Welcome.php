@@ -15,6 +15,7 @@ class Welcome extends CI_Controller {
 			$head["navbartoggle"] = "sidenav-toggled";
 			$data["paidstatus"] = $this->General_model->getPaidStatus();
 			$data["userData"] = $this->General_model->getUserData();
+			$data["chatlog"] = $this->General_model->getChat();
 			$this->load->view('main/header', $head);
 			$this->load->view('main/dashboard', $data);
 			$this->load->view('main/footer');

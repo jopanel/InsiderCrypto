@@ -72,6 +72,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                             <ul class="chat">
+                                <?php
+
+
+                                ?>
+
                                 <li class="left clearfix">
                                     <div class="chat-body clearfix"> 
                                         <p class="small">
