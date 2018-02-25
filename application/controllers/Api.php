@@ -58,5 +58,15 @@ class Api extends CI_Controller {
 		echo json_encode($output);		
 	}
 
+	public function getChat($last=null) {
+		$output = [];
+		if ($last == null) {
+			$return = $this->General_model->getChat();
+		} else {
+			$return = $this->General_model->getChat($last);
+		}
+		echo json_encode($return);
+	}
+
 
 }

@@ -105,7 +105,24 @@ class General_model extends CI_Model {
         }
 
         public function getChat($last=null) {
-            $sql = "SELECT * FROM trollbox ORDER BY id DESC LIMIT 50";
+            $output = [];
+            $output["error"] = 0;
+            $output["chat"] = [];
+            if ($last == null) {
+                $sql = "SELECT * FROM trollbox ORDER BY id DESC LIMIT 50";
+            } else {
+                $sql = "SELECT * FROM trollbox WHERE id > ".$this->db->escape(strip_tags((int)$last))." ORDER BY id DESC LIMIT 50";
+            }
+            $query = $this->db->query($sql);
+            if ($query->num_rows() > 0) {
+                foreach ($query->result_array() as $res) {
+                    $output["chat"][] = $res;
+                }
+                rsort($output);
+            } else {
+                $output["error"] = 1;
+            }
+            return $output;
         }
 
         public function sendChat($postData=array()) {
@@ -114,8 +131,20 @@ class General_model extends CI_Model {
             if (!isset($postData["uid"]) || empty($postData["uid"])) { $output["error"] = 1; $output["error_message"] = "User not authenticated."; }
             if (!isset($postData["message"]) || empty($postData["message"])) { $output["error"] = 1; $output["error_message"] = "Chat cannot be empty";}
             $userData = $this->getUserData();
+            if ($userData["admin"] == 1) { 
+                $user_type = 1; 
+            } elseif ($userData["vip"] == 1) {
+                $user_type = 2; 
+            } elseif ($userData["paid"] == 1) {
+                $user_type = 3;
+            } else {
+                $output["error"] = 1;
+                $output["error_message"] = "Must have active subscription.";
+                return $output;
+            }
+            $handle = $userData["username"];
             if ($userData["uid"] == $postData["uid"]) {
-                $sql = "INSERT INTO trollbox (uid, message, created) VALUES (".$this->db->escape(strip_tags((int)$postData["uid"])).", ".$this->db->escape(strip_tags($postData["message"])).", UNIX_TIMESTAMP())";
+                $sql = "INSERT INTO trollbox (uid, message, created, handle, user_type) VALUES (".$this->db->escape(strip_tags((int)$postData["uid"])).", ".$this->db->escape(strip_tags($postData["message"])).", UNIX_TIMESTAMP(), ".$this->db->escape($handle).", ".$this->db->escape($user_type).")";
                 $this->db->query($sql);
             } else {
                  $output["error"] = 1; $output["error_message"] = "User not authenticated.";
@@ -300,12 +329,14 @@ class General_model extends CI_Model {
 
         public function getUserData() {
             $output = [];
-            $sql = "SELECT id, email, username, created, vip, COALESCE(lsk_address, '') as 'lsk_address', subscribed, notifications, threshold FROM users WHERE email = ".$this->db->escape($this->session->userdata("email"))." AND verification_key = ".$this->db->escape($this->session->userdata("verification_key"));
+            $sql = "SELECT id, email, username, created, vip, COALESCE(lsk_address, '') as 'lsk_address', subscribed, notifications, threshold, paid, admin FROM users WHERE email = ".$this->db->escape($this->session->userdata("email"))." AND verification_key = ".$this->db->escape($this->session->userdata("verification_key"));
             $query = $this->db->query($sql);
             if ($query->num_rows() > 0) {
                 $output["email"] = $query->row()->email;
                 $output["created"] = $query->row()->created;
                 $output["vip"] = $query->row()->vip;
+                $output["paid"] = $query->row()->paid;
+                $output["admin"] = $query->row()->admin;
                 $output["username"] = $query->row()->username;
                 $output["lsk_address"] = $query->row()->lsk_address;
                 $output["uid"] = $query->row()->id;

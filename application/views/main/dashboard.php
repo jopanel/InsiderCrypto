@@ -71,20 +71,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               <i class="fa fa-comment"></i> Chat</div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                            <ul class="chat">
+                            <ul class="chat" id="trollbox">
                                 <?php
 
 
                                 ?>
-
-                                <li class="left clearfix">
-                                    <div class="chat-body clearfix"> 
-                                        <p class="small">
-                                            <strong>Billy</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
-                                        </p>
-                                    </div>
-                                </li>
-
+ 
 
                             </ul>
                         </div>
@@ -138,6 +130,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       document.addEventListener('DOMContentLoaded', function() {
         allGains();
         personalGains();
+        getChat();
+        function getChat(){
+          $.ajax({
+
+              url : '<?=base_url()?>api/getChat',
+              type : 'GET',
+              dataType:'json',
+              success : function(data) {     
+                  if (data.error == 1) {
+                    // do nothing
+                  } else {
+                    var updateChat = "";
+                    var chatarrlength = data.chat.length;
+                    for (i=0; i >= chatarrlength; i++) {
+                      var pos = data.chat[i];
+                      updateChat += '<li class="left clearfix"><div class="chat-body clearfix"><p class="small"><strong>'+pos.handle+'</strong> '+pos.message+'</p></div></li>';
+                    }
+                    document.getElementById("trollbox").innerHTML = updateChat;
+                  }
+                  setTimeout(getChat,500);
+              },
+              error : function(request,error)
+              {
+                  alert("Request: "+JSON.stringify(request));
+              }
+          });
+          
+        }
         function allGains() {
           Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
           Chart.defaults.global.defaultFontColor = '#292b2c';
