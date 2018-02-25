@@ -118,7 +118,7 @@ class General_model extends CI_Model {
                 foreach ($query->result_array() as $res) {
                     $output["chat"][] = $res;
                 }
-                rsort($output);
+                rsort($output["chat"]);
             } else {
                 $output["error"] = 1;
             }

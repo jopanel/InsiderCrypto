@@ -40,7 +40,7 @@ class Api extends CI_Controller {
 		}
 	}
 
-	public function sendChat($postData=null) { 
+	public function sendChat() { 
 		$output = [];
 		$output["error"] = 0;
 		$output["error_message"] = "";
@@ -48,10 +48,11 @@ class Api extends CI_Controller {
 			$output["error"] = 1;
 			$output["error_message"] = "User not authenticated.";
 		} else {
-			if ($postData == null) { 
+			if (!$this->input->post()) { 
 				$output["error"] = 1;
 				$output["error_message"] = "Input cannot be empty.";
 			} else {
+				$postData = $this->input->post();
 				$output = $this->General_model->sendChat($postData);
 			}
 		}

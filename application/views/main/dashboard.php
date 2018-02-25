@@ -83,9 +83,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <!-- /.panel-body -->
                         <div class="panel-footer">
                             <div class="input-group">
-                                <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." />
+                                <input id="trollbox-message" type="text" class="form-control input-sm" placeholder="Type your message here..." />
                                 <span class="input-group-btn">
-                                    <button class="btn btn-warning btn-sm" id="btn-chat">
+                                    <button class="btn btn-warning btn-sm" id="btn-chat" onClick="sendChat()">
                                         Send
                                     </button>
                                 </span>
@@ -127,33 +127,76 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- /.content-wrapper-->
 
     <script>
+      
+      function sendChat() {
+          var message = document.getElementById("trollbox-message").value;
+          var uid = <?=$userData["uid"]?>;
+          $.ajax({
+              url : '<?=base_url()?>api/sendChat',
+              data : {
+                  'uid' : uid,
+                  'message' : message
+              },
+              type : 'POST',
+              dataType:'json',
+              success : function(data) {  
+                document.getElementById("trollbox-message").value = "";
+              },
+              error : function(request,error)
+              {
+                  //alert("Request: "+JSON.stringify(request));
+              }
+          });
+        }
       document.addEventListener('DOMContentLoaded', function() {
         allGains();
         personalGains();
         getChat();
+        var lastpost = 0; 
+        $("#trollbox-message").keyup(function(event) {
+            if (event.keyCode === 13) {
+                sendChat();
+            }
+        });
         function getChat(){
           $.ajax({
-
               url : '<?=base_url()?>api/getChat',
               type : 'GET',
               dataType:'json',
               success : function(data) {     
-                  if (data.error == 1) {
-                    // do nothing
-                  } else {
+                  if (data.error == 0) { 
                     var updateChat = "";
                     var chatarrlength = data.chat.length;
-                    for (i=0; i >= chatarrlength; i++) {
-                      var pos = data.chat[i];
-                      updateChat += '<li class="left clearfix"><div class="chat-body clearfix"><p class="small"><strong>'+pos.handle+'</strong> '+pos.message+'</p></div></li>';
+                    var latestpost = lastpost;
+                    var lastposter = 0;
+                    var mypost = <?=$userData["uid"]?>;
+                    var counter = 0;
+                    for (i=0; i < chatarrlength; i++) {
+                      var pos = data.chat[i]; 
+                      counter += 1;
+                      if (counter == 1) {
+                        var addindex = 'tabindex="1"';
+                        lastpost = pos.id;
+                        lastposter = pos.uid;
+                      } else {
+                        var addindex = '';
+                      }
+                      updateChat = '<li '+addindex+' class="left clearfix"><div class="chat-body clearfix"><p class="small"><strong>'+pos.handle+'</strong> '+pos.message+'</p></div></li>'+updateChat; 
+                      
                     }
                     document.getElementById("trollbox").innerHTML = updateChat;
+                    if (lastpost > latestpost) {
+                       $('li').last().addClass('active-li').focus();
+                       if (lastposter == mypost) {
+                        $("#trollbox-message").focus();
+                       }
+                    }
                   }
                   setTimeout(getChat,500);
               },
               error : function(request,error)
               {
-                  alert("Request: "+JSON.stringify(request));
+                  //alert("Request: "+JSON.stringify(request));
               }
           });
           
