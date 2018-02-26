@@ -256,8 +256,9 @@ class General_model extends CI_Model {
                     m.started,
                     ml.pair1_price,
                     ml.pair2_price,
-                    (((ml.pair1_price - ml.pair2_price) / (ml.pair1_price)) * 100) as 'percent',
-                    ml.created AS 'updated'
+                    ROUND((((ml.pair1_price - ml.pair2_price) / (ml.pair1_price)) * 100),2) as 'percent',
+                    ml.created AS 'updated',
+                    m.id as 'identifier'
                 FROM
                     matches m
                 LEFT JOIN matches_log ml ON ml.match_id = m.id
@@ -270,7 +271,7 @@ class General_model extends CI_Model {
                 GROUP BY
                     ml.match_id
                 ORDER BY
-                    MAX(ml.created)";
+                    MAX(ml.created), percent DESC";
             $query = $this->db->query($sql); 
             if ($query->num_rows() > 0) {
                 foreach ($query->result_array() as $res) {
@@ -407,14 +408,18 @@ class General_model extends CI_Model {
 
         public function getPaidStatus() {
             // firstly check if they are VIP status
-            $sql = "SELECT vip, id FROM users WHERE email = ".$this->db->escape($this->session->userdata("email"))." AND verification_key = ".$this->db->escape($this->session->userdata("verification_key"));
+            $sql = "SELECT vip, id, admin, paid FROM users WHERE email = ".$this->db->escape($this->session->userdata("email"))." AND verification_key = ".$this->db->escape($this->session->userdata("verification_key"));
             $query = $this->db->query($sql);
             if ($query->num_rows() > 0) {
                 $vip = $query->row()->vip;
                 $uid = $query->row()->id;
+                $admin = $query->row()->admin;
+                $paid = $query->row()->paid;
             } else {
                 return FALSE;
             }
+            if ($paid == 1) { return TRUE; }
+            if ($admin == 1) { return TRUE; }
             if ($vip == 1) { return TRUE; }
             // not a VIP, must check if they have placed an order with us
             $sql = "SELECT 1 FROM orders WHERE uid = ".$this->db->escape($uid)." AND confirmed = '1' AND amount_requested = amount_received";

@@ -13,33 +13,39 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <div class="card-columns">
 
 
-           
+           <?php 
+           foreach ($matchData as $v) {?>
             <div class="card mb-3">
               <div class="card-body">
                 <div class="row">
                   
-                  <div class="col-md-1">
-                    <img src="https://files.coinmarketcap.com/static/img/coins/32x32/ripple.png">
+                  <div class="col-md-1"> 
+                    <?=$v["identifier"]?>
                   </div>
                   <div class="col">
-                    <h6 class="card-title mb-1"><a href="#">Ripple (XRP)</a></h6>
+                    <h6 class="card-title mb-1"><a href="#"><?=$v["currency1"]?></a></h6>
                     <p class="card-text small">
-                      Binance => Poloniex <br>
-                      <strong>Arbitrage</strong>
+                      <?=$v["market2"]?> <br><small><?=$v["currency2"]?>-<?=$v["symbol2"]?></small><br>=><br> <?=$v["market1"]?> <br><small><?=$v["currency1"]?>-<?=$v["symbol1"]?></small> 
                     </p>
                   </div>
                   <div class="col">
-                    <p><strong style="color:green">Buy:</strong> 0.001323232
+                    <p><strong style="color:green">Buy:</strong> <br><?=$v["pair2_price"]?>
                       <br>
-                    <strong style="color:red">Sell:</strong> 0.001423232</p>
+                    <strong style="color:red">Sell:</strong> <br><?=$v["pair1_price"]?>
+                    </p>
                   </div>
                   <div class="col">
-                    <h2>4.32%</h2>
+                    <h2><?=$v["percent"]?>%</h2>
                   </div>
                 </div>
               </div>
-              <div class="card-footer small text-muted">Added 46 mins ago</div>
+              <div class="card-footer small text-muted">Added <?=date("m/d G:i", $v["started"])?>, Updated <?=date("m/d G:i", $v["updated"])?></div>
             </div>
+
+           <?php }
+
+           ?>
+            
 
 
 

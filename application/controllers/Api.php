@@ -5,9 +5,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Api extends CI_Controller {
 
-	private function genArb() { 
+	public function genArb($password=null) { 
+		if ($password == "checksum") {
 			$this->load->model('Compare_model');
 			$this->Compare_model->generateArbitrageEvents(); 
+		}
 	}
 
 	public function index()
@@ -18,7 +20,7 @@ class Api extends CI_Controller {
 	public function update($type=null, $password="") {
 		$this->load->model('Cryptocompare_api'); 
 		$this->Cryptocompare_api->build();
-		$this->genArb();
+		$this->genArb("checksum");
 	}
 
 	public function unsubscribe($email=null) {
