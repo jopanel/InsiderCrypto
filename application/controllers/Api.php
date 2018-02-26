@@ -5,6 +5,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Api extends CI_Controller {
 
+	private function genArb() { 
+			$this->load->model('Compare_model');
+			$this->Compare_model->generateArbitrageEvents(); 
+	}
+
 	public function index()
 	{
 		echo json_encode(array("success" => 0, "error" => "You haven't successfuly tipped overlord supreme 1.337 Lisk (4287319913737945577L)"));
@@ -12,15 +17,8 @@ class Api extends CI_Controller {
 
 	public function update($type=null, $password="") {
 		$this->load->model('Cryptocompare_api'); 
-		$done = $this->Cryptocompare_api->build();
-		var_dump($done);  
-	}
-
-	public function genArb($password=null) {
-		if ($password == "checksum") {
-			$this->load->model('Compare_model');
-			$this->Compare_model->generateArbitrageEvents();
-		}
+		$this->Cryptocompare_api->build();
+		$this->genArb();
 	}
 
 	public function unsubscribe($email=null) {

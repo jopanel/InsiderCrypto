@@ -35,7 +35,7 @@ class Compare_model extends CI_Model {
 			$forcount = count($v);
 			if ($forcount > 1) {
 				foreach ($v as $kk => $vv) {
-					for ($i = 0; $i <= $forcount; $i++) {
+					for ($i = 0; $i < $forcount; $i++) {
 						if ($kk != $i) {
 							$percent = $this->calculatePercentage($vv["price"], $v[$i]["price"]);
 							if ($percent > 3) {
@@ -92,9 +92,11 @@ class Compare_model extends CI_Model {
 			} else {
 				return TRUE;
 			}
-			$instatement = implode(',',$deleteIDs);
-			$sql = "UPDATE matches SET finished = ".$this->db->escape($time)." WHERE id IN (".$instatement.")";
-			$this->db->query($sql);
+			if (count($deleteIDs) > 0) {
+				$instatement = implode(',',$deleteIDs);
+				$sql = "UPDATE matches SET finished = ".$this->db->escape($time)." WHERE id IN (".$instatement.")";
+				$this->db->query($sql);
+			}
 			return TRUE;
 		} else {
 

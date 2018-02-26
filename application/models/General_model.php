@@ -181,6 +181,105 @@ class General_model extends CI_Model {
             return $output;
         }
 
+        public function getMatchData() {
+            $userData = $this->getUserData();
+            $output = [];
+            $userExchangesCall = $this->getUserExchanges();
+            $userExchanges = [];
+            $userPairs = [];
+            foreach ($userExchangesCall as $e) {
+                if ($e["selected"] == TRUE) {
+                    $userExchanges[] = $e["market_id"];
+                }
+            }
+            $userExchangesCall = null;
+            if (count($userExchanges) == 0) { return $output; }
+            $sql = "SELECT id FROM markets_pairs WHERE market_id IN (".implode(",",$userExchanges).")";
+            $query = $this->db->query($sql);
+            $userExchanges = null;
+            if ($query->num_rows() > 0) {
+                foreach ($query->result_array() as $res) {
+                    $userPairs[] = $res["id"];
+                }
+            } else {
+                return $output;
+            }
+            $sql = "SELECT
+                    (
+                        SELECT
+                            c1.abbr
+                        FROM
+                            currency c1
+                        WHERE
+                            c1.id = mp1.currency_id
+                    )AS 'currency1',
+                    (
+                        SELECT
+                            c2.abbr
+                        FROM
+                            currency c2
+                        WHERE
+                            c2.id = mp2.currency_id
+                    )AS 'currency2',
+                    (
+                        SELECT
+                            m1. NAME
+                        FROM
+                            markets m1
+                        WHERE
+                            m1.id = mp1.market_id
+                    )AS 'market1',
+                    (
+                        SELECT
+                            m2. NAME
+                        FROM
+                            markets m2
+                        WHERE
+                            m2.id = mp2.market_id
+                    )AS 'market2',
+                    (
+                        SELECT
+                            s1.abbr
+                        FROM
+                            symbols s1
+                        WHERE
+                            s1.id = mp1.symbol_id
+                    )AS 'symbol1',
+                    (
+                        SELECT
+                            s2.abbr
+                        FROM
+                            symbols s2
+                        WHERE
+                            s2.id = mp2.symbol_id
+                    )AS 'symbol2',
+                    m.started,
+                    ml.pair1_price,
+                    ml.pair2_price,
+                    (((ml.pair1_price - ml.pair2_price) / (ml.pair1_price)) * 100) as 'percent',
+                    ml.created AS 'updated'
+                FROM
+                    matches m
+                LEFT JOIN matches_log ml ON ml.match_id = m.id
+                LEFT JOIN markets_pairs mp1 ON mp1.id = m.pair1_id
+                LEFT JOIN markets_pairs mp2 ON mp2.id = m.pair2_id
+                WHERE
+                    m.pair1_id IN(".implode(", ",$userPairs).")
+                AND m.pair2_id IN(".implode(", ",$userPairs).")
+                AND m.finished IS NULL
+                GROUP BY
+                    ml.match_id
+                ORDER BY
+                    MAX(ml.created)";
+            $query = $this->db->query($sql); 
+            if ($query->num_rows() > 0) {
+                foreach ($query->result_array() as $res) {
+                    $output[] = $res;
+                }
+            }
+            return $output;
+        }
+
         public function getPaymentStep() {
             $userData = $this->getUserData();
             /*

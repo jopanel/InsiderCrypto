@@ -16,6 +16,7 @@ class Welcome extends CI_Controller {
 			$data["paidstatus"] = $this->General_model->getPaidStatus();
 			$data["userData"] = $this->General_model->getUserData();
 			$data["chatlog"] = $this->General_model->getChat();
+			$data["matchData"] = $this->General_model->getMatchData();
 			$this->load->view('main/header', $head);
 			$this->load->view('main/dashboard', $data);
 			$this->load->view('main/footer');
