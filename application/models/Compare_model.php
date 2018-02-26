@@ -19,11 +19,27 @@ class Compare_model extends CI_Model {
 		$output = [];
 		$data = [];
 		$followup = [];
-		$sql = "SELECT p.price, m.currency_id, m.market_id, p.lastupdate, m.symbol_id, m.id as 'pair_id' FROM markets_pairs m 
-				LEFT JOIN price_chart p ON m.currency_id = p.currency_id AND m.market_id = p.market_id 
-				WHERE m.active = '1' 
-				GROUP BY m.market_id, m.currency_id
-				order by MAX(p.created) DESC";
+		$sql = "SELECT
+					p.price,
+					m.currency_id,
+					m.market_id,
+					p.lastupdate,
+					m.symbol_id,
+					m.id AS 'pair_id'
+				FROM
+					markets_pairs m
+				JOIN price_chart p ON p.id =(
+					SELECT
+						MAX(z.id)
+					FROM
+						price_chart z
+					WHERE
+						z.currency_id = m.currency_id
+					AND z.market_id = m.market_id
+					AND z.symbol_id = m.symbol_id
+				)
+				WHERE
+					m.active = '1'";
 		$query = $this->db->query($sql);
 		if ($query->num_rows() > 0) {
 			foreach ($query->result_array() as $res) {
@@ -99,8 +115,17 @@ class Compare_model extends CI_Model {
 			}
 			return TRUE;
 		} else {
-
+			$output = [];
+			$sql = "SELECT pair1_id, pair2_id FROM matches WHERE finished IS NULL";
+			$query = $this->db->query($sql);
+			if ($query->num_rows() > 0) {
+				foreach ($query->result_array() as $res) {
+					$output[$res["pair1_id"]] = $res["pair1_id"];
+					$output[$res["pair2_id"]] = $res["pair2_id"];
+				}
+			}
 		}
+		return $output;
 	}
 
 }

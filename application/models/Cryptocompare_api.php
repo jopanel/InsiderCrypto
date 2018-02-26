@@ -157,9 +157,27 @@ class Cryptocompare_api extends CI_Model {
         	$this->generatePrices();
         }
 
-        public function generatePrices() {
+        public function generatePrices($followUps=array()) {
         	$this->getBitcoinValue();
         	$cryptocomparePrice = new Cryptocompare\Price();
+        	if (count($followUps) > 0) {
+        		$sql = "SELECT 
+				        	mp.market_id, 
+				        	mp.currency_id, 
+				        	mp.symbol_id, 
+				        	m.name as 'market',
+				        	c.abbr as 'currency_abbr', 
+				        	s.abbr as 'symbol_abbr' 
+				        	FROM markets_pairs mp
+				        	LEFT JOIN markets m ON m.id = mp.market_id
+				        	LEFT JOIN currency c ON c.id = mp.currency_id
+				        	LEFT JOIN symbols s ON s.id = mp.symbol_id  
+				        	WHERE 
+				        	EXISTS(SELECT 1 FROM markets mm WHERE mm.id = mp.market_id AND mm.active = '1')
+				        	AND mp.id IN (".implode(",",$followUps).")
+				        	AND mp.active = '1'
+	        	";
+        	} else {
 				$sql = "SELECT 
 				        	mp.market_id, 
 				        	mp.currency_id, 
@@ -175,6 +193,7 @@ class Cryptocompare_api extends CI_Model {
 				        	EXISTS(SELECT 1 FROM markets mm WHERE mm.id = mp.market_id AND mm.active = '1')
 				        	AND mp.active = '1'
 	        	";
+	        }
 	        	$query = $this->db->query($sql);
 	        	if ($query->num_rows() > 0) {
 	        		$sortcalls = [];

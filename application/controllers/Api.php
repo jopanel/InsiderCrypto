@@ -14,13 +14,23 @@ class Api extends CI_Controller {
 
 	public function index()
 	{
-		echo json_encode(array("success" => 0, "error" => "You haven't successfuly tipped overlord supreme 1.337 Lisk (4287319913737945577L)"));
+		echo json_encode(array("success" => 0, "error" => "You haven't tipped overlord supreme 1.337 Lisk (4287319913737945577L)"));
 	}
 
 	public function update($type=null, $password="") {
 		$this->load->model('Cryptocompare_api'); 
 		$this->Cryptocompare_api->build();
 		$this->genArb("checksum");
+	}
+
+	public function updateMatches() {
+		$this->load->model('Cryptocompare_api'); 
+		$this->load->model('Compare_model');
+		$followUps = $this->Compare_model->generateFollowUp();
+		if ($this->Cryptocompare_api->generatePrices($followUps) == TRUE) {
+			$this->Compare_model->generateArbitrageEvents();
+		}
+		
 	}
 
 	public function unsubscribe($email=null) {

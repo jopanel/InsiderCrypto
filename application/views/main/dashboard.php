@@ -14,7 +14,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
            <?php 
-           foreach ($matchData as $v) {?>
+           foreach ($matchData as $v) {
+            
+            ?>
             <div class="card mb-3">
               <div class="card-body">
                 <div class="row">
