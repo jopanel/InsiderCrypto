@@ -16,6 +16,13 @@ class Api extends CI_Controller {
 		var_dump($done);  
 	}
 
+	public function genArb($password=null) {
+		if ($password == "checksum") {
+			$this->load->model('Compare_model');
+			$this->Compare_model->generateArbitrageEvents();
+		}
+	}
+
 	public function unsubscribe($email=null) {
 		if ($email == null) {
 			echo "Sorry there was a problem.";

@@ -192,7 +192,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                        }
                     }
                   }
-                  setTimeout(getChat,500);
+                  setTimeout(getChat,1000);
               },
               error : function(request,error)
               {
