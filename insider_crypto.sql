@@ -1,22 +1,24 @@
 /*
-Navicat MySQL Data Transfer
+ Navicat Premium Data Transfer
 
-Source Server         : localhost
-Source Server Version : 50713
-Source Host           : localhost:3306
-Source Database       : insider_crypto
+ Source Server         : localhost
+ Source Server Type    : MySQL
+ Source Server Version : 50721
+ Source Host           : 127.0.0.1
+ Source Database       : insider_crypto
 
-Target Server Type    : MYSQL
-Target Server Version : 50713
-File Encoding         : 65001
+ Target Server Type    : MySQL
+ Target Server Version : 50721
+ File Encoding         : utf-8
 
-Date: 2018-02-12 12:46:53
+ Date: 02/26/2018 14:54:37 PM
 */
 
-SET FOREIGN_KEY_CHECKS=0;
+SET NAMES utf8;
+SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
--- Table structure for `api_errors`
+--  Table structure for `api_errors`
 -- ----------------------------
 DROP TABLE IF EXISTS `api_errors`;
 CREATE TABLE `api_errors` (
@@ -25,14 +27,10 @@ CREATE TABLE `api_errors` (
   `error` varchar(0) NOT NULL,
   `created` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=139 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=353 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of api_errors
--- ----------------------------
-
--- ----------------------------
--- Table structure for `bitcoin_value`
+--  Table structure for `bitcoin_value`
 -- ----------------------------
 DROP TABLE IF EXISTS `bitcoin_value`;
 CREATE TABLE `bitcoin_value` (
@@ -44,14 +42,22 @@ CREATE TABLE `bitcoin_value` (
   UNIQUE KEY `id` (`id`) USING BTREE,
   KEY `fiat` (`fiat`) USING BTREE,
   KEY `cost` (`cost`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of bitcoin_value
+--  Table structure for `chat`
 -- ----------------------------
+DROP TABLE IF EXISTS `chat`;
+CREATE TABLE `chat` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uid` int(11) NOT NULL,
+  `comment` text NOT NULL,
+  `created` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- ----------------------------
--- Table structure for `cold_storage`
+--  Table structure for `cold_storage`
 -- ----------------------------
 DROP TABLE IF EXISTS `cold_storage`;
 CREATE TABLE `cold_storage` (
@@ -59,14 +65,10 @@ CREATE TABLE `cold_storage` (
   `address` varchar(255) NOT NULL,
   `uid` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=43142 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of cold_storage
--- ----------------------------
-
--- ----------------------------
--- Table structure for `currency`
+--  Table structure for `currency`
 -- ----------------------------
 DROP TABLE IF EXISTS `currency`;
 CREATE TABLE `currency` (
@@ -78,14 +80,10 @@ CREATE TABLE `currency` (
   UNIQUE KEY `id` (`id`) USING BTREE,
   KEY `name` (`name`) USING BTREE,
   KEY `abbr` (`abbr`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=20069 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22288 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of currency
--- ----------------------------
-
--- ----------------------------
--- Table structure for `last_update`
+--  Table structure for `last_update`
 -- ----------------------------
 DROP TABLE IF EXISTS `last_update`;
 CREATE TABLE `last_update` (
@@ -96,14 +94,10 @@ CREATE TABLE `last_update` (
   UNIQUE KEY `id` (`id`) USING BTREE,
   KEY `lastupdate` (`lastupdate`) USING BTREE,
   KEY `reset` (`reset`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of last_update
--- ----------------------------
-
--- ----------------------------
--- Table structure for `markets`
+--  Table structure for `markets`
 -- ----------------------------
 DROP TABLE IF EXISTS `markets`;
 CREATE TABLE `markets` (
@@ -114,14 +108,10 @@ CREATE TABLE `markets` (
   UNIQUE KEY `id` (`id`) USING BTREE,
   KEY `name` (`name`) USING BTREE,
   KEY `active` (`active`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=759 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=850 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of markets
--- ----------------------------
-
--- ----------------------------
--- Table structure for `markets_pairs`
+--  Table structure for `markets_pairs`
 -- ----------------------------
 DROP TABLE IF EXISTS `markets_pairs`;
 CREATE TABLE `markets_pairs` (
@@ -136,14 +126,10 @@ CREATE TABLE `markets_pairs` (
   KEY `currency_id` (`currency_id`) USING BTREE,
   KEY `symbol_id` (`symbol_id`) USING BTREE,
   KEY `active` (`active`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=102282 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=119888 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of markets_pairs
--- ----------------------------
-
--- ----------------------------
--- Table structure for `matches`
+--  Table structure for `matches`
 -- ----------------------------
 DROP TABLE IF EXISTS `matches`;
 CREATE TABLE `matches` (
@@ -153,14 +139,10 @@ CREATE TABLE `matches` (
   `started` int(11) NOT NULL,
   `finished` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13293 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of matches
--- ----------------------------
-
--- ----------------------------
--- Table structure for `matches_log`
+--  Table structure for `matches_log`
 -- ----------------------------
 DROP TABLE IF EXISTS `matches_log`;
 CREATE TABLE `matches_log` (
@@ -172,14 +154,10 @@ CREATE TABLE `matches_log` (
   `pair2_price` varchar(255) NOT NULL,
   `created` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19565 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of matches_log
--- ----------------------------
-
--- ----------------------------
--- Table structure for `orders`
+--  Table structure for `orders`
 -- ----------------------------
 DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders` (
@@ -196,11 +174,7 @@ CREATE TABLE `orders` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of orders
--- ----------------------------
-
--- ----------------------------
--- Table structure for `price_chart`
+--  Table structure for `price_chart`
 -- ----------------------------
 DROP TABLE IF EXISTS `price_chart`;
 CREATE TABLE `price_chart` (
@@ -227,14 +201,10 @@ CREATE TABLE `price_chart` (
   KEY `volume24hour` (`volume24hour`) USING BTREE,
   KEY `created` (`created`) USING BTREE,
   KEY `changepct24hour` (`changepct24hour`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=211945 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=229389 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of price_chart
--- ----------------------------
-
--- ----------------------------
--- Table structure for `requests`
+--  Table structure for `requests`
 -- ----------------------------
 DROP TABLE IF EXISTS `requests`;
 CREATE TABLE `requests` (
@@ -246,11 +216,7 @@ CREATE TABLE `requests` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of requests
--- ----------------------------
-
--- ----------------------------
--- Table structure for `symbols`
+--  Table structure for `symbols`
 -- ----------------------------
 DROP TABLE IF EXISTS `symbols`;
 CREATE TABLE `symbols` (
@@ -260,14 +226,31 @@ CREATE TABLE `symbols` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`) USING BTREE,
   KEY `abbr` (`abbr`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=1326 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1541 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of symbols
+--  Table structure for `trollbox`
 -- ----------------------------
+DROP TABLE IF EXISTS `trollbox`;
+CREATE TABLE `trollbox` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uid` int(11) NOT NULL,
+  `handle` varchar(255) NOT NULL,
+  `user_type` tinyint(4) NOT NULL,
+  `message` text NOT NULL,
+  `created` int(11) NOT NULL,
+  `active` int(11) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`),
+  KEY `id` (`id`) USING BTREE,
+  KEY `uid` (`uid`) USING BTREE,
+  KEY `created` (`created`) USING BTREE,
+  KEY `handle` (`handle`) USING BTREE,
+  KEY `user_type` (`user_type`) USING BTREE,
+  KEY `active` (`active`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
--- Table structure for `users`
+--  Table structure for `users`
 -- ----------------------------
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
@@ -284,16 +267,20 @@ CREATE TABLE `users` (
   `last_login` int(11) DEFAULT NULL,
   `ip` varchar(255) DEFAULT NULL,
   `vip` int(11) NOT NULL DEFAULT '0',
+  `paid` int(11) NOT NULL DEFAULT '0',
+  `admin` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of users
+--  Records of `users`
 -- ----------------------------
-INSERT INTO `users` VALUES ('1', 'admin', 'opanelj@gmail.com', '79a7387515718b5f24b1b70d8ea44dbd', 'WjrPIECgap', '4287319913737945577L', '1516182413', '1', '1', '3', '1517730892', '127.0.0.1', '0');
+BEGIN;
+INSERT INTO `users` VALUES ('1', 'admin', 'opanelj@gmail.com', '79a7387515718b5f24b1b70d8ea44dbd', 'WjrPIECgap', '4287319913737945577L', '1516182413', '1', '1', '3', '1519683574', '127.0.0.1', '1', '0', '1');
+COMMIT;
 
 -- ----------------------------
--- Table structure for `users_ip_login`
+--  Table structure for `users_ip_login`
 -- ----------------------------
 DROP TABLE IF EXISTS `users_ip_login`;
 CREATE TABLE `users_ip_login` (
@@ -302,14 +289,10 @@ CREATE TABLE `users_ip_login` (
   `ip` varchar(255) NOT NULL,
   `created` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of users_ip_login
--- ----------------------------
-
--- ----------------------------
--- Table structure for `users_markets`
+--  Table structure for `users_markets`
 -- ----------------------------
 DROP TABLE IF EXISTS `users_markets`;
 CREATE TABLE `users_markets` (
@@ -317,8 +300,6 @@ CREATE TABLE `users_markets` (
   `uid` int(11) NOT NULL,
   `market_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of users_markets
--- ----------------------------
+SET FOREIGN_KEY_CHECKS = 1;
