@@ -24,6 +24,8 @@ class Api extends CI_Controller {
 	}
 
 	public function updateMatches() {
+		ini_set('max_execution_time', 0);
+        set_time_limit(0);
 		$this->load->model('Cryptocompare_api'); 
 		$this->load->model('Compare_model');
 		$followUps = $this->Compare_model->generateFollowUp();

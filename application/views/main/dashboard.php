@@ -22,7 +22,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="row">
                   
                   <div class="col-md-1"> 
-                    <?=$v["identifier"]?>
+                    #<?=$v["identifier"]?>
                   </div>
                   <div class="col">
                     <h6 class="card-title mb-1"><a href="#"><?=$v["currency1"]?></a></h6>
@@ -139,22 +139,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       function sendChat() {
           var message = document.getElementById("trollbox-message").value;
           var uid = <?=$userData["uid"]?>;
-          $.ajax({
-              url : '<?=base_url()?>api/sendChat',
-              data : {
-                  'uid' : uid,
-                  'message' : message
-              },
-              type : 'POST',
-              dataType:'json',
-              success : function(data) {  
-                document.getElementById("trollbox-message").value = "";
-              },
-              error : function(request,error)
-              {
-                  //alert("Request: "+JSON.stringify(request));
-              }
-          });
+          if (message.length > 1 && str.replace(/\s/g, '').length) {
+            $.ajax({
+                url : '<?=base_url()?>api/sendChat',
+                data : {
+                    'uid' : uid,
+                    'message' : message
+                },
+                type : 'POST',
+                dataType:'json',
+                success : function(data) {  
+                  document.getElementById("trollbox-message").value = "";
+                },
+                error : function(request,error)
+                {
+                    //alert("Request: "+JSON.stringify(request));
+                }
+            });
+          }
+          
         }
       document.addEventListener('DOMContentLoaded', function() {
         allGains();

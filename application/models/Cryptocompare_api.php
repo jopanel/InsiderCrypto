@@ -159,6 +159,7 @@ class Cryptocompare_api extends CI_Model {
 
         public function generatePrices($followUps=array()) {
         	$this->getBitcoinValue();
+        	$insertSQL = [];
         	$cryptocomparePrice = new Cryptocompare\Price();
         	if (count($followUps) > 0) {
         		$sql = "SELECT 
@@ -305,17 +306,7 @@ class Cryptocompare_api extends CI_Model {
 			        						$sql = "UPDATE markets_pairs SET active = '0' WHERE market_id = ".$this->db->escape($v["market_id"])." AND symbol_id = ".$this->db->escape($symbol_id)." AND currency_id = ".$this->db->escape($currency_id);
 			        						$this->db->query($sql);
 			        					} else {
-			        						$sql = "INSERT INTO price_chart 
-			        						(market_id, 
-			        						currency_id,
-			        						symbol_id,
-			        						price,
-			        						lastupdate,
-			        						price_low,
-			        						price_high,
-			        						changepct24hour,
-			        						volume24hour,
-			        						created) VALUES 
+			        						$insertSQL[] ="
 			        						(".$this->db->escape($v["market_id"]).",
 			        						".$this->db->escape($currency_id).",
 			        						".$this->db->escape($symbol_id).",
@@ -326,7 +317,6 @@ class Cryptocompare_api extends CI_Model {
 			        						".$this->db->escape($pairData->CHANGEPCT24HOUR).",
 			        						".$this->db->escape($pairData->VOLUME24HOURTO).",
 			        						".$this->db->escape(time()).")";
-			        						$this->db->query($sql);
 			        					}
 		        					} else {
 		        						// problem obtaining symbol_id and currency_id
@@ -337,6 +327,21 @@ class Cryptocompare_api extends CI_Model {
 	        			
 	        		}
 	        	}
+
+	        if (count($insertSQL) > 0) {
+	        	$sql = "INSERT INTO price_chart 
+			        						(market_id, 
+			        						currency_id,
+			        						symbol_id,
+			        						price,
+			        						lastupdate,
+			        						price_low,
+			        						price_high,
+			        						changepct24hour,
+			        						volume24hour,
+			        						created) VALUES ".implode(",",$insertSQL).";";
+			    $this->db->query($sql);
+	        }
         	$sql = "INSERT INTO last_update (lastupdate) VALUES (".$this->db->escape(time()).")";
         	$this->db->query($sql);
         	return TRUE;
