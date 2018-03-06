@@ -294,11 +294,53 @@ class General_model extends CI_Model {
             }
         }
 
+        public function setupPayment($postData=array()) {
+            if (!isset($postData["type"]) || empty($postData["type"])) {
+                return FALSE;
+            }
+            $userData = $this->getUserData();
+            $order = $this->getUserOrders();
+            $programCost = $this->getProgramCost();
+            if (!isset($programCost[$postData["type"]]) || empty($programCost[$postData["type"]])) { return FALSE; }
+            if ($programCost[$postData["type"]] <= 0) {
+                return FALSE;
+            }
+            $lskCost = $programCost[$postData["type"]];
+            if ($postData["type"] == "beginner") {
+                $usdCost = BEGINNER_PACKAGE_USD;
+            } elseif ($postData["type"] == "trader") {
+                $usdCost = TRADER_PACKAGE_USD;
+            } elseif ($postData["type"] == "vip") {
+                $usdCost = VIP_PACKAGE_USD;
+            }
+            if ($order["expired"] == true) {
+                // create a new order
+                // assign a cold storage account 
+                $sql = "SELECT id, address FROM cold_storage WHERE uid IS NULL LIMIT 1";
+                $query = $this->db->query($sql);
+                if ($query->num_rows() > 0) {
+                    $lskAddress = $query->row()->address;
+                    $cold_storage_id = $query->row()->id;
+                } else {
+                    return FALSE;
+                }
+                $now = time();
+                $sql = "INSERT INTO orders (uid, usd_cost, amount_requested, cold_storage_id, created) VALUES (".$this->db->escape($userData["uid"]).", ".$this->db->escape($usdCost).", ".$this->db->escape($lskCost).", ".$this->db->escape($cold_storage_id).", ".$this->db->escape($now).")";
+                $this->db->query($sql);
+                $sql = "UPDATE cold_storage SET uid = ".$this->db->escape($userData["uid"])." WHERE id = ".$this->db->escape($cold_storage_id);
+                $this->db->query($sql);
+                return TRUE;
+            } 
+
+        }
+
         public function getUserOrders($check=false) {
             $output = [];
             $userData = $this->getUserData();
             $expiretime = strtotime("-12 hours");
-            $sql = "SELECT * FROM orders WHERE uid = ".$this->db->escape($userData["uid"])." ORDER BY id DESC LIMIT 1";
+            $sql = "SELECT o.*, cs.address FROM orders o 
+            LEFT JOIN cold_storage cs ON o.cold_storage_id = cs.id
+            WHERE o.uid = ".$this->db->escape($userData["uid"])." ORDER BY o.id DESC LIMIT 1";
             $query = $this->db->query($sql);
             if ($query->num_rows() > 0) {
                 foreach ($query->result_array() as $v) {
@@ -323,6 +365,49 @@ class General_model extends CI_Model {
             }
             return $output;
         }
+
+        public function checkPayments() {
+            $sql = "SELECT o.*, cs.address FROM orders o 
+            LEFT JOIN cold_storage cs ON o.cold_storage_id = cs.id
+            WHERE confirmed = 0";
+            $query = $this->db->query($sql);
+            if ($query->num_rows() > 0) {
+                foreach ($query->result_array() as $res) {
+                    // check for payment
+                    $checkBalance = $this->getBalance($res["address"]);
+                    if (isset($checkBalance["result"][0])) {
+                        $balance = $this->toHuman($checkBalance["result"][0]);
+                        if ($balance >= $res["amount_requested"]) {
+                            // update member to paid
+                            if ($res["usd_cost"] == VIP_PACKAGE_USD) {
+                                $vip = 1;
+                            } else {
+                                $vip = 0;
+                            }
+                            $sql = "UPDATE orders SET amount_received = ".$this->db->escape($balance)." AND tx_id = ".$this->db->escape($res["address"])." AND confirmed = 1 WHERE id = ".$this->db->escape($res["id"]);
+                            $this->db->query($sql);
+                            $sql = "UPDATE users SET paid = '1' AND vip = ".$this->db->escape($vip)." WHERE id = ".$this->db->escape($res["uid"]);
+                            $this->db->query($sql);
+                        } 
+                    }
+                    
+                }
+            } else {
+                return TRUE;
+            }
+        }
+
+        public function getBalance($address) {
+            try {
+                $client = new \Lisk\Client(LISK_SERVER);
+                $result = $client->getBalance($address);
+                $result = $this->parseLiskResult($result);
+                return $result;
+            } catch (Throwable $t) {
+                return (object)array("result" => null, "success" => 0, "error" => $t->getMessage());
+            }
+        }
+
 
         public function modifyPreferences($postData=array(), $action=null) {
             if (count($postData) == 0 || $action == null) { return FALSE; } 
@@ -401,9 +486,9 @@ class General_model extends CI_Model {
             if ($query->num_rows() > 0) {
                 $bitcoin_value = $query->row()->cost;
             } else {
-                $bitcoin_value = 14000; // cant get accurate bitcoin price, fuck it - 1/14/2018
+                $bitcoin_value = 10000; // cant get accurate bitcoin price, fuck it 
             }
-            return array("beginner" => (round(((150 / $bitcoin_value) / $lsk_price),2)+0.1), "trader" => (round(((300 / $bitcoin_value) / $lsk_price),2)+0.1), "vip" => (round(((1000 / $bitcoin_value) / $lsk_price),2)+0.1));
+            return array("beginner" => (round(((BEGINNER_PACKAGE_USD / $bitcoin_value) / $lsk_price),2)+0.1), "trader" => (round(((TRADER_PACKAGE_USD / $bitcoin_value) / $lsk_price),2)+0.1), "vip" => (round(((VIP_PACKAGE_USD / $bitcoin_value) / $lsk_price),2)+0.1));
         }
 
         public function getPaidStatus() {

@@ -23,6 +23,10 @@ class Api extends CI_Controller {
 		$this->genArb("checksum");
 	}
 
+	public function checkForPayments() {
+		$this->General_model->checkPayments();
+	}
+
 	public function updateMatches() {
 		ini_set('max_execution_time', 0);
         set_time_limit(0);

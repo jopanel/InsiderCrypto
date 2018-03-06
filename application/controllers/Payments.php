@@ -13,8 +13,14 @@ class Payments extends CI_Controller {
 				$this->load->view('landing/footer');
 			} else {
 				if ($this->input->post()) {
-
+					$postData = $this->input->post();
+					if ($this->General_model->setupPayment($postData) == FALSE) {
+						$data["error"] = 1;
+					} else {
+						$data["error"] = 0;
+					}
 				}
+				$data["error"] = 0;
 				$data["paymentstep"] = $this->General_model->getPaymentStep();
 				$data["paidstatus"] = $this->General_model->getPaidStatus();
 				$data["order"] = $this->General_model->getUserOrders();
