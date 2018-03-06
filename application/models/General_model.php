@@ -308,10 +308,13 @@ class General_model extends CI_Model {
             $lskCost = $programCost[$postData["type"]];
             if ($postData["type"] == "beginner") {
                 $usdCost = BEGINNER_PACKAGE_USD;
+                $type = 1;
             } elseif ($postData["type"] == "trader") {
                 $usdCost = TRADER_PACKAGE_USD;
+                $type = 2;
             } elseif ($postData["type"] == "vip") {
                 $usdCost = VIP_PACKAGE_USD;
+                $type = 3;
             }
             if ($order["expired"] == true) {
                 // create a new order
@@ -325,7 +328,7 @@ class General_model extends CI_Model {
                     return FALSE;
                 }
                 $now = time();
-                $sql = "INSERT INTO orders (uid, usd_cost, amount_requested, cold_storage_id, created) VALUES (".$this->db->escape($userData["uid"]).", ".$this->db->escape($usdCost).", ".$this->db->escape($lskCost).", ".$this->db->escape($cold_storage_id).", ".$this->db->escape($now).")";
+                $sql = "INSERT INTO orders (uid, usd_cost, amount_requested, cold_storage_id, created, type) VALUES (".$this->db->escape($userData["uid"]).", ".$this->db->escape($usdCost).", ".$this->db->escape($lskCost).", ".$this->db->escape($cold_storage_id).", ".$this->db->escape($now).", ".$this->db->escape($type).")";
                 $this->db->query($sql);
                 $sql = "UPDATE cold_storage SET uid = ".$this->db->escape($userData["uid"])." WHERE id = ".$this->db->escape($cold_storage_id);
                 $this->db->query($sql);
@@ -384,9 +387,10 @@ class General_model extends CI_Model {
                             } else {
                                 $vip = 0;
                             }
-                            $sql = "UPDATE orders SET amount_received = ".$this->db->escape($balance)." AND tx_id = ".$this->db->escape($res["address"])." AND confirmed = 1 WHERE id = ".$this->db->escape($res["id"]);
+                            $sql = "UPDATE orders SET amount_received = ".$this->db->escape($balance).", tx_id = ".$this->db->escape($res["address"]).", confirmed = '1' WHERE id = ".$this->db->escape($res["id"]);
+                            echo $sql;
                             $this->db->query($sql);
-                            $sql = "UPDATE users SET paid = '1' AND vip = ".$this->db->escape($vip)." WHERE id = ".$this->db->escape($res["uid"]);
+                            $sql = "UPDATE users SET paid = '1', vip = ".$this->db->escape($vip)." WHERE id = ".$this->db->escape($res["uid"]);
                             $this->db->query($sql);
                         } 
                     }
