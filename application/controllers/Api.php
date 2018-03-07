@@ -36,8 +36,16 @@ class Api extends CI_Controller {
 		if ($this->Cryptocompare_api->generatePrices($followUps) == TRUE) {
 			$this->Compare_model->generateArbitrageEvents();
 		}
+	} 
+
+
+	public function test() {
+		ini_set('max_execution_time', 0);
+        set_time_limit(0); 
+		$this->load->model('Compare_model');
+		$this->Compare_model->generatePairArbitrateEvents();
 		
-	}
+	} 
 
 	public function unsubscribe($email=null) {
 		if ($email == null) {

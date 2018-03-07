@@ -139,7 +139,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       function sendChat() {
           var message = document.getElementById("trollbox-message").value;
           var uid = <?=$userData["uid"]?>;
-          if (message.length > 1 && str.replace(/\s/g, '').length) {
+          if (message.length > 1 && message.replace(/\s/g, '').length) {
             $.ajax({
                 url : '<?=base_url()?>api/sendChat',
                 data : {
