@@ -43,7 +43,7 @@ class Api extends CI_Controller {
 		ini_set('max_execution_time', 0);
         set_time_limit(0); 
 		$this->load->model('Compare_model');
-		$this->Compare_model->generatePairArbitrateEvents();
+		$this->Compare_model->generatePairEvents();
 		
 	} 
 
