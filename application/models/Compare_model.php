@@ -206,6 +206,9 @@ class Compare_model extends CI_Model {
 	        					foreach ($marketData as $market_id2 => $mArr2) {
 				        			foreach ($mArr2 as $sym_id2 => $cArr2) {
 				        				foreach ($cArr2 as $cur_id2 => $cur_data2) {
+				        					if ($sym_id2 != $sym_id && $cur_id2 == $cur_id) {
+				        						
+				        					}
 				        				}
 				        			}
 				        		}
