@@ -94,6 +94,7 @@ class Compare_model extends CI_Model {
 				        	m.name as 'market',
 				        	c.abbr as 'currency_abbr', 
 				        	s.abbr as 'symbol_abbr',
+				        	mp.id as 'market_pair',
 				        	p.price 
 				        	FROM markets_pairs mp
 				        	LEFT JOIN markets m ON m.id = mp.market_id
@@ -116,36 +117,17 @@ class Compare_model extends CI_Model {
 
 	        	$query = $this->db->query($sql);
 	        	if ($query->num_rows() > 0) {
-	        		// Organized array: look
-	        		/*array(
-	        			array("market_id1" =>
-	        				array(
-	        					array("symbol_id1" => array(
-	        						array1_data,
-	        						array2_data,
-	        					),
-	        					array("symbol_id2" => array(
-	        						array1_data,
-	        						array2_data,
-	        					),
-	        					array("symbol_id3" => array(
-	        						array1_data,
-	        						array2_data,
-	        					)	
-	        			)
-	        		)*/
-	        		// Organize array as such above
-	        		// Foreach currency foreach symbol foreach market find the USD cost
-	        		// Foreach currency foreach symbol foreach market find currencies that exist in other symbols and calculate the percentage of gains traded between eachother
 	        		$orgArr = [];
+	        		$symbols = [];
 	        		$presymbols = [];
 	        		$presymbolsnoescape = [];
 	        		foreach ($query->result_array() as $res) {
 	        			$orgArr[$res["market_id"]][$res["symbol_id"]][$res["currency_id"]] = $res;
 	        			$presymbols[$res["symbol_id"]] = "'".$res["symbol_abbr"]."'";
+	        			$presymbolsid[$res["symbol_id"]] = "'".$res["symbol_id"]."'";
 	        			$presymbolsnoescape[$res["symbol_id"]] = $res["symbol_abbr"];
 	        		}
-	        		// get bitcoin symbol_id and current bitcoin USD price
+	        		// get bitcoin symbol_id 
 	        		$sql = "SELECT id FROM symbols WHERE abbr = 'BTC' LIMIT 1";
 	        		$query2 = $this->db->query($sql);
 	        		if ($query2->num_rows() > 0) {
@@ -153,6 +135,15 @@ class Compare_model extends CI_Model {
 	        		} else {
 	        			return FALSE;
 	        		}
+	        		// get bitcoin currency_id
+	        		$sql = "SELECT id FROM currency WHERE abbr = 'BTC' LIMIT 1";
+	        		$query2 = $this->db->query($sql);
+	        		if ($query2->num_rows() > 0) {
+	        			$btc_currency_id = $query2->row()->id;
+	        		} else {
+	        			return FALSE;
+	        		}
+	        		// get btc current usd price
 	        		$sql = "SELECT cost FROM bitcoin_value ORDER BY id DESC LIMIT 1";
 	        		$query2 = $this->db->query($sql);
 	        		if ($query2->num_rows() > 0) {
@@ -160,88 +151,79 @@ class Compare_model extends CI_Model {
 	        		} else {
 	        			return FALSE;
 	        		}
-	        		$sql = "SELECT s.abbr FROM currency s WHERE s.abbr IN (".implode(",",$presymbols).")";
+					$sql = "SELECT
+								ROUND(p.price,2) as 'price',
+								p.symbol_id
+							FROM
+								price_chart p
+							LEFT JOIN 
+								price_chart pp ON 
+								(p.symbol_id = pp.symbol_id AND p.currency_id = pp.currency_id AND p.lastupdate < pp.lastupdate)
+							WHERE
+								p.symbol_id IN(".implode(",",$presymbolsid).")
+							AND p.currency_id = ".$this->db->escape($btc_currency_id)."
+							AND NOT EXISTS(
+								SELECT
+									1
+								FROM
+									markets_pairs mp
+								WHERE
+									mp.symbol_id = p.symbol_id
+								AND mp.currency_id = p.currency_id
+								AND mp.market_id = p.market_id
+								AND mp.active = '0'
+							)
+							AND p.volume24hour > 0
+							AND pp.lastupdate is NULL";
 	        		$query2 = $this->db->query($sql);
+	        		$presymbols = $presymbolsid = $presymbolsnoescape = null;
 	        		if ($query2->num_rows() > 0) {
 	        			foreach ($query2->result_array() as $res) {
-	        				foreach ($presymbolsnoescape as $k => $v) {
-	        					if ($v == $res["abbr"]) {
-	        						$symbols[$k] = array("symbol_id" => $k, "abbr" => $res["abbr"]);
-	        					}
-	        				}
+	        				$symbols[$res["symbol_id"]] = array("symbol_id" => $res["symbol_id"], "btc_cost" => $res["price"]);
 	        			}
 	        		} else {
 	        			return FALSE;
+	        		} 
+	        		$marketData = [];
+	        		foreach ($orgArr as $market_id => $mArr) {
+	        			foreach ($mArr as $sym_id => $cArr) {
+	        				foreach ($cArr as $cur_id => $cur_data) {
+	        					if (isset($symbols[$sym_id]["btc_cost"]) || !empty($symbols[$sym_id]["btc_cost"])) {
+
+		        					$usd_val = (($bitcoin_usd_value / $symbols[$sym_id]["btc_cost"]) * $cur_data["price"]);  
+		        					$marketData[$market_id][$sym_id][$cur_id] = array("market_price" => $cur_data["price"], "usd_cost" => $usd_val, "pair_id" => $cur_data["market_pair"]);
+	        					}
+	        					
+	        				}
+	        			}
+	        		}
+	        		$pairsFound = [];
+	        		foreach ($marketData as $market_id => $mArr) {
+	        			foreach ($mArr as $sym_id => $cArr) {
+	        				foreach ($cArr as $cur_id => $cur_data) {
+
+
+	        					foreach ($marketData as $market_id2 => $mArr2) {
+				        			foreach ($mArr2 as $sym_id2 => $cArr2) {
+				        				foreach ($cArr2 as $cur_id2 => $cur_data2) {
+				        				}
+				        			}
+				        		}
+
+
+	        				}
+	        			}
 	        		}
 
 
 
+
+
 	        		echo "<pre>";
-	        		var_dump($symbols);
+	        		var_dump($marketData);
 	        		echo "</pre>";
 	        	}
 
-	}
-
-	public function generatePairArbitrateEvents() {
-				$sql = "SELECT 
-				        	mp.market_id, 
-				        	mp.currency_id, 
-				        	mp.symbol_id, 
-				        	m.name as 'market',
-				        	c.abbr as 'currency_abbr', 
-				        	s.abbr as 'symbol_abbr',
-				        	p.price 
-				        	FROM markets_pairs mp
-				        	LEFT JOIN markets m ON m.id = mp.market_id
-				        	LEFT JOIN currency c ON c.id = mp.currency_id
-				        	LEFT JOIN symbols s ON s.id = mp.symbol_id
-				        	JOIN price_chart p ON p.id =(
-								SELECT
-									MAX(z.id)
-								FROM
-									price_chart z
-								WHERE
-									z.currency_id = mp.currency_id
-								AND z.market_id = mp.market_id
-								AND z.symbol_id = mp.symbol_id
-							)  
-				        	WHERE 
-				        	EXISTS(SELECT 1 FROM markets mm WHERE mm.id = mp.market_id AND mm.active = '1')
-				        	AND mp.active = '1'
-	        	";
-
-	        	$query = $this->db->query($sql);
-	        	if ($query->num_rows() > 0) {
-	        		// Organized array: look
-	        		/*array(
-	        			array("market_id1" =>
-	        				array(
-	        					array("symbol_id1" => array(
-	        						array1_data,
-	        						array2_data,
-	        					),
-	        					array("symbol_id2" => array(
-	        						array1_data,
-	        						array2_data,
-	        					),
-	        					array("symbol_id3" => array(
-	        						array1_data,
-	        						array2_data,
-	        					)	
-	        			)
-	        		)*/
-	        		// Organize array as such above
-	        		// Clean the arrays, by removing currency that isn't tradable between more than 1 symbol (LSK/BTC, LSK/ETH OK, XRP/BTC ONLY NOT)
-	        		// Foreach currency foreach symbol foreach market find the USD cost
-	        		// Foreach currency foreach symbol foreach market find currencies that exist in other markets that do not contain the same symbol and calculate the percentage of gains traded between eachother
-	        	}
-
-	        
-
-	        	echo "<pre>";
-	        	var_dump($calls);
-	        	echo "</pre>";
 	}
 
 	public function generateFollowUp($checkData=array()) {
