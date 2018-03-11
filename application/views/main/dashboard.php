@@ -31,9 +31,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </p>
                   </div>
                   <div class="col">
-                    <p><strong style="color:green">Buy:</strong> <br><?=$v["pair2_price"]?>
+                    <p><strong style="color:green">Buy @</strong> <br><?=$v["pair2_price"]?>
                       <br>
-                    <strong style="color:red">Sell:</strong> <br><?=$v["pair1_price"]?>
+                    <strong style="color:red">Sell @ </strong> <br><?=$v["pair1_price"]?>
                     </p>
                   </div>
                   <div class="col">

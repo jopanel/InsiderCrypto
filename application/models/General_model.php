@@ -256,7 +256,7 @@ class General_model extends CI_Model {
                     m.started,
                     ml.pair1_price,
                     ml.pair2_price,
-                    ROUND((((ml.pair1_price - ml.pair2_price) / (ml.pair1_price)) * 100),2) as 'percent',
+                    COALESCE(ROUND(ml.percent,2), 'X') as 'percent',
                     ml.created AS 'updated',
                     m.id as 'identifier'
                 FROM
@@ -271,7 +271,7 @@ class General_model extends CI_Model {
                 GROUP BY
                     ml.match_id
                 ORDER BY
-                    MAX(ml.created), percent DESC";
+                    MAX(ml.created), percent ASC";
             $query = $this->db->query($sql); 
             if ($query->num_rows() > 0) {
                 foreach ($query->result_array() as $res) {

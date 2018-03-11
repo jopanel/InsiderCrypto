@@ -61,7 +61,7 @@ class Compare_model extends CI_Model {
 								if ($query->num_rows() > 0) {
 									// match is active
 									$match_id = $query->row()->id;
-									$sql = "INSERT INTO matches_log (match_id, pair1_id, pair2_id, pair1_price, pair2_price, created) VALUES (".$this->db->escape($match_id).", ".$this->db->escape($vv["pair_id"]).", ".$this->db->escape($v[$i]["pair_id"]).", ".$this->db->escape($vv["price"]).", ".$this->db->escape($v[$i]["price"]).", ".$this->db->escape($time).")";
+									$sql = "INSERT INTO matches_log (match_id, pair1_id, pair2_id, pair1_price, pair2_price, created, percent) VALUES (".$this->db->escape($match_id).", ".$this->db->escape($vv["pair_id"]).", ".$this->db->escape($v[$i]["pair_id"]).", ".$this->db->escape($vv["price"]).", ".$this->db->escape($v[$i]["price"]).", ".$this->db->escape($time).", ".$this->db->escape($percent).")";
 									$this->db->query($sql);
 								} else {
 									// match doesnt exist
@@ -70,7 +70,7 @@ class Compare_model extends CI_Model {
 									$sql = "SELECT id FROM matches WHERE pair1_id = ".$this->db->escape($vv["pair_id"])." AND pair2_id = ".$this->db->escape($v[$i]["pair_id"])." AND finished IS NULL";
 									$query2 = $this->db->query($sql);
 									$match_id = $query2->row()->id;
-									$sql = "INSERT INTO matches_log (match_id, pair1_id, pair2_id, pair1_price, pair2_price, created) VALUES (".$this->db->escape($match_id).", ".$this->db->escape($vv["pair_id"]).", ".$this->db->escape($v[$i]["pair_id"]).", ".$this->db->escape($vv["price"]).", ".$this->db->escape($v[$i]["price"]).", ".$this->db->escape($time).")";
+									$sql = "INSERT INTO matches_log (match_id, pair1_id, pair2_id, pair1_price, pair2_price, created, percent) VALUES (".$this->db->escape($match_id).", ".$this->db->escape($vv["pair_id"]).", ".$this->db->escape($v[$i]["pair_id"]).", ".$this->db->escape($vv["price"]).", ".$this->db->escape($v[$i]["price"]).", ".$this->db->escape($time).", ".$this->db->escape($percent).")";
 									$this->db->query($sql);
 								}
 							} else {
@@ -201,30 +201,63 @@ class Compare_model extends CI_Model {
 	        		foreach ($marketData as $market_id => $mArr) {
 	        			foreach ($mArr as $sym_id => $cArr) {
 	        				foreach ($cArr as $cur_id => $cur_data) {
-
-
 	        					foreach ($marketData as $market_id2 => $mArr2) {
 				        			foreach ($mArr2 as $sym_id2 => $cArr2) {
 				        				foreach ($cArr2 as $cur_id2 => $cur_data2) {
 				        					if ($sym_id2 != $sym_id && $cur_id2 == $cur_id) {
-				        						
+				        						$percent = $this->calculatePercentage($cur_data["usd_cost"], $cur_data2["usd_cost"]); 
+				        						$pairsFound[] = array("pair1_id" => $cur_data["pair_id"], "pair1_price" => $cur_data["market_price"], "pair2_id" => $cur_data2["pair_id"], "pair2_price" => $cur_data2["market_price"], "percent" => $percent); 
 				        					}
 				        				}
 				        			}
 				        		}
-
-
 	        				}
 	        			}
-	        		}
-
-
-
-
-
-	        		echo "<pre>";
-	        		var_dump($marketData);
-	        		echo "</pre>";
+	        		} 
+	        		$started = time();
+	        		$marketData = null;
+	        		foreach ($pairsFound as $m) { 
+	        			$sql = "SELECT
+									EXISTS(
+										SELECT
+											1
+										FROM
+											matches m
+										WHERE
+											m.pair1_id = ".$this->db->escape($m["pair1_id"])."
+										AND m.pair2_id = ".$this->db->escape($m["pair2_id"])."
+										AND m.finished IS NULL
+										LIMIT 1
+									)AS 'e' 
+								";
+	        			$query = $this->db->query($sql);
+	        			if ($query->row()->e == 1) {
+	        				// has open match,  check if percent > 3, if so insert history new row else close match
+	        				if ($m["percent"] > 3) {
+	        					$sql = "SELECT id FROM matches WHERE pair1_id = ".$this->db->escape($m["pair1_id"])." AND pair2_id = ".$this->db->escape($m["pair2_id"])." AND finished IS NULL";
+	        					$query2 = $this->db->query($sql);
+	        					$match_id = $query2->row()->id;
+	        					$sql = "INSERT INTO matches_log (match_id, pair1_id, pair2_id, pair1_price, pair2_price, percent, created) VALUES (".$this->db->escape($match_id).", ".$this->db->escape($m["pair1_id"]).", ".$this->db->escape($m["pair2_id"]).", ".$this->db->escape($m["pair1_price"]).", ".$this->db->escape($m["pair2_price"]).", ".$this->db->escape($m["percent"]).", ".$this->db->escape($started).")";
+	        					$this->db->query($sql);
+	        				} else {
+	        					$sql = "UPDATE matches SET finished = ".$this->db->escape($started)." WHERE pair1_id = ".$this->db->escape($m["pair1_id"])." AND pair2_id = ".$this->db->escape($m["pair2_id"])." AND finished IS NULL";
+	        					$this->db->query($sql);
+	        				}
+	        			} else { 
+	        				// if percent > 3 insert new row
+	        				if ($m["percent"] > 3) {
+	        					$sql = "INSERT INTO matches (pair1_id, pair2_id, started) VALUES (".$this->db->escape($m["pair1_id"]).", ".$this->db->escape($m["pair2_id"]).", ".$this->db->escape($started).")";
+	        					$this->db->query($sql);
+	        					$sql = "SELECT id FROM matches WHERE pair1_id = ".$this->db->escape($m["pair1_id"])." AND pair2_id = ".$this->db->escape($m["pair2_id"])." AND finished IS NULL";
+	        					$query2 = $this->db->query($sql);
+	        					$match_id = $query2->row()->id;
+	        					$sql = "INSERT INTO matches_log (match_id, pair1_id, pair2_id, pair1_price, pair2_price, percent, created) VALUES (".$this->db->escape($match_id).", ".$this->db->escape($m["pair1_id"]).", ".$this->db->escape($m["pair2_id"]).", ".$this->db->escape($m["pair1_price"]).", ".$this->db->escape($m["pair2_price"]).", ".$this->db->escape($m["percent"]).", ".$this->db->escape($started).")";
+	        					$this->db->query($sql);
+	        				}
+	        			}
+	        		} 
+	        		
+	        		return TRUE;
 	        	}
 
 	}
