@@ -90,7 +90,7 @@ class Cryptocompare_api extends CI_Model {
         		$sql = "SELECT 1 FROM markets WHERE name = ".$this->db->escape($k);
         		$query = $this->db->query($sql);
         		if ($query->num_rows() == 0) {
-        			$sql = "INSERT INTO markets (name) VALUES (".$this->db->escape($k).")";
+        			$sql = "INSERT INTO markets (name, active) VALUES (".$this->db->escape($k).", '1')";
         			$this->db->query($sql);
         		}
         	}
@@ -177,6 +177,7 @@ class Cryptocompare_api extends CI_Model {
 				        	EXISTS(SELECT 1 FROM markets mm WHERE mm.id = mp.market_id AND mm.active = '1')
 				        	AND mp.id IN (".implode(",",$followUps).")
 				        	AND mp.active = '1'
+				        	ORDER BY s.abbr ASC
 	        	";
         	} else {
 				$sql = "SELECT 
@@ -193,13 +194,15 @@ class Cryptocompare_api extends CI_Model {
 				        	WHERE 
 				        	EXISTS(SELECT 1 FROM markets mm WHERE mm.id = mp.market_id AND mm.active = '1')
 				        	AND mp.active = '1'
+				        	ORDER BY s.abbr ASC
 	        	";
 	        }
 	        	$query = $this->db->query($sql);
 	        	if ($query->num_rows() > 0) {
 	        		$sortcalls = [];
 	        		$sortcallsSym = [];
-	        		foreach ($query->result_array() as $v) {
+	        		foreach ($query->result_array() as $v) { 
+	        			$orgArr[$v["market_id"]][$v["symbol_id"]][$v["currency_id"]] = $v;
 	        			// to minimize the amount of calls I make to crypto compare I must first organize calls
 	        			$sortcalls[$v["market_id"].$v["currency_id"]] = array(
 	        				"market_id" => $v["market_id"],
@@ -214,8 +217,7 @@ class Cryptocompare_api extends CI_Model {
 	        		foreach ($sortcallsSym as $k => $v) {
 	        			$sortcalls[$k]["symbols"] = $v["symbols"];
 	        			$sortcalls[$k]["symbols_id"] = $v["symbols_id"];
-	        		}
-	        		
+	        		} 
 	        		$calls = [];  
 	        		foreach ($sortcalls as $k => $v) {
 	        			// get the special keyname by symbols
@@ -241,10 +243,10 @@ class Cryptocompare_api extends CI_Model {
 	        			$calls[$v["market_id"].$symbolKey]["currency"][] = $v["currency"];
 	        			$calls[$v["market_id"].$symbolKey]["currency_id"][] = $v["currency_id"];
 	        		}
-	        		// echo "total amount of calls method 2: ".count($calls);
-	        		 
-	        		// after testing, i found that arrays that carry over 50 currencies per call fail receiving error "fsyms param is invalid. (fsyms length is higher than maxlength: 300)". To fix this, I must split up large calls.
-	        		$calls = $this->cleanPriceData($calls);
+
+	 
+
+	        		$calls = $this->cleanPriceData($calls); 
 	        		$sortcalls = null;
 	        		$callcounter = 0;
 	        		foreach ($calls as $k => $v) {
@@ -254,15 +256,7 @@ class Cryptocompare_api extends CI_Model {
 	        				$callcounter = 1;
 	        			}
 	        			$getPrices = $cryptocomparePrice->getMultiPriceFull("1", $v["currency"], $v["symbols"],$v["market"], false); 
-	        			$disableDate = strtotime("-".$this->daysBeforeDisable." days");
-	        			// echo "<pre>";
-	        			// var_dump($v);
-	        			// echo "</pre>";
-	        			// echo "<br><br><br>";
-	        			// echo "<pre>";
-	        			// var_dump($getPrices);
-	        			// echo "</pre>";
-	        			// exit();
+	        			$disableDate = strtotime("-".$this->daysBeforeDisable." days"); 
 	        			if (!isset($getPrices->RAW) || empty($getPrices->RAW)) {
 	        				if (!isset($getPrices->Message) || empty($getPrices->Message)) {
 	        					$sql = "INSERT INTO api_errors (error, json, created) VALUES ('No Message, Price API', ".$this->db->escape(json_encode($v)).", ".$this->db->escape(time()).")";
@@ -272,18 +266,7 @@ class Cryptocompare_api extends CI_Model {
 	        						$sql = "INSERT INTO api_errors (error, json, created) VALUES ('Price API', ".$this->db->escape(json_encode($getPrices)).", ".$this->db->escape(time()).")";
 									$this->db->query($sql);
 	        					}
-	        				}
-	        				
-	        				/*echo "total currencies in call: ".count($v["currency"]);
-	        				echo "<br> currency: <br>";
-	        				echo "<pre>";
-	        				var_dump($v["currency"]);
-	        				echo "</pre>";
-	        				echo "<br><br><hr><br><br>";
-	        				echo "<pre>";
-	        				var_dump($getPrices);
-	        				echo "</pre>";
-	        				echo "<br>";*/
+	        				} 
 	        			} else {
 	        				foreach ($getPrices->RAW as $currency => $pairSets) {
 		        				foreach ($pairSets as $pair => $pairData) {
