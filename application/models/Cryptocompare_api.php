@@ -201,8 +201,7 @@ class Cryptocompare_api extends CI_Model {
 	        	if ($query->num_rows() > 0) {
 	        		$sortcalls = [];
 	        		$sortcallsSym = [];
-	        		foreach ($query->result_array() as $v) { 
-	        			$orgArr[$v["market_id"]][$v["symbol_id"]][$v["currency_id"]] = $v;
+	        		foreach ($query->result_array() as $v) {  
 	        			// to minimize the amount of calls I make to crypto compare I must first organize calls
 	        			$sortcalls[$v["market_id"].$v["currency_id"]] = array(
 	        				"market_id" => $v["market_id"],
@@ -249,7 +248,12 @@ class Cryptocompare_api extends CI_Model {
 	        		$calls = $this->cleanPriceData($calls); 
 	        		$sortcalls = null;
 	        		$callcounter = 0;
+
 	        		foreach ($calls as $k => $v) {
+	        			echo "<pre>";
+	        		var_dump($v);
+	        		echo "</pre>";
+	        		exit();
 	        			$callcounter += 1;
 	        			if ($callcounter == 51) {
 	        				sleep(1);
@@ -285,9 +289,12 @@ class Cryptocompare_api extends CI_Model {
 		        					}
 		        					if ($currency_id > 0 && $symbol_id > 0) {
 		        						// check if last update is old and pair data should be disabled before continuing
-			        					if ($pairData->LASTUPDATE < $disableDate || !isset($pairData->LASTUPDATE) || empty($pairData->LASTUPDATE)) {
-			        						$sql = "UPDATE markets_pairs SET active = '0' WHERE market_id = ".$this->db->escape($v["market_id"])." AND symbol_id = ".$this->db->escape($symbol_id)." AND currency_id = ".$this->db->escape($currency_id);
-			        						$this->db->query($sql);
+			        					if ($pairData->LASTUPDATE < $disableDate || !isset($pairData->LASTUPDATE) || empty($pairData->LASTUPDATE)) { 
+			        						$updateSQLBAD[] = array(
+			        							"currency_id" => $currency_id,
+			        							"market_id" => $v["market_id"],
+			        							"symbol_id" => $symbol_id
+			        						);
 			        					} else {
 			        						$insertSQL[] ="
 			        						(".$this->db->escape($v["market_id"]).",
@@ -332,10 +339,20 @@ class Cryptocompare_api extends CI_Model {
 			        						volume24hour,
 			        						created) VALUES ".implode(",",$insertSQL).";";
 			    $this->db->query($sql);
-			    foreach ($updateSQL as $q) {
-			    	$sql = "UPDATE markets_pairs SET volume24hour = ".$this->db->escape($q["volume24hour"]).", price = ".$this->db->escape($q["price"]).", lastupdate = ".$this->db->escape($q["lastupdate"])." WHERE market_id = ".$this->db->escape($q["market_id"])." AND currency_id = ".$this->db->escape($q["currency_id"])." AND symbol_id = ".$this->db->escape($q["symbol_id"]);
-			    	$this->db->query($sql);
+			    if (count($updateSQL) > 0) {
+			    	foreach ($updateSQL as $q) {
+				    	$sql = "UPDATE markets_pairs SET volume24hour = ".$this->db->escape($q["volume24hour"]).", price = ".$this->db->escape($q["price"]).", lastupdate = ".$this->db->escape($q["lastupdate"])." WHERE market_id = ".$this->db->escape($q["market_id"])." AND currency_id = ".$this->db->escape($q["currency_id"])." AND symbol_id = ".$this->db->escape($q["symbol_id"]);
+				    	$this->db->query($sql);
+				    }
 			    }
+			    if (count($updateSQLBAD) > 0) {
+			    	foreach ($updateSQLBAD as $q) {
+			    		$sql = "UPDATE markets_pairs SET active = '0' WHERE market_id = ".$this->db->escape($q["market_id"])." AND currency_id = ".$this->db->escape($q["currency_id"])." AND symbol_id = ".$this->db->escape($q["symbol_id"]);
+				    	$this->db->query($sql);
+			    	}
+			    }
+			    
+
 	        }
         	$sql = "INSERT INTO last_update (lastupdate) VALUES (".$this->db->escape(time()).")";
         	$this->db->query($sql);
