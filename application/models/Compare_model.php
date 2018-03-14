@@ -20,13 +20,13 @@ class Compare_model extends CI_Model {
 		$data = [];
 		$followup = [];
 		$sql = "SELECT
-					mp.price,
+					m.price,
 					m.currency_id,
 					m.market_id,
-					mp.lastupdate,
+					m.lastupdate,
 					m.symbol_id,
 					m.id AS 'pair_id',
-					mp.volume24hour
+					m.volume24hour
 				FROM
 					markets_pairs m 
 				WHERE
