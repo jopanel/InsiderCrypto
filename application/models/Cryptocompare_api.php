@@ -300,6 +300,14 @@ class Cryptocompare_api extends CI_Model {
 			        						".$this->db->escape($pairData->CHANGEPCT24HOUR).",
 			        						".$this->db->escape($pairData->VOLUME24HOURTO).",
 			        						".$this->db->escape(time()).")";
+			        						$updateSQL[] = array(
+			        							"currency_id" => $currency_id,
+			        							"market_id" => $v["market_id"],
+			        							"symbol_id" => $symbol_id,
+			        							"volume24hour" => $pairData->VOLUME24HOURTO,
+			        							"price" => $pairData->PRICE,
+			        							"lastupdate" => $pairData->LASTUPDATE
+			        						);
 			        					}
 		        					} else {
 		        						// problem obtaining symbol_id and currency_id
@@ -324,6 +332,10 @@ class Cryptocompare_api extends CI_Model {
 			        						volume24hour,
 			        						created) VALUES ".implode(",",$insertSQL).";";
 			    $this->db->query($sql);
+			    foreach ($updateSQL as $q) {
+			    	$sql = "UPDATE markets_pairs SET volume24hour = ".$this->db->escape($q["volume24hour"]).", price = ".$this->db->escape($q["price"]).", lastupdate = ".$this->db->escape($q["lastupdate"])." WHERE market_id = ".$this->db->escape($q["market_id"])." AND currency_id = ".$this->db->escape($q["currency_id"])." AND symbol_id = ".$this->db->escape($q["symbol_id"]);
+			    	$this->db->query($sql);
+			    }
 	        }
         	$sql = "INSERT INTO last_update (lastupdate) VALUES (".$this->db->escape(time()).")";
         	$this->db->query($sql);

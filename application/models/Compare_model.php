@@ -20,25 +20,15 @@ class Compare_model extends CI_Model {
 		$data = [];
 		$followup = [];
 		$sql = "SELECT
-					p.price,
+					mp.price,
 					m.currency_id,
 					m.market_id,
-					p.lastupdate,
+					mp.lastupdate,
 					m.symbol_id,
 					m.id AS 'pair_id',
-					p.volume24hour
+					mp.volume24hour
 				FROM
-					markets_pairs m
-				JOIN price_chart p ON p.id =(
-					SELECT
-						MAX(z.id)
-					FROM
-						price_chart z
-					WHERE
-						z.currency_id = m.currency_id
-					AND z.market_id = m.market_id
-					AND z.symbol_id = m.symbol_id
-				)
+					markets_pairs m 
 				WHERE
 					m.active = '1'";
 		$query = $this->db->query($sql);
@@ -101,22 +91,12 @@ class Compare_model extends CI_Model {
 				        	c.abbr as 'currency_abbr', 
 				        	s.abbr as 'symbol_abbr',
 				        	mp.id as 'market_pair',
-				        	p.price,
-				        	p.volume24hour
+				        	mp.price,
+				        	mp.volume24hour
 				        	FROM markets_pairs mp
 				        	LEFT JOIN markets m ON m.id = mp.market_id
 				        	LEFT JOIN currency c ON c.id = mp.currency_id
-				        	LEFT JOIN symbols s ON s.id = mp.symbol_id
-				        	JOIN price_chart p ON p.id =(
-								SELECT
-									MAX(z.id)
-								FROM
-									price_chart z
-								WHERE
-									z.currency_id = mp.currency_id
-								AND z.market_id = mp.market_id
-								AND z.symbol_id = mp.symbol_id
-							)  
+				        	LEFT JOIN symbols s ON s.id = mp.symbol_id  
 				        	WHERE 
 				        	EXISTS(SELECT 1 FROM markets mm WHERE mm.id = mp.market_id AND mm.active = '1')
 				        	AND mp.active = '1'
@@ -161,29 +141,15 @@ class Compare_model extends CI_Model {
 	        			return FALSE;
 	        		}
 					$sql = "SELECT
-								ROUND(p.price,2) as 'price',
-								p.symbol_id
+								ROUND(mp.price,2) as 'price',
+								mp.symbol_id
 							FROM
-								price_chart p
-							LEFT JOIN 
-								price_chart pp ON 
-								(p.symbol_id = pp.symbol_id AND p.currency_id = pp.currency_id AND p.lastupdate < pp.lastupdate)
+								markets_pairs mp 
 							WHERE
-								p.symbol_id IN(".implode(",",$presymbolsid).")
-							AND p.currency_id = ".$this->db->escape($btc_currency_id)."
-							AND NOT EXISTS(
-								SELECT
-									1
-								FROM
-									markets_pairs mp
-								WHERE
-									mp.symbol_id = p.symbol_id
-								AND mp.currency_id = p.currency_id
-								AND mp.market_id = p.market_id
-								AND mp.active = '0'
-							)
-							AND p.volume24hour > 0
-							AND pp.lastupdate is NULL";
+								mp.symbol_id IN(".implode(",",$presymbolsid).")
+							AND mp.currency_id = ".$this->db->escape($btc_currency_id)." 
+							AND mp.volume24hour > 0
+							AND mp.active = 1";
 	        		$query2 = $this->db->query($sql);
 	        		$presymbols = $presymbolsid = $presymbolsnoescape = null;
 	        		if ($query2->num_rows() > 0) {
