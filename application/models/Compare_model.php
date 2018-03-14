@@ -25,7 +25,8 @@ class Compare_model extends CI_Model {
 					m.market_id,
 					p.lastupdate,
 					m.symbol_id,
-					m.id AS 'pair_id'
+					m.id AS 'pair_id',
+					p.volume24hour
 				FROM
 					markets_pairs m
 				JOIN price_chart p ON p.id =(
@@ -43,7 +44,12 @@ class Compare_model extends CI_Model {
 		$query = $this->db->query($sql);
 		if ($query->num_rows() > 0) {
 			foreach ($query->result_array() as $res) {
-				$data[$res["currency_id"].$res["symbol_id"]][] = array("price"=>$res["price"], "market_id"=>$res["market_id"], "lastupdate"=>$res["lastupdate"], "pair_id" => $res["pair_id"]);
+				if ($res["volume24hour"] > 0) {
+					$data[$res["currency_id"].$res["symbol_id"]][] = array("price"=>$res["price"], "market_id"=>$res["market_id"], "lastupdate"=>$res["lastupdate"], "pair_id" => $res["pair_id"]);
+				} else {
+					$data[$res["currency_id"].$res["symbol_id"]][] = array("price"=>0, "market_id"=>$res["market_id"], "lastupdate"=>$res["lastupdate"], "pair_id" => $res["pair_id"]);
+				}
+				
 			}
 		}
 
@@ -95,7 +101,8 @@ class Compare_model extends CI_Model {
 				        	c.abbr as 'currency_abbr', 
 				        	s.abbr as 'symbol_abbr',
 				        	mp.id as 'market_pair',
-				        	p.price 
+				        	p.price,
+				        	p.volume24hour
 				        	FROM markets_pairs mp
 				        	LEFT JOIN markets m ON m.id = mp.market_id
 				        	LEFT JOIN currency c ON c.id = mp.currency_id
@@ -122,10 +129,12 @@ class Compare_model extends CI_Model {
 	        		$presymbols = [];
 	        		$presymbolsnoescape = [];
 	        		foreach ($query->result_array() as $res) {
-	        			$orgArr[$res["market_id"]][$res["symbol_id"]][$res["currency_id"]] = $res;
-	        			$presymbols[$res["symbol_id"]] = "'".$res["symbol_abbr"]."'";
-	        			$presymbolsid[$res["symbol_id"]] = "'".$res["symbol_id"]."'";
-	        			$presymbolsnoescape[$res["symbol_id"]] = $res["symbol_abbr"];
+	        			if ($res["volume24hour"] > 0) {
+	        				$orgArr[$res["market_id"]][$res["symbol_id"]][$res["currency_id"]] = $res;
+		        			$presymbols[$res["symbol_id"]] = "'".$res["symbol_abbr"]."'";
+		        			$presymbolsid[$res["symbol_id"]] = "'".$res["symbol_id"]."'";
+		        			$presymbolsnoescape[$res["symbol_id"]] = $res["symbol_abbr"];
+	        			}
 	        		}
 	        		// get bitcoin symbol_id 
 	        		$sql = "SELECT id FROM symbols WHERE abbr = 'BTC' LIMIT 1";
