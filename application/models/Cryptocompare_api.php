@@ -249,11 +249,7 @@ class Cryptocompare_api extends CI_Model {
 	        		$sortcalls = null;
 	        		$callcounter = 0;
 
-	        		foreach ($calls as $k => $v) {
-	        			echo "<pre>";
-	        		var_dump($v);
-	        		echo "</pre>";
-	        		exit();
+	        		foreach ($calls as $k => $v) { 
 	        			$callcounter += 1;
 	        			if ($callcounter == 51) {
 	        				sleep(1);
