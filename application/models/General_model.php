@@ -257,7 +257,7 @@ class General_model extends CI_Model {
                     ml.pair1_price,
                     ml.pair2_price,
                     COALESCE(ROUND(ml.percent,2), 'X') as 'percent',
-                    ml.created AS 'updated',
+                    ml.lastupdate AS 'updated',
                     m.id as 'identifier'
                 FROM
                     matches m
