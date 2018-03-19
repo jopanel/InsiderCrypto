@@ -112,9 +112,10 @@ class Compare_model extends CI_Model {
 							)  
 				        	WHERE 
 				        	EXISTS(SELECT 1 FROM markets mm WHERE mm.id = mp.market_id AND mm.active = '1')
+				        	AND NOT EXISTS(SELECT 1 FROM symbols ss WHERE c.abbr = ss.abbr)
 				        	AND mp.active = '1'
 	        	";
-
+	        	echo 1;
 	        	$query = $this->db->query($sql);
 	        	if ($query->num_rows() > 0) {
 	        		$orgArr = [];
@@ -126,7 +127,8 @@ class Compare_model extends CI_Model {
 	        			$presymbols[$res["symbol_id"]] = "'".$res["symbol_abbr"]."'";
 	        			$presymbolsid[$res["symbol_id"]] = "'".$res["symbol_id"]."'";
 	        			$presymbolsnoescape[$res["symbol_id"]] = $res["symbol_abbr"];
-	        		}
+	        		} 
+	        		echo 2;
 	        		// get bitcoin symbol_id 
 	        		$sql = "SELECT id FROM symbols WHERE abbr = 'BTC' LIMIT 1";
 	        		$query2 = $this->db->query($sql);
@@ -135,6 +137,7 @@ class Compare_model extends CI_Model {
 	        		} else {
 	        			return FALSE;
 	        		}
+	        		echo 3;
 	        		// get bitcoin currency_id
 	        		$sql = "SELECT id FROM currency WHERE abbr = 'BTC' LIMIT 1";
 	        		$query2 = $this->db->query($sql);
@@ -143,6 +146,7 @@ class Compare_model extends CI_Model {
 	        		} else {
 	        			return FALSE;
 	        		}
+	        		echo 4;
 	        		// get btc current usd price
 	        		$sql = "SELECT cost FROM bitcoin_value ORDER BY id DESC LIMIT 1";
 	        		$query2 = $this->db->query($sql);
@@ -151,6 +155,7 @@ class Compare_model extends CI_Model {
 	        		} else {
 	        			return FALSE;
 	        		}
+	        		echo 5;
 					$sql = "SELECT
 								ROUND(p.price,2) as 'price',
 								p.symbol_id
@@ -184,6 +189,7 @@ class Compare_model extends CI_Model {
 	        		} else {
 	        			return FALSE;
 	        		} 
+	        		echo 6;
 	        		$marketData = [];
 	        		foreach ($orgArr as $market_id => $mArr) {
 	        			foreach ($mArr as $sym_id => $cArr) {
@@ -197,6 +203,7 @@ class Compare_model extends CI_Model {
 	        				}
 	        			}
 	        		}
+	        	
 	        		$pairsFound = [];
 	        		foreach ($marketData as $market_id => $mArr) {
 	        			foreach ($mArr as $sym_id => $cArr) {
@@ -205,7 +212,7 @@ class Compare_model extends CI_Model {
 				        			foreach ($mArr2 as $sym_id2 => $cArr2) {
 				        				foreach ($cArr2 as $cur_id2 => $cur_data2) {
 				        					if ($sym_id2 != $sym_id && $cur_id2 == $cur_id) {
-				        						$percent = $this->calculatePercentage($cur_data["usd_cost"], $cur_data2["usd_cost"]); 
+				        						$percent = $this->calculatePercentage($cur_data["usd_cost"],$cur_data2["usd_cost"]); 
 				        						$pairsFound[] = array("pair1_id" => $cur_data["pair_id"], "pair1_price" => $cur_data["market_price"], "pair2_id" => $cur_data2["pair_id"], "pair2_price" => $cur_data2["market_price"], "percent" => $percent); 
 				        					}
 				        				}
@@ -213,7 +220,8 @@ class Compare_model extends CI_Model {
 				        		}
 	        				}
 	        			}
-	        		} 
+	        		}  
+	        		
 	        		$started = time();
 	        		$marketData = null;
 	        		foreach ($pairsFound as $m) { 
