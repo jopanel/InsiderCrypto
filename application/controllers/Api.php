@@ -6,7 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Api extends CI_Controller {
 
 	public function genArb($password=null) { 
-		if ($password == "checksum") {
+		if ($password == "checksum00") {
 			$this->load->model('Compare_model');
 			$this->Compare_model->generateArbitrageEvents(); 
 		}
@@ -17,35 +17,32 @@ class Api extends CI_Controller {
 		echo json_encode(array("success" => 0, "error" => "You haven't tipped overlord supreme 1.337 Lisk (4287319913737945577L)"));
 	}
 
-	public function update($type=null, $password="") {
-		$this->load->model('Cryptocompare_api'); 
-		$this->Cryptocompare_api->build();
-		$this->genArb("checksum");
+
+	public function getAllPriceData($password=""){
+		if ($password == "checksum00") {
+			$this->load->model('Cryptocompare_api'); 
+			$this->Cryptocompare_api->build(); 
+		}
 	}
 
 	public function checkForPayments() {
 		$this->General_model->checkPayments();
 	}
 
-	public function updateMatches() {
-		ini_set('max_execution_time', 0);
-        set_time_limit(0);
-		$this->load->model('Cryptocompare_api'); 
-		$this->load->model('Compare_model');
-		$followUps = $this->Compare_model->generateFollowUp();
-		if ($this->Cryptocompare_api->generatePrices($followUps) == TRUE) {
-			$this->Compare_model->generateArbitrageEvents();
+	public function updateMatches($password=null) {
+		if ($password == "checksum00") {
+			ini_set('max_execution_time', 0);
+	        set_time_limit(0);
+			$this->load->model('Cryptocompare_api'); 
+			$this->load->model('Compare_model');
+			$followUps = $this->Compare_model->generateFollowUp();
+			if ($this->Cryptocompare_api->generatePrices($followUps) == TRUE) {
+				$this->Compare_model->generateArbitrageEvents();
+				$this->Compare_model->generatePairEvents();
+			}
 		}
 	} 
 
-
-	public function test() {
-		ini_set('max_execution_time', 0);
-        set_time_limit(0); 
-		$this->load->model('Compare_model');
-		$this->Compare_model->generatePairEvents();
-		
-	} 
 
 	public function unsubscribe($email=null) {
 		if ($email == null) {

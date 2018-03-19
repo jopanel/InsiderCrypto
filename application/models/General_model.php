@@ -164,7 +164,6 @@ class General_model extends CI_Model {
             $sql = "SELECT p.market_id, m.name, count(p.id) FROM markets_pairs p 
                     LEFT JOIN markets m ON p.market_id = m.id AND m.active = '1'
                     WHERE p.active = '1'
-                                        AND EXISTS (SELECT 1 FROM price_chart pc WHERE pc.market_id = p.market_id)
                     GROUP BY p.market_id;";
             $query = $this->db->query($sql);
             if ($query->num_rows() > 0) {

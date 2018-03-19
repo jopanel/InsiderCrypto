@@ -90,7 +90,7 @@ class Cryptocompare_api extends CI_Model {
         		$sql = "SELECT 1 FROM markets WHERE name = ".$this->db->escape($k);
         		$query = $this->db->query($sql);
         		if ($query->num_rows() == 0) {
-        			$sql = "INSERT INTO markets (name) VALUES (".$this->db->escape($k).")";
+        			$sql = "INSERT INTO markets (name, active) VALUES (".$this->db->escape($k).", '1')";
         			$this->db->query($sql);
         		}
         	}
@@ -177,6 +177,7 @@ class Cryptocompare_api extends CI_Model {
 				        	EXISTS(SELECT 1 FROM markets mm WHERE mm.id = mp.market_id AND mm.active = '1')
 				        	AND mp.id IN (".implode(",",$followUps).")
 				        	AND mp.active = '1'
+				        	ORDER BY s.abbr ASC
 	        	";
         	} else {
 				$sql = "SELECT 
@@ -193,13 +194,14 @@ class Cryptocompare_api extends CI_Model {
 				        	WHERE 
 				        	EXISTS(SELECT 1 FROM markets mm WHERE mm.id = mp.market_id AND mm.active = '1')
 				        	AND mp.active = '1'
+				        	ORDER BY s.abbr ASC
 	        	";
 	        }
 	        	$query = $this->db->query($sql);
 	        	if ($query->num_rows() > 0) {
 	        		$sortcalls = [];
 	        		$sortcallsSym = [];
-	        		foreach ($query->result_array() as $v) {
+	        		foreach ($query->result_array() as $v) {  
 	        			// to minimize the amount of calls I make to crypto compare I must first organize calls
 	        			$sortcalls[$v["market_id"].$v["currency_id"]] = array(
 	        				"market_id" => $v["market_id"],
@@ -214,8 +216,7 @@ class Cryptocompare_api extends CI_Model {
 	        		foreach ($sortcallsSym as $k => $v) {
 	        			$sortcalls[$k]["symbols"] = $v["symbols"];
 	        			$sortcalls[$k]["symbols_id"] = $v["symbols_id"];
-	        		}
-	        		
+	        		} 
 	        		$calls = [];  
 	        		foreach ($sortcalls as $k => $v) {
 	        			// get the special keyname by symbols
@@ -241,28 +242,21 @@ class Cryptocompare_api extends CI_Model {
 	        			$calls[$v["market_id"].$symbolKey]["currency"][] = $v["currency"];
 	        			$calls[$v["market_id"].$symbolKey]["currency_id"][] = $v["currency_id"];
 	        		}
-	        		// echo "total amount of calls method 2: ".count($calls);
-	        		 
-	        		// after testing, i found that arrays that carry over 50 currencies per call fail receiving error "fsyms param is invalid. (fsyms length is higher than maxlength: 300)". To fix this, I must split up large calls.
-	        		$calls = $this->cleanPriceData($calls);
+
+	 
+
+	        		$calls = $this->cleanPriceData($calls); 
 	        		$sortcalls = null;
 	        		$callcounter = 0;
-	        		foreach ($calls as $k => $v) {
+
+	        		foreach ($calls as $k => $v) { 
 	        			$callcounter += 1;
 	        			if ($callcounter == 51) {
 	        				sleep(1);
 	        				$callcounter = 1;
 	        			}
 	        			$getPrices = $cryptocomparePrice->getMultiPriceFull("1", $v["currency"], $v["symbols"],$v["market"], false); 
-	        			$disableDate = strtotime("-".$this->daysBeforeDisable." days");
-	        			// echo "<pre>";
-	        			// var_dump($v);
-	        			// echo "</pre>";
-	        			// echo "<br><br><br>";
-	        			// echo "<pre>";
-	        			// var_dump($getPrices);
-	        			// echo "</pre>";
-	        			// exit();
+	        			$disableDate = strtotime("-".$this->daysBeforeDisable." days"); 
 	        			if (!isset($getPrices->RAW) || empty($getPrices->RAW)) {
 	        				if (!isset($getPrices->Message) || empty($getPrices->Message)) {
 	        					$sql = "INSERT INTO api_errors (error, json, created) VALUES ('No Message, Price API', ".$this->db->escape(json_encode($v)).", ".$this->db->escape(time()).")";
@@ -272,18 +266,7 @@ class Cryptocompare_api extends CI_Model {
 	        						$sql = "INSERT INTO api_errors (error, json, created) VALUES ('Price API', ".$this->db->escape(json_encode($getPrices)).", ".$this->db->escape(time()).")";
 									$this->db->query($sql);
 	        					}
-	        				}
-	        				
-	        				/*echo "total currencies in call: ".count($v["currency"]);
-	        				echo "<br> currency: <br>";
-	        				echo "<pre>";
-	        				var_dump($v["currency"]);
-	        				echo "</pre>";
-	        				echo "<br><br><hr><br><br>";
-	        				echo "<pre>";
-	        				var_dump($getPrices);
-	        				echo "</pre>";
-	        				echo "<br>";*/
+	        				} 
 	        			} else {
 	        				foreach ($getPrices->RAW as $currency => $pairSets) {
 		        				foreach ($pairSets as $pair => $pairData) {
@@ -302,9 +285,12 @@ class Cryptocompare_api extends CI_Model {
 		        					}
 		        					if ($currency_id > 0 && $symbol_id > 0) {
 		        						// check if last update is old and pair data should be disabled before continuing
-			        					if ($pairData->LASTUPDATE < $disableDate || !isset($pairData->LASTUPDATE) || empty($pairData->LASTUPDATE)) {
-			        						$sql = "UPDATE markets_pairs SET active = '0' WHERE market_id = ".$this->db->escape($v["market_id"])." AND symbol_id = ".$this->db->escape($symbol_id)." AND currency_id = ".$this->db->escape($currency_id);
-			        						$this->db->query($sql);
+			        					if ($pairData->LASTUPDATE < $disableDate || !isset($pairData->LASTUPDATE) || empty($pairData->LASTUPDATE)) { 
+			        						$updateSQLBAD[] = array(
+			        							"currency_id" => $currency_id,
+			        							"market_id" => $v["market_id"],
+			        							"symbol_id" => $symbol_id
+			        						);
 			        					} else {
 			        						$insertSQL[] ="
 			        						(".$this->db->escape($v["market_id"]).",
@@ -317,6 +303,14 @@ class Cryptocompare_api extends CI_Model {
 			        						".$this->db->escape($pairData->CHANGEPCT24HOUR).",
 			        						".$this->db->escape($pairData->VOLUME24HOURTO).",
 			        						".$this->db->escape(time()).")";
+			        						$updateSQL[] = array(
+			        							"currency_id" => $currency_id,
+			        							"market_id" => $v["market_id"],
+			        							"symbol_id" => $symbol_id,
+			        							"volume24hour" => $pairData->VOLUME24HOURTO,
+			        							"price" => $pairData->PRICE,
+			        							"lastupdate" => $pairData->LASTUPDATE
+			        						);
 			        					}
 		        					} else {
 		        						// problem obtaining symbol_id and currency_id
@@ -341,6 +335,20 @@ class Cryptocompare_api extends CI_Model {
 			        						volume24hour,
 			        						created) VALUES ".implode(",",$insertSQL).";";
 			    $this->db->query($sql);
+			    if (count($updateSQL) > 0) {
+			    	foreach ($updateSQL as $q) {
+				    	$sql = "UPDATE markets_pairs SET volume24hour = ".$this->db->escape($q["volume24hour"]).", price = ".$this->db->escape($q["price"]).", lastupdate = ".$this->db->escape($q["lastupdate"])." WHERE market_id = ".$this->db->escape($q["market_id"])." AND currency_id = ".$this->db->escape($q["currency_id"])." AND symbol_id = ".$this->db->escape($q["symbol_id"]);
+				    	$this->db->query($sql);
+				    }
+			    }
+			    if (count($updateSQLBAD) > 0) {
+			    	foreach ($updateSQLBAD as $q) {
+			    		$sql = "UPDATE markets_pairs SET active = '0' WHERE market_id = ".$this->db->escape($q["market_id"])." AND currency_id = ".$this->db->escape($q["currency_id"])." AND symbol_id = ".$this->db->escape($q["symbol_id"]);
+				    	$this->db->query($sql);
+			    	}
+			    }
+			    
+
 	        }
         	$sql = "INSERT INTO last_update (lastupdate) VALUES (".$this->db->escape(time()).")";
         	$this->db->query($sql);
