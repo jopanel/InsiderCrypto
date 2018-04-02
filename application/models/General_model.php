@@ -609,8 +609,7 @@ class General_model extends CI_Model {
         9 =  username or email exists already
         */
             $error = 0;
-            if (!isset($postData["username"]) || empty($postData["username"])) { return 2;} else { $username = $this->db->escape(strip_tags($postData["username"]));}
-            if ($postData["username"] == ("administrator"  || "owner")) { return 2;}
+            if (!isset($postData["username"]) || empty($postData["username"])) { return 2;} else { $username = $this->db->escape(strip_tags($postData["username"]));} 
             if (!isset($postData["password"]) || empty($postData["password"])) { return 3;} else { $password = strip_tags($postData["password"]);}
             if (!isset($postData["password2"]) || empty($postData["password2"])) { return 4;} else { $password2 = strip_tags($postData["password2"]);}
             if (!isset($postData["email"]) || empty($postData["email"])) { return 6;} else { $email = $this->db->escape(strip_tags($postData["email"]));}
