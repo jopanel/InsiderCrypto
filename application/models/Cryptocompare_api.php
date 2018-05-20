@@ -249,12 +249,47 @@ class Cryptocompare_api extends CI_Model {
 	        		$sortcalls = null;
 	        		$callcounter = 0;
 
-	        		foreach ($calls as $k => $v) { 
-	        			$callcounter += 1;
-	        			if ($callcounter == 51) {
-	        				sleep(1);
-	        				$callcounter = 1;
-	        			}
+	        		foreach ($calls as $v) {
+	        			$this->curl_post_async(base_url().'api/asyncPriceRequest/'.API_PASSWORD, json_encode($v));
+	        		}
+	        	}
+
+	        
+        	$sql = "INSERT INTO last_update (lastupdate) VALUES (".$this->db->escape(time()).")";
+        	$this->db->query($sql);
+        	return TRUE;
+        }
+
+        public function cleanPriceData($calls=array()) {
+        	$output = [];
+        	foreach ($calls as $k => $v) {
+        		if (count($v["currency"]) > 50) { 
+        			$keybuilder = $k + 1;
+        			$counter = -1;
+        			foreach ($v["currency"] as $key => $val) {
+        				$counter += 1;
+        				if ($counter == 50) {
+        					$counter = 0;
+        					$keybuilder += 1;
+        				}
+        				$output[$keybuilder]["market"] = $v["market"];
+        				$output[$keybuilder]["market_id"] = $v["market_id"];
+        				$output[$keybuilder]["symbols"] = $v["symbols"];
+        				$output[$keybuilder]["symbols_id"] = $v["symbols_id"];
+        				$output[$keybuilder]["currency"][] = $val;
+        				$output[$keybuilder]["currency_id"][] = $v["currency_id"][$key];
+        			}
+        		} else {
+        			$output[] = $v;
+        		}
+        	}
+        	return $output;
+        }
+
+        public function priceDataParse($calls=array()) { 
+        		$calls = json_decode($calls, TRUE);
+        			foreach ($calls as $k => $v) { 
+
 	        			$getPrices = $cryptocomparePrice->getMultiPriceFull("1", $v["currency"], $v["symbols"],$v["market"], false); 
 	        			$disableDate = strtotime("-".$this->daysBeforeDisable." days"); 
 	        			if (!isset($getPrices->RAW) || empty($getPrices->RAW)) {
@@ -320,66 +355,60 @@ class Cryptocompare_api extends CI_Model {
 	        			}
 	        			
 	        		}
-	        	}
 
-	        if (count($insertSQL) > 0) {
-	        	$sql = "INSERT INTO price_chart 
-			        						(market_id, 
-			        						currency_id,
-			        						symbol_id,
-			        						price,
-			        						lastupdate,
-			        						price_low,
-			        						price_high,
-			        						changepct24hour,
-			        						volume24hour,
-			        						created) VALUES ".implode(",",$insertSQL).";";
-			    $this->db->query($sql);
-			    if (count($updateSQL) > 0) {
-			    	foreach ($updateSQL as $q) {
-				    	$sql = "UPDATE markets_pairs SET volume24hour = ".$this->db->escape($q["volume24hour"]).", price = ".$this->db->escape($q["price"]).", lastupdate = ".$this->db->escape($q["lastupdate"])." WHERE market_id = ".$this->db->escape($q["market_id"])." AND currency_id = ".$this->db->escape($q["currency_id"])." AND symbol_id = ".$this->db->escape($q["symbol_id"]);
-				    	$this->db->query($sql);
-				    }
-			    }
-			    if (count($updateSQLBAD) > 0) {
-			    	foreach ($updateSQLBAD as $q) {
-			    		$sql = "UPDATE markets_pairs SET active = '0' WHERE market_id = ".$this->db->escape($q["market_id"])." AND currency_id = ".$this->db->escape($q["currency_id"])." AND symbol_id = ".$this->db->escape($q["symbol_id"]);
-				    	$this->db->query($sql);
-			    	}
-			    }
-			    
+	        		if (count($insertSQL) > 0) {
+			        	$sql = "INSERT INTO price_chart 
+					        						(market_id, 
+					        						currency_id,
+					        						symbol_id,
+					        						price,
+					        						lastupdate,
+					        						price_low,
+					        						price_high,
+					        						changepct24hour,
+					        						volume24hour,
+					        						created) VALUES ".implode(",",$insertSQL).";";
+					    $this->db->query($sql);
+					    if (count($updateSQL) > 0) {
+					    	foreach ($updateSQL as $q) {
+						    	$sql = "UPDATE markets_pairs SET volume24hour = ".$this->db->escape($q["volume24hour"]).", price = ".$this->db->escape($q["price"]).", lastupdate = ".$this->db->escape($q["lastupdate"])." WHERE market_id = ".$this->db->escape($q["market_id"])." AND currency_id = ".$this->db->escape($q["currency_id"])." AND symbol_id = ".$this->db->escape($q["symbol_id"]);
+						    	$this->db->query($sql);
+						    }
+					    }
+					    if (count($updateSQLBAD) > 0) {
+					    	foreach ($updateSQLBAD as $q) {
+					    		$sql = "UPDATE markets_pairs SET active = '0' WHERE market_id = ".$this->db->escape($q["market_id"])." AND currency_id = ".$this->db->escape($q["currency_id"])." AND symbol_id = ".$this->db->escape($q["symbol_id"]);
+						    	$this->db->query($sql);
+					    	}
+					    }
+			        }
 
-	        }
-        	$sql = "INSERT INTO last_update (lastupdate) VALUES (".$this->db->escape(time()).")";
-        	$this->db->query($sql);
-        	return TRUE;
         }
 
-        public function cleanPriceData($calls=array()) {
-        	$output = [];
-        	foreach ($calls as $k => $v) {
-        		if (count($v["currency"]) > 50) { 
-        			$keybuilder = $k + 1;
-        			$counter = -1;
-        			foreach ($v["currency"] as $key => $val) {
-        				$counter += 1;
-        				if ($counter == 50) {
-        					$counter = 0;
-        					$keybuilder += 1;
-        				}
-        				$output[$keybuilder]["market"] = $v["market"];
-        				$output[$keybuilder]["market_id"] = $v["market_id"];
-        				$output[$keybuilder]["symbols"] = $v["symbols"];
-        				$output[$keybuilder]["symbols_id"] = $v["symbols_id"];
-        				$output[$keybuilder]["currency"][] = $val;
-        				$output[$keybuilder]["currency_id"][] = $v["currency_id"][$key];
-        			}
-        		} else {
-        			$output[] = $v;
-        		}
-        	}
-        	return $output;
-        }
+        public function curl_post_async($url, $params = array()){
+	        	//$post_params = array();
+	        	// foreach ($params as $key => &$val) {
+	         //      if (is_array($val)) $val = implode(',', $val);
+	         //        $post_params[] = $key.'='.urlencode($val);
+	         //    }
+	            $post_string = $params;
+	            $parts = parse_url($url);
+	            $fp = fsockopen($parts['host'],
+	                isset($parts['port'])?$parts['port']:80,
+	                $errno, $errstr, 30);
+
+	            $out = "POST ".$parts['path']." HTTP/1.1\r\n";
+	            $out.= "Host: ".$parts['host']."\r\n";
+	            $out.= "Content-Type: application/json\r\n";
+	            $out.= "Content-Length: ".strlen($post_string)."\r\n";
+	            $out.= "Connection: Close\r\n\r\n";
+	            if (isset($post_string)) $out.= $post_string;
+	            echo $out;
+	            echo "<br><br><br>";
+	            fwrite($fp, $out); 
+	            fclose($fp);
+	            exit();
+	    }
 
         public function getBitcoinValue() {
         	date_default_timezone_set('America/Los_Angeles');

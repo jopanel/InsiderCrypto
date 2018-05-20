@@ -116,6 +116,22 @@ class Price extends CryptocompareApi
         return $r;
     }
 
+    public function getMultiPriceFullReturn($tryConversion = "1", $fsyms = array("BTC","ETH"), $tsyms = array("USD","EUR"), $e = "CCCAGG", $sign = false) {
+        $_tsyms = $this->arrayToCommaSeperatedString($tsyms);
+        $_fsyms = $this->arrayToCommaSeperatedString($fsyms);
+        $extraParams = $this->appplicationName;;
+
+        $params = array(
+            "tryConversion" => $tryConversion,
+            "fsyms" => $_fsyms,
+            "tsyms" => $_tsyms,
+            "e" => $e,
+            "extraParams" => $extraParams,
+            "sign" => $sign
+        );
+        return $params;
+    }
+
     /**
      * @param string $tryConversion - type of currency to convert from - default: BTC
      * @param string $fsym - base currency to convert from
