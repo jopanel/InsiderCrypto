@@ -159,8 +159,7 @@ class Cryptocompare_api extends CI_Model {
 
         public function generatePrices($followUps=array()) {
         	$this->getBitcoinValue();
-        	$insertSQL = [];
-        	$cryptocomparePrice = new Cryptocompare\Price();
+        	$insertSQL = []; 
         	if (count($followUps) > 0) {
         		$sql = "SELECT 
 				        	mp.market_id, 
@@ -250,7 +249,12 @@ class Cryptocompare_api extends CI_Model {
 	        		$callcounter = 0;
 
 	        		foreach ($calls as $v) {
-	        			$this->curl_post_async(base_url().'api/asyncPriceRequest/'.API_PASSWORD, json_encode($v));
+	        			$callcounter += 1;
+	        			if ($callcounter == 51) {
+	        				sleep(1);
+	        				$callcounter = 1;
+	        			}
+	        			$this->curl_post_async(base_url().'api/asyncPriceRequest/'.API_PASSWORD, $v);
 	        		}
 	        	}
 
@@ -287,8 +291,10 @@ class Cryptocompare_api extends CI_Model {
         }
 
         public function priceDataParse($calls=array()) { 
-        		$calls = json_decode($calls, TRUE);
-        			foreach ($calls as $k => $v) { 
+        		$insertSQL = [];
+        		$v = json_decode($calls, TRUE); 
+        		//var_dump($calls); 
+        		$cryptocomparePrice = new Cryptocompare\Price(); 
 
 	        			$getPrices = $cryptocomparePrice->getMultiPriceFull("1", $v["currency"], $v["symbols"],$v["market"], false); 
 	        			$disableDate = strtotime("-".$this->daysBeforeDisable." days"); 
@@ -354,7 +360,7 @@ class Cryptocompare_api extends CI_Model {
 		        			}
 	        			}
 	        			
-	        		}
+	        		
 
 	        		if (count($insertSQL) > 0) {
 			        	$sql = "INSERT INTO price_chart 
@@ -385,29 +391,23 @@ class Cryptocompare_api extends CI_Model {
 
         }
 
-        public function curl_post_async($url, $params = array()){
-	        	//$post_params = array();
-	        	// foreach ($params as $key => &$val) {
-	         //      if (is_array($val)) $val = implode(',', $val);
-	         //        $post_params[] = $key.'='.urlencode($val);
-	         //    }
+        public function curl_post_async($url, $params = array()){ 
 	            $post_string = $params;
 	            $parts = parse_url($url);
 	            $fp = fsockopen($parts['host'],
 	                isset($parts['port'])?$parts['port']:80,
 	                $errno, $errstr, 30);
+				$content = http_build_query($params);
 
-	            $out = "POST ".$parts['path']." HTTP/1.1\r\n";
-	            $out.= "Host: ".$parts['host']."\r\n";
-	            $out.= "Content-Type: application/json\r\n";
-	            $out.= "Content-Length: ".strlen($post_string)."\r\n";
-	            $out.= "Connection: Close\r\n\r\n";
-	            if (isset($post_string)) $out.= $post_string;
-	            echo $out;
-	            echo "<br><br><br>";
-	            fwrite($fp, $out); 
-	            fclose($fp);
-	            exit();
+				fwrite($fp, "POST ".$parts['path']." HTTP/1.1\r\n");
+				fwrite($fp, "Host: ".$parts['host']."\r\n");
+				fwrite($fp, "Content-Type: application/x-www-form-urlencoded\r\n");
+				fwrite($fp, "Content-Length: ".strlen($content)."\r\n");
+				fwrite($fp, "Connection: close\r\n");
+				fwrite($fp, "\r\n");
+
+				fwrite($fp, $content);
+				fclose($fp); 
 	    }
 
         public function getBitcoinValue() {

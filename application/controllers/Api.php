@@ -16,10 +16,8 @@ class Api extends CI_Controller {
 	{
 		echo json_encode(array("success" => 0, "error" => "You haven't tipped overlord supreme 1.337 Lisk (4287319913737945577L)"));
 	}
-
-	
 /*
-	CRON Job Related Functions
+	CRON Job Calls
 */
 
 	public function getAllPriceData($password=""){
@@ -46,12 +44,20 @@ class Api extends CI_Controller {
 			}
 		}
 	} 
+	
+/*
+	CRON Job Related Functions
+*/
+
+	
+
+	
 
 	public function asyncPriceRequest($password=null) {
-		if ($password == API_PASSWORD) {
-			if ($this->input->post()) {
+		if ($password == API_PASSWORD) { 
+			if ($this->input->post()) { 
 				$this->load->model('Cryptocompare_api');
-				$this->Cryptocompare_api->priceDataParse($this->input->post());
+				$this->Cryptocompare_api->priceDataParse(json_encode($this->input->post()));
 			}
 		} 
 	}
