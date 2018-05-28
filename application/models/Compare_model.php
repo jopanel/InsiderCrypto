@@ -20,24 +20,14 @@ class Compare_model extends CI_Model {
 		$data = [];
 		$followup = [];
 		$sql = "SELECT
-					p.price,
+					m.price,
 					m.currency_id,
 					m.market_id,
-					p.lastupdate,
+					m.lastupdate,
 					m.symbol_id,
 					m.id AS 'pair_id'
 				FROM
-					markets_pairs m
-				JOIN price_chart p ON p.id =(
-					SELECT
-						MAX(z.id)
-					FROM
-						price_chart z
-					WHERE
-						z.currency_id = m.currency_id
-					AND z.market_id = m.market_id
-					AND z.symbol_id = m.symbol_id
-				)
+					markets_pairs m 
 				WHERE
 					m.active = '1'";
 		$query = $this->db->query($sql);
@@ -95,27 +85,17 @@ class Compare_model extends CI_Model {
 				        	c.abbr as 'currency_abbr', 
 				        	s.abbr as 'symbol_abbr',
 				        	mp.id as 'market_pair',
-				        	p.price 
+				        	mp.price 
 				        	FROM markets_pairs mp
 				        	LEFT JOIN markets m ON m.id = mp.market_id
 				        	LEFT JOIN currency c ON c.id = mp.currency_id
-				        	LEFT JOIN symbols s ON s.id = mp.symbol_id
-				        	JOIN price_chart p ON p.id =(
-								SELECT
-									MAX(z.id)
-								FROM
-									price_chart z
-								WHERE
-									z.currency_id = mp.currency_id
-								AND z.market_id = mp.market_id
-								AND z.symbol_id = mp.symbol_id
-							)  
+				        	LEFT JOIN symbols s ON s.id = mp.symbol_id  
 				        	WHERE 
 				        	EXISTS(SELECT 1 FROM markets mm WHERE mm.id = mp.market_id AND mm.active = '1')
 				        	AND NOT EXISTS(SELECT 1 FROM symbols ss WHERE c.abbr = ss.abbr)
 				        	AND mp.active = '1'
 	        	";
-	        	echo 1;
+	        	//echo 1;
 	        	$query = $this->db->query($sql);
 	        	if ($query->num_rows() > 0) {
 	        		$orgArr = [];
@@ -128,7 +108,7 @@ class Compare_model extends CI_Model {
 	        			$presymbolsid[$res["symbol_id"]] = "'".$res["symbol_id"]."'";
 	        			$presymbolsnoescape[$res["symbol_id"]] = $res["symbol_abbr"];
 	        		} 
-	        		echo 2;
+	        		//echo 2;
 	        		// get bitcoin symbol_id 
 	        		$sql = "SELECT id FROM symbols WHERE abbr = 'BTC' LIMIT 1";
 	        		$query2 = $this->db->query($sql);
@@ -137,7 +117,7 @@ class Compare_model extends CI_Model {
 	        		} else {
 	        			return FALSE;
 	        		}
-	        		echo 3;
+	        		//echo 3;
 	        		// get bitcoin currency_id
 	        		$sql = "SELECT id FROM currency WHERE abbr = 'BTC' LIMIT 1";
 	        		$query2 = $this->db->query($sql);
@@ -146,7 +126,7 @@ class Compare_model extends CI_Model {
 	        		} else {
 	        			return FALSE;
 	        		}
-	        		echo 4;
+	        		//echo 4;
 	        		// get btc current usd price
 	        		$sql = "SELECT cost FROM bitcoin_value ORDER BY id DESC LIMIT 1";
 	        		$query2 = $this->db->query($sql);
@@ -155,7 +135,7 @@ class Compare_model extends CI_Model {
 	        		} else {
 	        			return FALSE;
 	        		}
-	        		echo 5;
+	        		//echo 5;
 					$sql = "SELECT
 								ROUND(p.price,2) as 'price',
 								p.symbol_id
