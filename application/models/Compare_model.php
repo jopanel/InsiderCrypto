@@ -176,8 +176,8 @@ class Compare_model extends CI_Model {
 								AND mp.volume24hour > 0
 								AND mp.price > 0
 								AND mp.active = '1'";
-							echo $sql;
-							echo "<br><br><br>";
+							//echo $sql;
+							//echo "<br><br><br>";
 	        		$query2 = $this->db->query($sql);
 	        		$presymbols = $presymbolsid = $presymbolsnoescape = null;
 	        		if ($query2->num_rows() > 0) {
