@@ -453,7 +453,7 @@ class General_model extends CI_Model {
                 $sql = "SELECT p.market_id, m.name, count(p.id) FROM markets_pairs p 
                     LEFT JOIN markets m ON p.market_id = m.id AND m.active = '1'
                     WHERE p.active = '1'
-                                        AND EXISTS (SELECT 1 FROM price_chart pc WHERE pc.market_id = p.market_id)
+                    AND p.price != '0'
                     GROUP BY p.market_id;";
                 $query = $this->db->query($sql);
                 if ($query->num_rows() > 0) {
@@ -471,7 +471,7 @@ class General_model extends CI_Model {
         }
 
         public function getProgramCost() {
-            $sql = 'select p.price FROM price_chart p
+            $sql = 'select p.price FROM markets_pairs p
                     LEFT JOIN currency c ON c.id = p.currency_id
                     LEFT JOIN markets m ON m.id = p.market_id 
                     LEFT JOIN symbols s ON s.id = p.symbol_id 
@@ -496,7 +496,7 @@ class General_model extends CI_Model {
 
         public function getPaidStatus() {
             // firstly check if they are VIP status
-            $sql = "SELECT vip, id, admin, paid FROM users WHERE email = ".$this->db->escape($this->session->userdata("email"))." AND verification_key = ".$this->db->escape($this->session->userdata("verification_key"));
+            $sql = "SELECT `vip`, `id`, `admin`, `paid` FROM users WHERE email = ".$this->db->escape($this->session->userdata("email"))." AND verification_key = ".$this->db->escape($this->session->userdata("verification_key"));
             $query = $this->db->query($sql);
             if ($query->num_rows() > 0) {
                 $vip = $query->row()->vip;

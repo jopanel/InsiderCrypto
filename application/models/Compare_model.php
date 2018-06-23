@@ -29,7 +29,9 @@ class Compare_model extends CI_Model {
 				FROM
 					markets_pairs m 
 				WHERE
-					m.active = '1'";
+					m.active = '1'
+					AND
+					m.price > '0'";
 		$query = $this->db->query($sql);
 		if ($query->num_rows() > 0) {
 			foreach ($query->result_array() as $res) {
@@ -94,6 +96,7 @@ class Compare_model extends CI_Model {
 				        	EXISTS(SELECT 1 FROM markets mm WHERE mm.id = mp.market_id AND mm.active = '1')
 				        	AND NOT EXISTS(SELECT 1 FROM symbols ss WHERE c.abbr = ss.abbr)
 				        	AND mp.active = '1'
+				        	AND mp.price > '0'
 	        	";
 	        	//echo 1;
 	        	$query = $this->db->query($sql);
@@ -136,7 +139,7 @@ class Compare_model extends CI_Model {
 	        			return FALSE;
 	        		}
 	        		//echo 5;
-					$sql = "SELECT
+					/*$sql = "SELECT
 								ROUND(p.price,2) as 'price',
 								p.symbol_id
 							FROM
@@ -159,7 +162,22 @@ class Compare_model extends CI_Model {
 								AND mp.active = '0'
 							)
 							AND p.volume24hour > 0
-							AND pp.lastupdate is NULL";
+							AND pp.lastupdate is NULL";*/
+						$sql = "SELECT
+									ROUND(mp.price, 2)AS 'price',
+									mp.symbol_id
+								FROM
+									markets_pairs mp 
+								WHERE
+									mp.symbol_id IN(
+										".implode(",",$presymbolsid)."
+									)
+								AND mp.currency_id = ".$this->db->escape($btc_currency_id)."
+								AND mp.volume24hour > 0
+								AND mp.price > 0
+								AND mp.active = '1'";
+							echo $sql;
+							echo "<br><br><br>";
 	        		$query2 = $this->db->query($sql);
 	        		$presymbols = $presymbolsid = $presymbolsnoescape = null;
 	        		if ($query2->num_rows() > 0) {
@@ -169,7 +187,7 @@ class Compare_model extends CI_Model {
 	        		} else {
 	        			return FALSE;
 	        		} 
-	        		echo 6;
+	        		//echo 6;
 	        		$marketData = [];
 	        		foreach ($orgArr as $market_id => $mArr) {
 	        			foreach ($mArr as $sym_id => $cArr) {
@@ -228,8 +246,32 @@ class Compare_model extends CI_Model {
 	        					$sql = "INSERT INTO matches_log (match_id, pair1_id, pair2_id, pair1_price, pair2_price, percent, created) VALUES (".$this->db->escape($match_id).", ".$this->db->escape($m["pair1_id"]).", ".$this->db->escape($m["pair2_id"]).", ".$this->db->escape($m["pair1_price"]).", ".$this->db->escape($m["pair2_price"]).", ".$this->db->escape($m["percent"]).", ".$this->db->escape($started).")";
 	        					$this->db->query($sql);
 	        				} else {
-	        					$sql = "UPDATE matches SET finished = ".$this->db->escape($started)." WHERE pair1_id = ".$this->db->escape($m["pair1_id"])." AND pair2_id = ".$this->db->escape($m["pair2_id"])." AND finished IS NULL";
-	        					$this->db->query($sql);
+
+	        					$sql = "SELECT id, started FROM matches WHERE pair1_id = ".$this->db->escape($m["pair1_id"])." AND pair2_id = ".$this->db->escape($m["pair2_id"])." AND finished IS NULL";
+	        					$query2 = $this->db->query($sql);
+	        					$match_id = $query2->row()->id;
+	        					$started = $query2->row()->started;
+	        					$sql = "SELECT
+											COALESCE(AVG(pair1_price), 0)AS 'avg_price_pair1',
+											COALESCE(AVG(pair2_price), 0)AS 'avg_price_pair2',
+											COALESCE(AVG(percent), 0)AS 'avg_percent',
+											COALESCE(COUNT(id), 0)AS 'price_calls',
+											COALESCE(MIN(pair1_price), 0)AS 'low_price_pair1',
+											COALESCE(MIN(pair2_price), 0)AS 'low_price_pair2',
+											COALESCE(MAX(pair1_price), 0)AS 'high_price_pair1',
+											COALESCE(MAX(pair2_price), 0)AS 'high_price_pair2',
+											GROUP_CONCAT(id)AS 'ids'
+										FROM
+											matches_log
+										WHERE
+											match_id = ".$this->db->escape($match_id);
+								$query3 = $this->db->query($sql); 
+								$sql = "INSERT INTO match_history (match_id, pair1_id, pair2_id, started, finished, avg_percent, price_calls, avg_price_pair1, avg_price_pair2, low_price_pair1, low_price_pair2, high_price_pair1, high_price_pair2) VALUES (".$this->db->escape($match_id).", ".$this->db->escape($m["pair1_id"]).", ".$this->db->escape($m["pair2_id"]).", ".$this->db->escape($started).",".$this->db->escape(time()).", ".$this->db->escape($query3->row()->avg_percent).", ".$this->db->escape($query3->row()->price_calls).", ".$this->db->escape($query3->row()->avg_price_pair1).", ".$this->db->escape($query3->row()->avg_price_pair2).", ".$this->db->escape($query3->row()->low_price_pair1).", ".$this->db->escape($query3->row()->low_price_pair2).", ".$this->db->escape($query3->row()->high_price_pair1).", ".$this->db->escape($query3->row()->high_price_pair2).")";
+								$this->db->query($sql);
+								$sql = "DELETE FROM matches WHERE match_id = ".$this->db->escape($match_id);
+								$this->db->query($sql);
+								$sql = "DELETE FROM matches_log WHERE match_id = ".$this->db->escape($match_id);
+								$this->db->query($sql);
 	        				}
 	        			} else { 
 	        				// if percent > 3 insert new row

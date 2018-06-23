@@ -3,15 +3,15 @@
 
  Source Server         : localhost
  Source Server Type    : MySQL
- Source Server Version : 50721
+ Source Server Version : 50640
  Source Host           : 127.0.0.1
  Source Database       : insider_crypto
 
  Target Server Type    : MySQL
- Target Server Version : 50721
+ Target Server Version : 50640
  File Encoding         : utf-8
 
- Date: 02/26/2018 14:54:37 PM
+ Date: 06/23/2018 15:12:10 PM
 */
 
 SET NAMES utf8;
@@ -27,7 +27,7 @@ CREATE TABLE `api_errors` (
   `error` varchar(0) NOT NULL,
   `created` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=353 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1885 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `bitcoin_value`
@@ -42,7 +42,7 @@ CREATE TABLE `bitcoin_value` (
   UNIQUE KEY `id` (`id`) USING BTREE,
   KEY `fiat` (`fiat`) USING BTREE,
   KEY `cost` (`cost`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=107 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `chat`
@@ -80,7 +80,7 @@ CREATE TABLE `currency` (
   UNIQUE KEY `id` (`id`) USING BTREE,
   KEY `name` (`name`) USING BTREE,
   KEY `abbr` (`abbr`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=22288 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=27555 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `last_update`
@@ -94,7 +94,7 @@ CREATE TABLE `last_update` (
   UNIQUE KEY `id` (`id`) USING BTREE,
   KEY `lastupdate` (`lastupdate`) USING BTREE,
   KEY `reset` (`reset`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=108 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `markets`
@@ -108,7 +108,7 @@ CREATE TABLE `markets` (
   UNIQUE KEY `id` (`id`) USING BTREE,
   KEY `name` (`name`) USING BTREE,
   KEY `active` (`active`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=850 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1096 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `markets_pairs`
@@ -120,13 +120,39 @@ CREATE TABLE `markets_pairs` (
   `currency_id` int(11) NOT NULL,
   `symbol_id` int(11) NOT NULL,
   `active` int(11) NOT NULL DEFAULT '1',
+  `volume24hour` varchar(32) NOT NULL DEFAULT '0',
+  `price` varchar(32) NOT NULL DEFAULT '0',
+  `lastupdate` varchar(32) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`) USING BTREE,
   KEY `market_id` (`market_id`) USING BTREE,
   KEY `currency_id` (`currency_id`) USING BTREE,
   KEY `symbol_id` (`symbol_id`) USING BTREE,
   KEY `active` (`active`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=119888 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=179969 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+--  Table structure for `match_history`
+-- ----------------------------
+DROP TABLE IF EXISTS `match_history`;
+CREATE TABLE `match_history` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `match_id` int(11) NOT NULL,
+  `pair1_id` int(11) NOT NULL,
+  `pair2_id` int(11) NOT NULL,
+  `started` int(11) NOT NULL,
+  `finished` int(11) NOT NULL,
+  `avg_percent` varchar(32) NOT NULL DEFAULT '0',
+  `avg_24hourvolume` varchar(32) NOT NULL DEFAULT '0',
+  `price_calls` int(11) NOT NULL DEFAULT '0',
+  `avg_price_pair1` varchar(32) NOT NULL,
+  `avg_price_pair2` varchar(32) NOT NULL,
+  `low_price_pair1` varchar(32) NOT NULL,
+  `low_price_pair2` varchar(32) NOT NULL,
+  `high_price_pair1` varchar(255) NOT NULL,
+  `high_price_pair2` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 --  Table structure for `matches`
@@ -139,7 +165,7 @@ CREATE TABLE `matches` (
   `started` int(11) NOT NULL,
   `finished` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13293 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=88448 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `matches_log`
@@ -150,11 +176,12 @@ CREATE TABLE `matches_log` (
   `match_id` int(11) NOT NULL,
   `pair1_id` int(11) NOT NULL,
   `pair2_id` int(11) NOT NULL,
-  `pair1_price` varchar(255) NOT NULL,
-  `pair2_price` varchar(255) NOT NULL,
+  `pair1_price` varchar(32) NOT NULL,
+  `pair2_price` varchar(32) NOT NULL,
+  `percent` varchar(32) NOT NULL,
   `created` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19565 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=155868 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `orders`
@@ -201,7 +228,7 @@ CREATE TABLE `price_chart` (
   KEY `volume24hour` (`volume24hour`) USING BTREE,
   KEY `created` (`created`) USING BTREE,
   KEY `changepct24hour` (`changepct24hour`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=229389 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=326399 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `requests`
@@ -226,7 +253,7 @@ CREATE TABLE `symbols` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`) USING BTREE,
   KEY `abbr` (`abbr`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=1541 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1980 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `trollbox`
@@ -247,7 +274,7 @@ CREATE TABLE `trollbox` (
   KEY `handle` (`handle`) USING BTREE,
   KEY `user_type` (`user_type`) USING BTREE,
   KEY `active` (`active`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 --  Table structure for `users`
@@ -276,7 +303,7 @@ CREATE TABLE `users` (
 --  Records of `users`
 -- ----------------------------
 BEGIN;
-INSERT INTO `users` VALUES ('1', 'admin', 'opanelj@gmail.com', '79a7387515718b5f24b1b70d8ea44dbd', 'WjrPIECgap', '4287319913737945577L', '1516182413', '1', '1', '3', '1519683574', '127.0.0.1', '1', '0', '1');
+INSERT INTO `users` VALUES ('1', 'admin', 'opanelj@gmail.com', '79a7387515718b5f24b1b70d8ea44dbd', 'WjrPIECgap', '4287319913737945577L', '1516182413', '1', '1', '3', '1529790948', '127.0.0.1', '1', '0', '1');
 COMMIT;
 
 -- ----------------------------
@@ -289,7 +316,7 @@ CREATE TABLE `users_ip_login` (
   `ip` varchar(255) NOT NULL,
   `created` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `users_markets`
@@ -300,6 +327,6 @@ CREATE TABLE `users_markets` (
   `uid` int(11) NOT NULL,
   `market_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=86 DEFAULT CHARSET=utf8;
 
 SET FOREIGN_KEY_CHECKS = 1;

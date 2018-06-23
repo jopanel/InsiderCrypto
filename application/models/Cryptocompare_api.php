@@ -251,7 +251,7 @@ class Cryptocompare_api extends CI_Model {
 	        		foreach ($calls as $v) {
 	        			$callcounter += 1;
 	        			if ($callcounter == 51) {
-	        				sleep(1);
+	        				sleep(3);
 	        				$callcounter = 1;
 	        			}
 	        			$this->curl_post_async(base_url().'api/asyncPriceRequest/'.API_PASSWORD, $v);
@@ -363,18 +363,18 @@ class Cryptocompare_api extends CI_Model {
 	        		
 
 	        		if (count($insertSQL) > 0) {
-			        	$sql = "INSERT INTO price_chart 
-					        						(market_id, 
-					        						currency_id,
-					        						symbol_id,
-					        						price,
-					        						lastupdate,
-					        						price_low,
-					        						price_high,
-					        						changepct24hour,
-					        						volume24hour,
-					        						created) VALUES ".implode(",",$insertSQL).";";
-					    $this->db->query($sql);
+			      //   	$sql = "INSERT INTO price_chart 
+					    //     						(market_id, 
+					    //     						currency_id,
+					    //     						symbol_id,
+					    //     						price,
+					    //     						lastupdate,
+					    //     						price_low,
+					    //     						price_high,
+					    //     						changepct24hour,
+					    //     						volume24hour,
+					    //     						created) VALUES ".implode(",",$insertSQL).";";
+					    // $this->db->query($sql);
 					    if (count($updateSQL) > 0) {
 					    	foreach ($updateSQL as $q) {
 						    	$sql = "UPDATE markets_pairs SET volume24hour = ".$this->db->escape($q["volume24hour"]).", price = ".$this->db->escape($q["price"]).", lastupdate = ".$this->db->escape($q["lastupdate"])." WHERE market_id = ".$this->db->escape($q["market_id"])." AND currency_id = ".$this->db->escape($q["currency_id"])." AND symbol_id = ".$this->db->escape($q["symbol_id"]);
