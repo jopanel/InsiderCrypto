@@ -1,6 +1,24 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+
+
+/*
+
+
+
+
+
+THIS FILE IS CURRENTLY DEPRECATED BECAUSE THE SERVER TAKES A SHIT AFTER A WHILE. TOO MUCH DATA AND MATCHES NOT BEING CLOSED. WILL CLOSE UNTIL FIGURE OUT WHAT TEH FUCK IS WRONG
+
+
+
+
+
+
+
+*/
+
 class Compare_model extends CI_Model {
 
 	private function calculatePercentage($price1=null, $price2=null) {
@@ -53,11 +71,16 @@ class Compare_model extends CI_Model {
 								if ($query->num_rows() > 0) {
 									// match is active
 									$match_id = $query->row()->id;
-									$sql = "UPDATE matches SET percent = ".$this->db->escape($percent)." WHERE id = ".$this->db->escape($query->row()->id);
+									$sql = "INSERT INTO matches_log (match_id, pair1_id, pair2_id, pair1_price, pair2_price, created, percent) VALUES (".$this->db->escape($match_id).", ".$this->db->escape($vv["pair_id"]).", ".$this->db->escape($v[$i]["pair_id"]).", ".$this->db->escape($vv["price"]).", ".$this->db->escape($v[$i]["price"]).", ".$this->db->escape($time).", ".$this->db->escape($percent).")";
 									$this->db->query($sql);
 								} else {
 									// match doesnt exist
-									$sql = "INSERT INTO matches (pair1_id, pair2_id, started, percent) VALUES (".$this->db->escape($vv["pair_id"]).", ".$this->db->escape($v[$i]["pair_id"]).", ".$this->db->escape($time).", ".$this->db->escape($percent).")";
+									$sql = "INSERT INTO matches (pair1_id, pair2_id, started) VALUES (".$this->db->escape($vv["pair_id"]).", ".$this->db->escape($v[$i]["pair_id"]).", ".$this->db->escape($time).")";
+									$this->db->query($sql);
+									$sql = "SELECT id FROM matches WHERE pair1_id = ".$this->db->escape($vv["pair_id"])." AND pair2_id = ".$this->db->escape($v[$i]["pair_id"])." AND finished IS NULL";
+									$query2 = $this->db->query($sql);
+									$match_id = $query2->row()->id;
+									$sql = "INSERT INTO matches_log (match_id, pair1_id, pair2_id, pair1_price, pair2_price, created, percent) VALUES (".$this->db->escape($match_id).", ".$this->db->escape($vv["pair_id"]).", ".$this->db->escape($v[$i]["pair_id"]).", ".$this->db->escape($vv["price"]).", ".$this->db->escape($v[$i]["price"]).", ".$this->db->escape($time).", ".$this->db->escape($percent).")";
 									$this->db->query($sql);
 								}
 							} else {
@@ -134,6 +157,30 @@ class Compare_model extends CI_Model {
 	        			return FALSE;
 	        		}
 	        		//echo 5;
+					/*$sql = "SELECT
+								ROUND(p.price,2) as 'price',
+								p.symbol_id
+							FROM
+								price_chart p
+							LEFT JOIN 
+								price_chart pp ON 
+								(p.symbol_id = pp.symbol_id AND p.currency_id = pp.currency_id AND p.lastupdate < pp.lastupdate)
+							WHERE
+								p.symbol_id IN(".implode(",",$presymbolsid).")
+							AND p.currency_id = ".$this->db->escape($btc_currency_id)."
+							AND NOT EXISTS(
+								SELECT
+									1
+								FROM
+									markets_pairs mp
+								WHERE
+									mp.symbol_id = p.symbol_id
+								AND mp.currency_id = p.currency_id
+								AND mp.market_id = p.market_id
+								AND mp.active = '0'
+							)
+							AND p.volume24hour > 0
+							AND pp.lastupdate is NULL";*/
 						$sql = "SELECT
 									ROUND(mp.price, 2)AS 'price',
 									mp.symbol_id
@@ -214,24 +261,45 @@ class Compare_model extends CI_Model {
 	        					$sql = "SELECT id FROM matches WHERE pair1_id = ".$this->db->escape($m["pair1_id"])." AND pair2_id = ".$this->db->escape($m["pair2_id"])." AND finished IS NULL";
 	        					$query2 = $this->db->query($sql);
 	        					$match_id = $query2->row()->id;
-	        					$sql = "UPDATE matches SET percent = ".$this->db->escape($m["percent"])." WHERE id = ".$this->db->escape($match_id);
+	        					$sql = "INSERT INTO matches_log (match_id, pair1_id, pair2_id, pair1_price, pair2_price, percent, created) VALUES (".$this->db->escape($match_id).", ".$this->db->escape($m["pair1_id"]).", ".$this->db->escape($m["pair2_id"]).", ".$this->db->escape($m["pair1_price"]).", ".$this->db->escape($m["pair2_price"]).", ".$this->db->escape($m["percent"]).", ".$this->db->escape($started).")";
 	        					$this->db->query($sql);
 	        				} else {
 
 	        					$sql = "SELECT id, started FROM matches WHERE pair1_id = ".$this->db->escape($m["pair1_id"])." AND pair2_id = ".$this->db->escape($m["pair2_id"])." AND finished IS NULL";
 	        					$query2 = $this->db->query($sql);
 	        					$match_id = $query2->row()->id;
-	        					$started = $query2->row()->started; 
+	        					$started = $query2->row()->started;
+	        					$sql = "SELECT
+											COALESCE(AVG(pair1_price), 0)AS 'avg_price_pair1',
+											COALESCE(AVG(pair2_price), 0)AS 'avg_price_pair2',
+											COALESCE(AVG(percent), 0)AS 'avg_percent',
+											COALESCE(COUNT(id), 0)AS 'price_calls',
+											COALESCE(MIN(pair1_price), 0)AS 'low_price_pair1',
+											COALESCE(MIN(pair2_price), 0)AS 'low_price_pair2',
+											COALESCE(MAX(pair1_price), 0)AS 'high_price_pair1',
+											COALESCE(MAX(pair2_price), 0)AS 'high_price_pair2',
+											GROUP_CONCAT(id)AS 'ids'
+										FROM
+											matches_log
+										WHERE
+											match_id = ".$this->db->escape($match_id);
 								$query3 = $this->db->query($sql); 
-								$sql = "INSERT INTO match_history (match_id, pair1_id, pair2_id, started, finished, avg_percent, price_calls, avg_price_pair1, avg_price_pair2, low_price_pair1, low_price_pair2, high_price_pair1, high_price_pair2) VALUES (".$this->db->escape($match_id).", ".$this->db->escape($m["pair1_id"]).", ".$this->db->escape($m["pair2_id"]).", ".$this->db->escape($started).",".$this->db->escape(time()).", ".$this->db->escape(0).", ".$this->db->escape($query3->row()->price_calls).", ".$this->db->escape(0).", ".$this->db->escape(0).", ".$this->db->escape(0).", ".$this->db->escape(0).", ".$this->db->escape(0).", ".$this->db->escape(0).")";
+								$sql = "INSERT INTO match_history (match_id, pair1_id, pair2_id, started, finished, avg_percent, price_calls, avg_price_pair1, avg_price_pair2, low_price_pair1, low_price_pair2, high_price_pair1, high_price_pair2) VALUES (".$this->db->escape($match_id).", ".$this->db->escape($m["pair1_id"]).", ".$this->db->escape($m["pair2_id"]).", ".$this->db->escape($started).",".$this->db->escape(time()).", ".$this->db->escape($query3->row()->avg_percent).", ".$this->db->escape($query3->row()->price_calls).", ".$this->db->escape($query3->row()->avg_price_pair1).", ".$this->db->escape($query3->row()->avg_price_pair2).", ".$this->db->escape($query3->row()->low_price_pair1).", ".$this->db->escape($query3->row()->low_price_pair2).", ".$this->db->escape($query3->row()->high_price_pair1).", ".$this->db->escape($query3->row()->high_price_pair2).")";
 								$this->db->query($sql);
 								$sql = "DELETE FROM matches WHERE match_id = ".$this->db->escape($match_id);
-								$this->db->query($sql); 
+								$this->db->query($sql);
+								$sql = "DELETE FROM matches_log WHERE match_id = ".$this->db->escape($match_id);
+								$this->db->query($sql);
 	        				}
 	        			} else { 
 	        				// if percent > 3 insert new row
 	        				if ($m["percent"] > 3) {
-	        					$sql = "INSERT INTO matches (pair1_id, pair2_id, started, percent) VALUES (".$this->db->escape($m["pair1_id"]).", ".$this->db->escape($m["pair2_id"]).", ".$this->db->escape($started).", ".$this->db->escape($m["percent"]).")";
+	        					$sql = "INSERT INTO matches (pair1_id, pair2_id, started) VALUES (".$this->db->escape($m["pair1_id"]).", ".$this->db->escape($m["pair2_id"]).", ".$this->db->escape($started).")";
+	        					$this->db->query($sql);
+	        					$sql = "SELECT id FROM matches WHERE pair1_id = ".$this->db->escape($m["pair1_id"])." AND pair2_id = ".$this->db->escape($m["pair2_id"])." AND finished IS NULL";
+	        					$query2 = $this->db->query($sql);
+	        					$match_id = $query2->row()->id;
+	        					$sql = "INSERT INTO matches_log (match_id, pair1_id, pair2_id, pair1_price, pair2_price, percent, created) VALUES (".$this->db->escape($match_id).", ".$this->db->escape($m["pair1_id"]).", ".$this->db->escape($m["pair2_id"]).", ".$this->db->escape($m["pair1_price"]).", ".$this->db->escape($m["pair2_price"]).", ".$this->db->escape($m["percent"]).", ".$this->db->escape($started).")";
 	        					$this->db->query($sql);
 	        				}
 	        			}

@@ -253,14 +253,13 @@ class General_model extends CI_Model {
                             s2.id = mp2.symbol_id
                     )AS 'symbol2',
                     m.started,
-                    ml.pair1_price,
-                    ml.pair2_price,
-                    COALESCE(ROUND(ml.percent,2), 'X') as 'percent',
-                    ml.created AS 'updated',
+                    mp1.pair1_price,
+                    mp2.pair2_price,
+                    COALESCE(ROUND(m.percent,2), 'X') as 'percent',
+                    COALESCE(mp1.lastupdate, mp2.lastupdate) AS 'updated',
                     m.id as 'identifier'
                 FROM
-                    matches m
-                LEFT JOIN matches_log ml ON ml.match_id = m.id
+                    matches m 
                 LEFT JOIN markets_pairs mp1 ON mp1.id = m.pair1_id
                 LEFT JOIN markets_pairs mp2 ON mp2.id = m.pair2_id
                 WHERE
@@ -268,9 +267,9 @@ class General_model extends CI_Model {
                 AND m.pair2_id IN(".implode(", ",$userPairs).")
                 AND m.finished IS NULL
                 GROUP BY
-                    ml.match_id
+                    m.id
                 ORDER BY
-                    MAX(ml.created), percent ASC";
+                    percent ASC";
             $query = $this->db->query($sql); 
             if ($query->num_rows() > 0) {
                 foreach ($query->result_array() as $res) {
@@ -596,8 +595,8 @@ class General_model extends CI_Model {
             }
             return $output;
         }
-    
-        
+
+
         public function register($postData=null) {
             /*
         error list: 
@@ -609,10 +608,10 @@ class General_model extends CI_Model {
         9 =  username or email exists already
         */
             $error = 0;
-            if (!isset($postData["username"]) || empty($postData["username"])) { return 2;} else { $username = $this->db->escape(strip_tags($postData["username"]));} 
+            if (!isset($postData["username"]) || empty($postData["username"])) { return 2;} else { $username = $this->db->escape(strip_tags(preg_replace("/[^a-zA-Z0-9]+/", "", $postData["username"])));} 
             if (!isset($postData["password"]) || empty($postData["password"])) { return 3;} else { $password = strip_tags($postData["password"]);}
             if (!isset($postData["password2"]) || empty($postData["password2"])) { return 4;} else { $password2 = strip_tags($postData["password2"]);}
-            if (!isset($postData["email"]) || empty($postData["email"])) { return 6;} else { $email = $this->db->escape(strip_tags($postData["email"]));}
+            if (!isset($postData["email"]) || empty($postData["email"])) { return 6;} else { $email = $this->db->escape(strip_tags(filter_var($postData["email"], FILTER_SANITIZE_EMAIL)));}
             if ($error > 0) { return $error; }
             $verification_key = $this->db->escape($this->generateVerificationKey());
             $salt = $this->generateSalt();
