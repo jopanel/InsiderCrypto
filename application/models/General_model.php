@@ -253,8 +253,8 @@ class General_model extends CI_Model {
                             s2.id = mp2.symbol_id
                     )AS 'symbol2',
                     m.started,
-                    mp1.pair1_price,
-                    mp2.pair2_price,
+                    mp1.price,
+                    mp2.price,
                     COALESCE(ROUND(m.percent,2), 'X') as 'percent',
                     COALESCE(mp1.lastupdate, mp2.lastupdate) AS 'updated',
                     m.id as 'identifier'
