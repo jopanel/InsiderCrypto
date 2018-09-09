@@ -250,7 +250,7 @@ class Cryptocompare_api extends CI_Model {
 
 	        		foreach ($calls as $v) {
 	        			$callcounter += 1;
-	        			if ($callcounter == 51) {
+	        			if ($callcounter == 40) {
 	        				sleep(3);
 	        				$callcounter = 1;
 	        			}
