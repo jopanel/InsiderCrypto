@@ -247,13 +247,14 @@ class Compare_model extends CI_Model {
 			// check if the data in $checkData has an open id, if so, close it.
 			$time = time();
 			$deleteIDs = [];
-			$sql = "SELECT id, pair1_id, pair2_id FROM matches WHERE finished IS NULL";
+			$sql = "SELECT id, pair1_id, pair2_id, started, finished, percent FROM matches WHERE finished IS NULL";
 			$query = $this->db->query($sql);
 			if ($query->num_rows() > 0) {
 				foreach ($query->result_array() as $res) {
 					foreach ($checkData as $d) {
 						if ($res["pair1_id"] == $d["pair1_id"] && $res["pair2_id"] == $d["pair2_id"]) {
-							$deleteIDs[] = $res["id"];
+							$deleteIDs[] = $d["id"];
+							$deleteData[$d["id"]] = $d;
 						}
 					}
 				}
@@ -262,8 +263,12 @@ class Compare_model extends CI_Model {
 			}
 			if (count($deleteIDs) > 0) {
 				$instatement = implode(',',$deleteIDs);
-				$sql = "UPDATE matches SET finished = ".$this->db->escape($time)." WHERE id IN (".$instatement.")";
-				$this->db->query($sql);
+				$sql = "DELETE FROM matches WHERE id IN (".$instatement.")";
+				$this->db->query($sql); 
+				foreach ($deleteData as $k) {
+					$sql = "INSERT INTO match_history (match_id, pair1_id, pair2_id, started, finished, avg_percent, price_calls, avg_price_pair1, avg_price_pair2, low_price_pair1, low_price_pair2, high_price_pair1, high_price_pair2) VALUES (".$this->db->escape($k["id"]).", ".$this->db->escape($k["pair1_id"]).", ".$this->db->escape($k["pair2_id"]).", ".$this->db->escape($k["started"]).",".$this->db->escape(time()).", ".$this->db->escape(0).", ".$this->db->escape(0).", ".$this->db->escape(0).", ".$this->db->escape(0).", ".$this->db->escape(0).", ".$this->db->escape(0).", ".$this->db->escape(0).", ".$this->db->escape(0).")";
+					$this->db->query($sql);
+				}
 			}
 			return TRUE;
 		} else {
