@@ -94,6 +94,25 @@ class General_model extends CI_Model {
             return $output;
         }
 
+        public function checkExchanges() {
+            // inactivate exchanges with less than 5 btc volume
+            $sql = "UPDATE markets SET active = '1'";
+            $this->db->query($sql);
+            $marketsID = [];
+            $sql2 = "SELECT mp.market_id, SUM(mp.volume24hour) as 'mama' FROM markets_pairs mp GROUP BY mp.market_id HAVING mama < 5";
+            $query = $this->db->query($sql2);
+            if ($query->num_rows() > 0) {
+                foreach ($query->result_array() as $res) {
+                    $marketsID[] = $res["market_id"];
+                }
+                if (count($marketsID) > 0) {
+                    $ids = implode(',',$marketsID);
+                    $sql = "UPDATE markets SET active = '0' WHERE id IN (".$ids.")";
+                }
+            }
+            return TRUE;
+        }
+
         private function toHuman($number) {
             return number_format(sprintf("%.8f", $number / 100000000), 2, '.', '');
         }

@@ -1,5 +1,40 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+
+function get_friendly_time_ago($distant_timestamp, $max_units = 3) {
+    $i = 0;
+    $time = time() - $distant_timestamp; // to get the time since that moment
+    $tokens = [
+        31536000 => 'year',
+        2592000 => 'month',
+        604800 => 'week',
+        86400 => 'day',
+        3600 => 'hour',
+        60 => 'minute',
+        1 => 'second'
+    ];
+
+    $responses = [];
+    while ($i < $max_units && $time > 0) {
+        foreach ($tokens as $unit => $text) {
+            if ($time < $unit) {
+                continue;
+            }
+            $i++;
+            $numberOfUnits = floor($time / $unit);
+
+            $responses[] = $numberOfUnits . ' ' . $text . (($numberOfUnits > 1) ? 's' : '');
+            $time -= ($unit * $numberOfUnits);
+            break;
+        }
+    }
+
+    if (!empty($responses)) {
+        return implode(', ', $responses) . ' ago';
+    }
+
+    return 'Just now';
+}
 ?>
 
 
@@ -41,7 +76,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   </div>
                 </div>
               </div>
-              <div class="card-footer small text-muted">Added <?=date("m/d G:i", $v["started"])?>, Updated <?=date("m/d G:i", $v["updated"])?></div>
+              <div class="card-footer small text-muted">Updated <?=get_friendly_time_ago($v["updated"])?></div>
             </div>
 
            <?php }

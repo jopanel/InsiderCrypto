@@ -69,7 +69,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <p><b>1 Month Premium</b></p> 
                         <p>Access to all AI generated features/functionality</p>
                         <p>Receive E-Mail Notifications based on your Preferences</p>
-                        <p>Access to Chat</p>
                         <p>Access to future updates and access for premium users</p>
                         <?php if ($order["expired"] == true) { ?>
                         <h3><?=$programcost["beginner"]?> Lisk (LSK)</h3>
@@ -92,7 +91,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <p><b>12 Month Premium</b></p> 
                         <p>Access to all AI generated features/functionality</p>
                         <p>Receive E-Mail Notifications based on your Preferences</p>
-                        <p>Access to Chat</p>
                         <p>Access to future updates and access for premium users</p>
                         <?php if ($order["expired"] == true) { ?>
                         <h3><?=$programcost["trader"]?> Lisk (LSK)</h3>
@@ -115,7 +113,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <p><b>Lifetime Premium</b></p> 
                         <p>Access to all AI generated features/functionality</p>
                         <p>Receive E-Mail Notifications based on your Preferences</p>
-                        <p>Access to Chat</p>
                         <p>Access to future updates and access for premium users</p>
                         <p>Private Beta access to future updates/changes</p> 
                         <p>Private Beta access to future Lenapo Solutions Crypto based projects</p>
@@ -151,7 +148,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- /.content-wrapper-->
 <?php 
 if ($order["expired"] == false) { 
-$cDD = date("M j, Y H:I:S",strtotime("+12 hours", $order["created"]));
+$cDD = date("M j, Y H:I:s",strtotime("+12 hours", $order["created"]));
   ?>
 <script>
 var countDownDate = new Date("<?=$cDD?>").getTime();

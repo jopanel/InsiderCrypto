@@ -86,7 +86,7 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 defined('SENDGRID_API_KEY')      OR define('SENDGRID_API_KEY', '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'); 
 defined('SENDGRID_API_KEY_ID')      OR define('SENDGRID_API_KEY_ID', 'hwPVczmjR72fxNm-sJ1VdQ'); 
 defined('LISK_SERVER') OR define('LISK_SERVER', 'https://wallet.lisk.4miners.net');
-defined('BEGINNER_PACKAGE_USD') OR define('BEGINNER_PACKAGE_USD', 150);
-defined('TRADER_PACKAGE_USD') OR define('TRADER_PACKAGE_USD', 500);
-defined('VIP_PACKAGE_USD') OR define('VIP_PACKAGE_USD', 2500);
+defined('BEGINNER_PACKAGE_USD') OR define('BEGINNER_PACKAGE_USD', 15);
+defined('TRADER_PACKAGE_USD') OR define('TRADER_PACKAGE_USD', 150);
+defined('VIP_PACKAGE_USD') OR define('VIP_PACKAGE_USD', 1000);
 defined('API_PASSWORD') OR define('API_PASSWORD', 'checksum00');

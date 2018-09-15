@@ -41,9 +41,18 @@ class Api extends CI_Controller {
 			if ($this->Cryptocompare_api->generatePrices($followUps) == TRUE) {
 				$this->Compare_model->generateArbitrageEvents();
 				$this->Compare_model->generatePairEvents();
+				$this->General_model->checkExchanges();
 			}
 		}
 	} 
+
+	public function maintenance($password=null) {
+		if ($password == API_PASSWORD) {
+			ini_set('max_execution_time', 0);
+			set_time_limit(0);
+			$this->General_model->checkExchanges();
+		}
+	}
 	
 /*
 	CRON Job Related Functions
