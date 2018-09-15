@@ -7,7 +7,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <div class="content-wrapper">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-lg-8">  
+        <div class="col-lg-12">  
 
           <?php if ($paidstatus == TRUE) { ?>
           <div class="card-columns">
@@ -68,71 +68,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               <p><a class="btn btn-primary btn-lg" href="<?=base_url()?>payments/" role="button">Become Premium</a></p></center>
             </div>
           <?php } ?>
-          
-          <!-- /Card Columns-->
-        </div>
-        <div class="col-lg-4">
-          <!-- Example Notifications Card-->
-          <div class="card mb-3">
-            <div class="chat-panel panel panel-default">
-                        <div class="card-header">
-              <i class="fa fa-comment"></i> Chat</div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <ul class="chat" id="trollbox">
-                                <?php
-
-
-                                ?>
- 
-
-                            </ul>
-                        </div>
-                        <!-- /.panel-body -->
-                        <div class="panel-footer">
-                            <div class="input-group">
-                                <input id="trollbox-message" type="text" class="form-control input-sm" placeholder="Type your message here..." />
-                                <span class="input-group-btn">
-                                    <button class="btn btn-warning btn-sm" id="btn-chat" onClick="sendChat()">
-                                        Send
-                                    </button>
-                                </span>
-                            </div>
-                        </div>
-                        <!-- /.panel-footer -->
-                    </div>
-          </div>
-
-
-
-
-      <div class="card mb-3">
-        <div class="card-header">
-          <i class="fa fa-area-chart"></i> Personal Gain Opportunities</div>
-        <div class="card-body">
-          <canvas id="personalGains" width="100%" height="30"></canvas>
-        </div> 
+           
       </div>
-
-
-      <div class="card mb-3">
-        <div class="card-header">
-          <i class="fa fa-area-chart"></i> All Gain Opportunities</div>
-        <div class="card-body">
-          <canvas id="allGains" width="100%" height="30"></canvas>
-        </div> 
-      </div>
-
-      
-
-
-
-         
-        </div>
-      </div>
-    </div>
-    <!-- /.container-fluid-->
-    <!-- /.content-wrapper-->
+    </div> 
 
     <script>
       
