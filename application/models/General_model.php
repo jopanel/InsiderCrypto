@@ -135,23 +135,23 @@ class General_model extends CI_Model {
         }
 
         private function getTotalMatches() {
-            $sql = "SELECT COUNT(id) as 'total_matches' FROM matches";
+            $sql = "SELECT COALESCE(COUNT(id),0) as 'total_matches' FROM matches";
             $query = $this->db->query($sql);
-            return $query->num_rows();
+            return $query->row()->total_matches;
         }
 
         private function getActiveExchangesCount() {
-            $sql = "SELECT COUNT(id) as 'total_exchanges' FROM markets WHERE active = '1'";
+            $sql = "SELECT COALESCE(COUNT(id),0) as 'total_exchanges' FROM markets WHERE active = '1'";
             $query = $this->db->query($sql);
-            return $query->num_rows();
+            return $query->row()->total_exchanges;
         }
 
         private function getTotalMarketPairs() {
-            $sql = "SELECT COUNT(mp.id) as 'market_pairs' FROM markets m 
+            $sql = "SELECT COALESCE(COUNT(mp.id),0) as 'market_pairs' FROM markets m 
             LEFT JOIN markets_pairs mp ON m.id = mp.market_id 
             WHERE m.active = '1'";
             $query = $this->db->query($sql);
-            return $query->num_rows();
+            return $query->row()->market_pairs;
         }
 
         private function calculateAvgProfit30Day() {
