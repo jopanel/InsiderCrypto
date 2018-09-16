@@ -129,7 +129,7 @@ class General_model extends CI_Model {
             $num_exchanges = $this->getActiveExchangesCount();
             $num_markets_pairs = $this->getTotalMarketPairs();
             $avg_profit = $this->calculateAvgProfit30Day();
-            $sql = "UPDATE home_stats SET total_matches = ".$this->db->escape($total_matches).", num_exchanges = ".$this->db->escape($num_exchanges).", num_markets_pairs = ".$this->db->escape($num_markets_pairs).", avg_profit = ".$this->db->escape($avg_profit);
+            $sql = "INSERT INTO home_stats (total_matches, num_exchanges, num_markets_pairs, avg_profit, created) VALUES (".$this->db->escape($total_matches)", ".$this->db->escape($num_exchanges).", ".$this->db->escape($num_markets_pairs).", ".$this->db->escape($avg_profit).", UNIX_TIMESTAMP)"; 
             $this->db->query($sql);
             return TRUE;
         }
