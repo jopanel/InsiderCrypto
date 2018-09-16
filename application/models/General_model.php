@@ -107,7 +107,8 @@ class General_model extends CI_Model {
                 }
                 if (count($marketsID) > 0) {
                     $ids = implode(',',$marketsID);
-                    $sql = "UPDATE markets SET active = '0' WHERE id IN (".$ids.")";
+                    $sql3 = "UPDATE markets SET active = '0' WHERE id IN (".$ids.")";
+                    $this->db->query($sql3);
                 }
             }
             return TRUE;

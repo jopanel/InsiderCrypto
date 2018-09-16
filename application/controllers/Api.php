@@ -51,8 +51,8 @@ class Api extends CI_Controller {
 		$output["error"] = true;
 		if ($password == API_PASSWORD) {
 			$this->load->model('General_model');
-			$this->General_model->checkExchanges();
-			$this->General_model->updateHomePage();
+			$fixexchanges = $this->General_model->checkExchanges();
+			$updatehome = $this->General_model->updateHomePage();
 			$output["error"] = false;
 		}
 		echo json_encode($output);
