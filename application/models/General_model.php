@@ -123,6 +123,63 @@ class General_model extends CI_Model {
             return TRUE;
         }
 
+        public function updateHomePage() {
+            $total_matches = $this->getTotalMatches();
+            $num_exchanges = $this->getActiveExchangesCount();
+            $num_markets_pairs = $this->getTotalMarketPairs();
+            $avg_profit = $this->calculateAvgProfit30Day();
+            $sql = "UPDATE home_stats SET total_matches = ".$this->db->escape($total_matches).", num_exchanges = ".$this->db->escape($num_exchanges).", num_markets_pairs = ".$this->db->escape($num_markets_pairs).", avg_profit = ".$this->db->escape($avg_profit);
+            $this->db->query($sql);
+            return TRUE;
+        }
+
+        private function getTotalMatches() {
+            $sql = "SELECT COUNT(id) as 'total_matches' FROM matches";
+            $query = $this->db->query($sql);
+            return $query->num_rows();
+        }
+
+        private function getActiveExchangesCount() {
+            $sql = "SELECT COUNT(id) as 'total_exchanges' FROM markets WHERE active = '1'";
+            $query = $this->db->query($sql);
+            return $query->num_rows();
+        }
+
+        private function getTotalMarketPairs() {
+            $sql = "SELECT COUNT(mp.id) as 'market_pairs' FROM markets m 
+            LEFT JOIN markets_pairs mp ON m.id = mp.market_id 
+            WHERE m.active = '1'";
+            $query = $this->db->query($sql);
+            return $query->num_rows();
+        }
+
+        private function calculateAvgProfit30Day() {
+            $btcvalue = $this->getBitcoinValue();
+            if ($btcvalue == 0) { return "?"; }
+            $sql = "SELECT AVG(percent) as 'percent' FROM matches";
+            $query = $this->db->query($sql);
+            if ($query->num_rows() > 0) {
+                $percent = round($query->row()->percent, 2);
+            } else {
+                return "?";
+            }
+            for ($i=0; $i<=30; $i++) {
+                $add = ($percent / 100) * $btcvalue;
+                $btcvalue += $add;
+            }
+            return round($btcvalue, 2);
+        }
+
+        private function getBitcoinValue() {
+            $sql = "SELECT cost FROM bitcoin_value ORDER BY id DESC LIMIT 1";
+            $query2 = $this->db->query($sql);
+            if ($query2->num_rows() > 0) {
+                return $query2->row()->cost;
+            } else {
+                return 0;
+            }
+        }
+
         public function getChat($last=null) {
             $output = [];
             $output["error"] = 0;

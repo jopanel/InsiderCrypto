@@ -12,24 +12,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               <a href="<?=base_url()?>access/register" class="btn btn-outline btn-xl js-scroll-trigger">Get Started</a>
             </div>
           </div>
-          <div class="col-lg-5 my-auto">
-            <div class="device-container">
-              <div class="device-mockup iphone6_plus portrait white">
-                <div class="device">
-                  <div class="screen">
-                    <!-- Demo image for screen mockup, you can put an image here, some HTML, an animation, video, or anything else! -->
-                    <img src="img/demo-screen-1.jpg" class="img-fluid" alt="">
-                  </div>
-                  <div class="button">
-                    <!-- You can hook the "home button" to some JavaScript events or just remove it -->
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div class="col-lg-5 my-auto"> 
+                    <img src="<?=base_url()?>resources/img/headerimgdb.png" class="img-fluid" alt="">  
           </div>
         </div>
       </div>
     </header> 
+
+    <section class="goodforyou" id="goodforyou">
+    </section>
 
     <section class="features" id="features">
       <div class="container">
