@@ -47,12 +47,15 @@ class Api extends CI_Controller {
 	} 
 
 	public function maintenance($password=null) {
+		$output = [];
+		$output["error"] = true;
 		if ($password == API_PASSWORD) {
-			ini_set('max_execution_time', 0);
-			set_time_limit(0);
+			$this->load->model('General_model');
 			$this->General_model->checkExchanges();
 			$this->General_model->updateHomePage();
+			$output["error"] = false;
 		}
+		echo json_encode($output);
 	}
 	
 /*
