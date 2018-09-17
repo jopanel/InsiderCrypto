@@ -124,6 +124,12 @@ class General_model extends CI_Model {
             return TRUE;
         }
 
+        public function getHomeStats() {
+            $sql = "SELECT total_matches, num_exchanges, num_markets_pairs, avg_profit FROM home_stats ORDER BY id DESC LIMIT 1";
+            $query = $this->db->query($sql);
+            return (array)$query->row();
+        }
+
         public function updateHomePage() {
             $total_matches = $this->getTotalMatches();
             $num_exchanges = $this->getActiveExchangesCount();

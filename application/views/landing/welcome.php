@@ -20,32 +20,42 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </header> 
 
     <section class="goodforyou" id="goodforyou">
+      <div class="row">
+        <div class="col text-center">
+          <h2>Customizable Arbitrage Opportunities By Exchange</h2>
+          <h5>See how many artbitrage opportunities are available for you based on your exchanges!</h5>
+        </div>
+      </div>
+    </section>
+
+    <section class="sitestats" id="sitestats">
+      <div class="jumbotron">
+        <div class="row">
+          <div class="col text-center">
+            <h2>Current Site Statistics</h2>
+            <h5>Numbers don't lie. While some opporunities may be harder make profit on then others our deep learning algorithim and our highly skilled developers will make the process more streamlined.</h5>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col col-lg-4">
+          </div>
+          <div class="col col-lg-4">
+          </div>
+          <div class="col col-lg-4">
+          </div>
+          <div class="col col-lg-4">
+          </div>
+        </div>
+      </div> 
     </section>
 
     <section class="features" id="features">
       <div class="container">
         <div class="section-heading text-center">
           <h2>Cross-Exchange Analysis, Pair Calculations</h2>
-          <p class="text-muted">Our system collects data from over 50 different exchanges/markets that offer cryptocurrency trading. Using artificial intelligence deep learning and mathematical calculations we provide you with opportunities to make profits almost instantly if you act upon them. This service is unique and for people who want to maximize their profits or build their overall cryptocurrency portfolio capital.</p>
-          <hr>
+          <p class="text-muted">Our system collects data from over 50 different exchanges/markets that offer cryptocurrency trading. Using artificial intelligence deep learning and mathematical calculations we provide you with opportunities to make profits almost instantly if you act upon them. This service is unique and for people who want to maximize their profits or build their overall cryptocurrency portfolio capital.</p> 
         </div>
-        <div class="row">
-          <div class="col-lg-4 my-auto">
-            <div class="device-container">
-              <div class="device-mockup iphone6_plus portrait white">
-                <div class="device">
-                  <div class="screen">
-                    <!-- Demo image for screen mockup, you can put an image here, some HTML, an animation, video, or anything else! -->
-                    <img src="img/demo-screen-1.jpg" class="img-fluid" alt="">
-                  </div>
-                  <div class="button">
-                    <!-- You can hook the "home button" to some JavaScript events or just remove it -->
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-8 my-auto">
+          <div class="col-lg-12">
             <div class="container-fluid">
               <div class="row">
                 <div class="col-lg-6">
@@ -84,8 +94,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <section class="cta">
       <div class="cta-content">
         <div class="container">
-          <h2>Stop waiting.<br>Start earning.</h2> 
-          <a href="<?=base_url()?>access/register" class="btn btn-outline btn-xl js-scroll-trigger">Get Started!</a>
+          <div class="row">
+            <div class="col">
+              <h2>Stop waiting.<br>Start earning.</h2> 
+            </div>
+            <div class="col">
+              <a href="<?=base_url()?>access/register" class="btn btn-outline btn-xl js-scroll-trigger">Get Started!</a>
+            </div>
+          </div>
         </div>
       </div>
       <div class="overlay"></div>
