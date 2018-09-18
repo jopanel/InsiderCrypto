@@ -86,8 +86,8 @@ section {
       color: #fdcc52; }
   @media (min-width: 992px) {
     #mainNav {
-      border-color: transparent;
-      background-color: transparent;  
+      border-color: rgba(34, 34, 34, 0.05);
+      background-color: white;  
     }
       #mainNav .navbar-brand {
         color: #0f75bd; }
@@ -242,7 +242,7 @@ section.cta {
 section.goodforyou {
   position: relative;
   padding: 35px 0;
-  min-height:500px;
+  min-height:670px;
   background-color: #0f75bd;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -320,3 +320,7 @@ footer {
 .btn-xl {
   font-size: 11px;
   padding: 15px 45px; }
+
+
+
+

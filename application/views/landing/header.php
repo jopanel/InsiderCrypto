@@ -23,13 +23,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
-
-    <!-- Plugin CSS -->
     <link rel="stylesheet" href="<?=base_url()?>resources/landing/device-mockups/device-mockups.min.css">
-
-    <!-- Custom styles for this template -->
-    <link href="<?=base_url()?>resources/landing/css/new-age.css" rel="stylesheet">
-
+    <link href="<?=base_url()?>resources/landing/css/insidercrypto.css" rel="stylesheet">
+    <link href="<?=base_url()?>resources/landing/css/bootstrap-multiselect.css" rel="stylesheet">
   </head>
 
   <body id="page-top">

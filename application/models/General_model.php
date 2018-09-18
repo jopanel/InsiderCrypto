@@ -135,7 +135,8 @@ class General_model extends CI_Model {
             $num_exchanges = $this->getActiveExchangesCount();
             $num_markets_pairs = $this->getTotalMarketPairs();
             $avg_profit = $this->calculateAvgProfit30Day();
-            $sql = "INSERT INTO home_stats (total_matches, num_exchanges, num_markets_pairs, avg_profit, created) VALUES (".$this->db->escape($total_matches).", ".$this->db->escape($num_exchanges).", ".$this->db->escape($num_markets_pairs).", ".$this->db->escape($avg_profit).", UNIX_TIMESTAMP())"; 
+            $get_exchanges = $this->getExchanges();
+            $sql = "INSERT INTO home_stats (total_matches, num_exchanges, num_markets_pairs, avg_profit, created, markets) VALUES (".$this->db->escape($total_matches).", ".$this->db->escape($num_exchanges).", ".$this->db->escape($num_markets_pairs).", ".$this->db->escape($avg_profit).", UNIX_TIMESTAMP(), ".$this->db->escape(json_encode($get_exchanges)).")"; 
             $this->db->query($sql);
             return TRUE;
         }
@@ -158,6 +159,20 @@ class General_model extends CI_Model {
             WHERE m.active = '1'";
             $query = $this->db->query($sql);
             return $query->row()->market_pairs;
+        }
+
+        private function getExchanges() {
+            $markets = [];
+            $sql = "SELECT * FROM markets WHERE active = '1'";
+            $query = $this->db->query($sql);
+            if ($query->num_rows() > 0) {
+                foreach ($query->result_array() as $res) {
+                    $markets[$res["id"]] = $res["name"];
+                }
+            } else {
+                return [];
+            }
+            return $markets;
         }
 
         private function calculateAvgProfit30Day() {
@@ -575,6 +590,7 @@ class General_model extends CI_Model {
             }
             return array("beginner" => (round(((BEGINNER_PACKAGE_USD / $bitcoin_value) / $lsk_price),2)+0.1), "trader" => (round(((TRADER_PACKAGE_USD / $bitcoin_value) / $lsk_price),2)+0.1), "vip" => (round(((VIP_PACKAGE_USD / $bitcoin_value) / $lsk_price),2)+0.1));
         }
+
 
         public function getPaidStatus() {
             // firstly check if they are VIP status

@@ -26,26 +26,46 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <h5>See how many artbitrage opportunities are available for you based on your exchanges!</h5>
         </div>
       </div>
+      <div class="row">
+        <div class="col text-center"> 
+          <select id="exchangeselector"  multiple="multiple">
+              <option value="1">Option 1</option>
+              <option value="2">Option 2</option>
+              <option value="3">Option 3</option>
+              <option value="4">Option 4</option>
+              <option value="5">Option 5</option>
+              <option value="6">Option 6</option>
+          </select>
+        </div>
+      </div>
     </section>
 
     <section class="sitestats" id="sitestats">
-      <div class="jumbotron">
+      <div class="jumbotron"> 
+        <div class="row">
+          <div class="col col-lg-3 text-center">
+            <h3>Current Opportunities</h3>
+            <h2><?=$stats["total_matches"]?></h2>
+          </div>
+          <div class="col col-lg-3 text-center">
+            <h3>Exchanges Analyzed</h3>
+            <h2><?=$stats["num_exchanges"]?>
+          </div>
+          <div class="col col-lg-3 text-center">
+            <h3>Currencies Analyzed</h3>
+            <h2><?=$stats["num_markets_pairs"]?></h2>
+          </div>
+          <div class="col col-lg-3 text-center">
+            <h3>Potential 30 Day Profit*</h3>
+            <h2>$<?=$stats["avg_profit"]?></h2>
+          </div>
+        </div>
         <div class="row">
           <div class="col text-center">
-            <h2>Current Site Statistics</h2>
-            <h5>Numbers don't lie. While some opporunities may be harder make profit on then others our deep learning algorithim and our highly skilled developers will make the process more streamlined.</h5>
+            <small>This information is updated once a day at midnight PST</small>
+            <br />
+            <small>*30 Day Profit based on making 1 trade per day starting with 1 BTC at our average profit % based on arbitrage and pair opportunities found on Insider Crypto including initial investment</small>
           </div>
-        </div>
-        <div class="row">
-          <div class="col col-lg-4">
-          </div>
-          <div class="col col-lg-4">
-          </div>
-          <div class="col col-lg-4">
-          </div>
-          <div class="col col-lg-4">
-          </div>
-        </div>
       </div> 
     </section>
 

@@ -17,18 +17,40 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           </li>
         </ul>
       </div>
-    </footer>
+    </footer> 
 
-    <!-- Bootstrap core JavaScript -->
+
     <script src="<?=base_url()?>resources/landing/vendor/jquery/jquery.min.js"></script>
-    <script src="<?=base_url()?>resources/landing/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Plugin JavaScript -->
-    <script src="<?=base_url()?>resources/landing/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for this template -->
-    <script src="<?=base_url()?>resources/landing/js/new-age.min.js"></script>
-
+    <script src="<?=base_url()?>resources/landing/vendor/bootstrap/js/bootstrap.bundle.min.js"></script> 
+    <script src="<?=base_url()?>resources/landing/vendor/jquery-easing/jquery.easing.min.js"></script> 
+    <script src="<?=base_url()?>resources/landing/js/insidercrypto.js"></script>
+    <script src="<?=base_url()?>resources/landing/js/bootstrap-multiselect.js"></script>
+    <script type="text/javascript">
+          $(document).ready(function() {
+              $('#exchangeselector').multiselect({
+              buttonText: function(options, select) {
+                if (options.length === 0) {
+                    return 'Choose Your Exchanges';
+                }
+                else if (options.length > 3) {
+                    return options.length+' exchanges selected';
+                }
+                 else {
+                     var labels = [];
+                     options.each(function() {
+                         if ($(this).attr('label') !== undefined) {
+                             labels.push($(this).attr('label'));
+                         }
+                         else {
+                             labels.push($(this).html());
+                         }
+                     });
+                     return labels.join(', ') + '';
+                 }
+                }
+              }); 
+          });
+          </script>
   </body>
 
 </html>
