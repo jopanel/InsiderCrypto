@@ -9,6 +9,7 @@ class Welcome extends CI_Controller {
 		$data["programcost"] = $this->General_model->getProgramCost();
 		if ($this->General_model->verifyUser() == FALSE) {
 			$data["stats"] = $this->General_model->getHomeStats(); 
+			$data["markets"] = $this->General_model->getExchanges();
 			$this->load->view('landing/header');
 			$this->load->view('landing/welcome', $data);
 			$this->load->view('landing/footer');

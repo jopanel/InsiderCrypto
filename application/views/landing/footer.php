@@ -50,7 +50,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 }
               }); 
           });
-          </script>
+    </script>
+    <script>
+
+      function checkOpp() {
+        var formData = $("#exchangesform").serialize();
+        $.ajax({
+            url : '<?=base_url()?>api/getExchangesByRequest',
+            data : formData,
+            type : 'POST',
+            dataType:'json',
+            success : function(data) {  
+              document.getElementById("exchangesform").innerHTML = "<div class='row'><div class='col text-center'><h2>Total Opportunities</h2><h3>"+data+"</h3></div></div><div class='row'><div class='col text-center'><p>These opportunities are current. They can change at any time. We highly recommend you try our program out. If you're a daily trader, weekly, or less our program has high value.</p></div></div>";
+            },
+            error : function(request,error)
+            {
+                //alert("Request: "+JSON.stringify(request));
+            }
+        });
+      }
+
+    </script>
   </body>
 
 </html>

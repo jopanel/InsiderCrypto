@@ -132,5 +132,12 @@ class Api extends CI_Controller {
 		echo json_encode($return);
 	}
 
+	public function getExchangesByRequest() {
+		if ($this->input->post()) {
+			echo json_encode($this->General_model->getExchangesByRequest($this->input->post()));
+		}
+		
+	}
+
 
 }

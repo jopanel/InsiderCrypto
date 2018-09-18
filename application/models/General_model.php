@@ -130,6 +130,45 @@ class General_model extends CI_Model {
             return (array)$query->row();
         }
 
+        public function getExchangesByRequest($postData=array()) {
+            $output = 0;
+            $exchanges = $postData["exchanges"];
+            $exchanges = $exchanges;
+            $x = [];
+            foreach ($exchanges as $id) {
+                $x[] = strip_tags((int)$id);
+            }
+            $sql = "SELECT id FROM markets_pairs WHERE market_id IN (".implode(",",$x).")";
+            $query = $this->db->query($sql);
+            $x = null;
+            if ($query->num_rows() > 0) {
+                foreach ($query->result_array() as $res) {
+                    $userPairs[] = $res["id"];
+                }
+            } else {
+                return $output;
+            }
+            $sql = "SELECT
+                    COUNT(m.id) as 'total'
+                FROM
+                    matches m 
+                LEFT JOIN markets_pairs mp1 ON mp1.id = m.pair1_id
+                LEFT JOIN markets_pairs mp2 ON mp2.id = m.pair2_id
+                WHERE
+                    m.pair1_id IN(".implode(", ",$userPairs).")
+                AND m.pair2_id IN(".implode(", ",$userPairs).")
+                AND m.finished IS NULL
+                GROUP BY
+                    m.id
+                ORDER BY
+                    percent ASC"; 
+            $query = $this->db->query($sql); 
+            if ($query->num_rows() > 0) {
+                    $output = $query->num_rows();
+            }
+            return $output;
+        }
+
         public function updateHomePage() {
             $total_matches = $this->getTotalMatches();
             $num_exchanges = $this->getActiveExchangesCount();
@@ -161,9 +200,9 @@ class General_model extends CI_Model {
             return $query->row()->market_pairs;
         }
 
-        private function getExchanges() {
+        public function getExchanges() {
             $markets = [];
-            $sql = "SELECT * FROM markets WHERE active = '1'";
+            $sql = "SELECT * FROM markets WHERE active = '1' ORDER BY name ASC";
             $query = $this->db->query($sql);
             if ($query->num_rows() > 0) {
                 foreach ($query->result_array() as $res) {

@@ -27,18 +27,52 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
       </div>
       <div class="row">
-        <div class="col text-center"> 
-          <select id="exchangeselector"  multiple="multiple">
-              <option value="1">Option 1</option>
-              <option value="2">Option 2</option>
-              <option value="3">Option 3</option>
-              <option value="4">Option 4</option>
-              <option value="5">Option 5</option>
-              <option value="6">Option 6</option>
-          </select>
+        <div class="col text-center demobtn_col">  
+          <button type="button" class="btn btn-primary btn-lg demobtn" data-toggle="modal" data-target="#checkExchanges">
+            See Your Opportunities
+          </button>
         </div>
       </div>
     </section>
+
+    <div class="modal fade" id="checkExchanges" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Choose Your Exchanges</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="exchangesform">
+              <table class="table table-bordered">
+                <tr>
+                <?php
+                  $newline = 0;
+                  foreach ($markets as $id => $name) {
+                    $newline += 1;
+                    echo "<td><label for='".$id."'>".$name."</label></td><td><input type='checkbox' name='exchanges[]' id='".$id."' value='".$id."'></td>";
+                    if ($newline == 2) {
+                      $newline = 0;
+                      echo "</tr><tr>";
+                    }
+                  }
+                ?>
+                </tr>
+              </table>
+              <div class="row">
+                  <div class="col text-center">
+                    <button type="button" class="btn btn-primary btn-lg" onClick="checkOpp()">Check Opportunities</button>
+                  </div>
+                </div>
+              </div>
+            </form> 
+          <div class="modal-footer">
+          </div>
+        </div>
+      </div>
+    </div>
 
     <section class="sitestats" id="sitestats">
       <div class="jumbotron"> 
@@ -126,4 +160,3 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       </div>
       <div class="overlay"></div>
     </section>
-
