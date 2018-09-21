@@ -20,8 +20,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <link href="<?=base_url()?>resources/main/css/sb-admin.css" rel="stylesheet"> 
 </head>
 
-<body style="background-image: url(<?=base_url()?>resources/img/log-bg.jpg); background-position:center; background-color: #000;">
+<body style="background-image: url(<?=base_url()?>resources/img/homebg.png); background-position:center; background-color: #000;">
   <div class="container">
+    <div class="row">
+      <div class="col text-center" style="padding-top:50px;">
+        <a href="<?=base_url()?>">
+          <img src="<?=base_url()?>resources/img/homelogo.png" class="img-fluid header-logo">
+        </a>
+      </div>
+    </div>
     <div class="card card-register mx-auto mt-5">
       <div class="card-header">Register an Account</div>
       <div class="card-body">

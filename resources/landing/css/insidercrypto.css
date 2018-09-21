@@ -211,9 +211,9 @@ section.features .feature-item {
 
 section.cta {
   position: relative;
-  padding: 50px 0;
-  background-image: url("../img/bg-cta.jpg");
-  background-position: center;
+  padding: 50px 0;  
+  height:600px;
+  background: url(../../img/homebg.png) no-repeat bottom center; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -226,17 +226,10 @@ section.cta {
       max-width: 450px;
       margin-top: 0;
       margin-bottom: 25px;
-      color: white; }
+      color: black; }
     @media (min-width: 768px) {
       section.cta .cta-content h2 {
-        font-size: 80px; } }
-  section.cta .overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); }
+        font-size: 80px; } } 
 
 
 section.goodforyou {
@@ -331,3 +324,35 @@ footer {
   width: 400px;
   height:100px;
 }
+
+.padding-btn {
+  margin: 75px;
+  width:50%;
+}
+  @media (max-width: 992px) {
+.header-logo {
+  width:60%;
+}
+
+#mainNav .navbar-brand {
+  width:77%;
+  }
+
+  section.sitestats {
+    top: -56px !important;
+  }
+
+
+}
+
+@media (max-width: 420px) {
+  .demobtn {
+    width:100% !important;
+  }
+}
+
+@media (max-width: 470px) {
+  section.sitestats {
+    position: inherit;
+  }
+  }

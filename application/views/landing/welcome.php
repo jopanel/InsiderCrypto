@@ -12,7 +12,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               <a href="<?=base_url()?>access/register" class="btn btn-outline btn-xl js-scroll-trigger">Get Started</a>
             </div>
           </div>
-          <div class="col-lg-5 my-auto"> 
+          <div class="col-lg-5 my-auto text-center"> 
                     <img src="<?=base_url()?>resources/img/headerimgdb.png" class="img-fluid" alt="">  
           </div>
         </div>
@@ -152,8 +152,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="col">
               <h2>Stop waiting.<br>Start earning.</h2> 
             </div>
-            <div class="col">
-              <a href="<?=base_url()?>access/register" class="btn btn-outline btn-xl js-scroll-trigger">Get Started!</a>
+            <div class="col"> 
+              <a href="<?=base_url()?>access/register" class="btn btn-outline btn-xl js-scroll-trigger padding-btn">Get Started!</a>
             </div>
           </div>
         </div>
