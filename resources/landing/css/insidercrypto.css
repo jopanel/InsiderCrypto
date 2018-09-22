@@ -361,3 +361,9 @@ footer {
     position: inherit;
   }
   }
+
+@media (max-width: 974px) {
+  .rmv-mobile {
+    display: none;
+  }
+}

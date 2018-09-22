@@ -12,7 +12,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               <a href="<?=base_url()?>access/register" class="btn btn-outline btn-xl js-scroll-trigger">Get Started</a>
             </div>
           </div>
-          <div class="col-lg-5 my-auto text-center"> 
+          <div class="col-lg-5 my-auto text-center rmv-mobile"> 
                     <img src="<?=base_url()?>resources/img/headerimgdb.png" class="img-fluid" alt="">  
           </div>
         </div>
