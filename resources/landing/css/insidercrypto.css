@@ -344,6 +344,11 @@ footer {
 
 
 }
+@media (max-width:360px) {
+  #mainNav .navbar-brand {
+    width:70%;
+    }
+}
 
 @media (max-width: 420px) {
   .demobtn {
