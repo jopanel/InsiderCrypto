@@ -66,9 +66,9 @@ function get_friendly_time_ago($distant_timestamp, $max_units = 3) {
                     </p>
                   </div>
                   <div class="col">
-                    <p><strong style="color:green">Buy @</strong> <br><?=$v["pair2_price"]?>
+                    <p><strong style="color:green">Buy @</strong> <br><?=$v["pair1_price"]?>
                       <br>
-                    <strong style="color:red">Sell @ </strong> <br><?=$v["pair1_price"]?>
+                    <strong style="color:red">Sell @ </strong> <br><?=$v["pair2_price"]?>
                     </p>
                   </div>
                   <div class="col">

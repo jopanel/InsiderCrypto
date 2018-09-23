@@ -95,11 +95,13 @@ class General_model extends CI_Model {
         }
 
         public function checkExchanges() {
-            // inactivate exchanges with less than 5 btc volume
+            // inactivate exchanges with less than X btc volume
             $sql = "UPDATE markets SET active = '1'";
             $this->db->query($sql);
             $marketsID = [];
-            $sql2 = "SELECT mp.market_id, SUM(mp.volume24hour) as 'mama' FROM markets_pairs mp GROUP BY mp.market_id HAVING mama < 5";
+            $sql2 = "SELECT mp.market_id, SUM(mp.volume24hour) as 'mama' FROM markets_pairs mp GROUP BY mp.market_id HAVING mama < 50
+                UNION 
+                SELECT r.id as 'market_id', '' as 'mama' FROM markets r WHERE NOT EXISTS(SELECT 1 FROM markets_pairs mpr WHERE mpr.market_id = r.id)";
             $query = $this->db->query($sql2);
             if ($query->num_rows() > 0) {
                 foreach ($query->result_array() as $res) {
@@ -300,7 +302,7 @@ class General_model extends CI_Model {
             $output = [];
             $sql = "SELECT p.market_id, m.name, count(p.id) FROM markets_pairs p 
                     LEFT JOIN markets m ON p.market_id = m.id AND m.active = '1'
-                    WHERE p.active = '1'
+                    WHERE m.active = '1'
                     GROUP BY p.market_id;";
             $query = $this->db->query($sql);
             if ($query->num_rows() > 0) {
