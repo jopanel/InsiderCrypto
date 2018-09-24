@@ -139,5 +139,92 @@ class Api extends CI_Controller {
 		
 	}
 
+	public function profits() {
+
+		$people = [];
+		(float)$originalcost = 5.0; 
+		(float)$profit = 0;
+		(float)$fundsgiven = 0;
+		(float)$increase = 0.003;
+		(float)$profitup = 0.0029;
+		(float)$equity = 0.0001;
+		$counter = 0;
+		for ($i=1; $i<=2; $i++) {
+			$counter += 1;
+			(float)$initcost = $originalcost;
+			$output = [];
+			$personcount = 0;
+			$people[] = array(
+						"person" => $counter,
+						"cost" => (float)$initcost,
+						"profit" => 0
+						);
+			(float)$fundsgivenround = 0;
+			$personcount = 0;
+			(float)$profit += ($initcost * $profitup);
+			$addit = 0;
+				foreach ($people as $k => $peep) { 
+						$personcount += 1;
+						if ($k == (count($people) - 1)) {
+						} else {
+							$addit = 1;
+							(float)$gains = ($initcost * $equity);
+							(float)$gains = $gains + $peep["profit"];
+							$output[] = array( 
+							"person" => $peep["person"],
+							"cost" => (float)$peep["cost"],
+							"profit" => (float)$gains
+							);
+						(float)$fundsgivenround += ($initcost * $equity);
+						}
+				} 
+				if ($addit == 1) {
+					$output[] = array(
+						"person" => $counter,
+						"cost" => (float)$initcost,
+						"profit" => 0
+						);
+				}
+			(float)$originalcostmoneymade = ($initcost - $fundsgivenround);
+			(float)$profit += $originalcostmoneymade;
+			if (count($people) > 1) { 
+				$people = $output; 
+			}
+			(float)$originalcost = ($initcost + ($initcost * $increase));
+		}
+		(float)$totalfundsgenerated = 0;
+		foreach ($people as $peep) {
+				(float)$fundsgiven += $peep["profit"];
+			(float)$totalfundsgenerated += $peep["cost"];
+		}
+		$profit = ($totalfundsgenerated - $fundsgiven);
+		echo "funds given: ".$fundsgiven." <br><br> Money Made: ".$profit."<br><br>cost of package now: ".$originalcost."<br><br> total funds generated: ".$totalfundsgenerated;
+		$costofmonthly = 30;
+		$totalpeople = count($people);
+		$numberpurchases = 50;
+		$moprofit = 0;
+		for ($i=1; $i<=12; $i++) {
+			for ($r=1; $r<=$numberpurchases; $r++) {
+				$moprofit += ($costofmonthly / 2);
+				$gains = (($costofmonthly / 2) / count($people));
+				$output = [];
+				foreach ($people as $peep) {
+					$output[] = array( 
+								"person" => $peep["person"],
+								"cost" => (float)$peep["cost"],
+								"profit" => (float)($peep["profit"] + $gains)
+								);
+				}
+				$people = $output;
+			}
+		}
+		echo "<br><br>total profit of $".$moprofit." after 12 months, with ".$numberpurchases." purchases at $".$costofmonthly." /mo";
+		echo "<pre>";
+		var_dump($people);
+		}
+
+
+
+
 
 }
