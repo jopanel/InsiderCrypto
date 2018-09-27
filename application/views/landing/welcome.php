@@ -98,7 +98,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <div class="col text-center">
             <small>This information is updated once a day at midnight PST</small>
             <br />
-            <small>*30 Day Profit based on making 1 trade per day starting with 1 BTC at our average profit % based on arbitrage and pair opportunities found on Insider Crypto including initial investment</small>
+            <small>*30 Day Profit based on making 1 trade per day starting with 1 BTC at our average profit % based on arbitrage and pair opportunities found on Insider Crypto including initial investment. Insider Crypto makes no gaurantees. There are great risks in trading and we do not gaurantee you will be profitable.</small>
           </div>
       </div> 
     </section>

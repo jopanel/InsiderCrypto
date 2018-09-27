@@ -4,14 +4,14 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit297dd0a38270dfa90050d09927eb4593
+class ComposerStaticInit948348fa60d2394c25657f2a0769ce0f
 {
     public static $files = array (
-        'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
+        'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
-        '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         '97be8d00d4e1b8596dda683609f3dce2' => __DIR__ . '/..' . '/tcdent/php-restclient/restclient.php',
+        '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         '3f8bdd3b35094c73a26f0106e3c0f8b2' => __DIR__ . '/..' . '/sendgrid/sendgrid/lib/SendGrid.php',
         '9dda55337a76a24e949fbcc5d905a2c7' => __DIR__ . '/..' . '/sendgrid/sendgrid/lib/helpers/mail/Mail.php',
     );
@@ -27,6 +27,7 @@ class ComposerStaticInit297dd0a38270dfa90050d09927eb4593
         ),
         'S' => 
         array (
+            'Stripe\\' => 7,
             'SendGrid\\' => 9,
         ),
         'P' => 
@@ -58,12 +59,16 @@ class ComposerStaticInit297dd0a38270dfa90050d09927eb4593
         'phpDocumentor\\Reflection\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
-            1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
-            2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
+            1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
+            2 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
         ),
         'Webmozart\\Assert\\' => 
         array (
             0 => __DIR__ . '/..' . '/webmozart/assert/src',
+        ),
+        'Stripe\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/stripe/stripe-php/lib',
         ),
         'SendGrid\\' => 
         array (
@@ -660,10 +665,10 @@ class ComposerStaticInit297dd0a38270dfa90050d09927eb4593
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit297dd0a38270dfa90050d09927eb4593::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit297dd0a38270dfa90050d09927eb4593::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit297dd0a38270dfa90050d09927eb4593::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit297dd0a38270dfa90050d09927eb4593::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit948348fa60d2394c25657f2a0769ce0f::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit948348fa60d2394c25657f2a0769ce0f::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit948348fa60d2394c25657f2a0769ce0f::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit948348fa60d2394c25657f2a0769ce0f::$classMap;
 
         }, null, ClassLoader::class);
     }

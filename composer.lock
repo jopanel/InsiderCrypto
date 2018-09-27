@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "28bbc64eb0ce3fa4f3340cccd0582a1c",
+    "content-hash": "97c6b22ec3dc875db77a692aac032a93",
     "packages": [
         {
             "name": "cb0/lisk-php-api",
@@ -243,19 +243,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/loeken/cryptocompare-api-php-wrapper.git",
-                "reference": "317527b8cff2d8913af661ea6eaa2e3db32e8ab9"
+                "reference": "d6110b6ca44ec05e19b3dbec331396f86fd65459"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/loeken/cryptocompare-api-php-wrapper/zipball/317527b8cff2d8913af661ea6eaa2e3db32e8ab9",
-                "reference": "317527b8cff2d8913af661ea6eaa2e3db32e8ab9",
+                "url": "https://api.github.com/repos/loeken/cryptocompare-api-php-wrapper/zipball/d6110b6ca44ec05e19b3dbec331396f86fd65459",
+                "reference": "d6110b6ca44ec05e19b3dbec331396f86fd65459",
                 "shasum": ""
             },
             "require": {
-                "guzzlehttp/guzzle": "6.3.0"
+                "guzzlehttp/guzzle": "6.3.*"
             },
             "require-dev": {
-                "guzzlehttp/guzzle": "6.3.0"
+                "guzzlehttp/guzzle": "6.3.*"
             },
             "type": "library",
             "autoload": {
@@ -265,7 +265,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "Creative Commons Attribution-NonCommercial 3.0 Unported (CC BY-NC 3.0) license"
+                "BSD-3-Clause"
             ],
             "authors": [
                 {
@@ -274,7 +274,7 @@
                 }
             ],
             "description": "Php wrapper class based on guzzle to query the cryptocompare.com api",
-            "time": "2017-11-08T02:59:59+00:00"
+            "time": "2018-09-03T00:04:46+00:00"
         },
         {
             "name": "psr/http-message",
@@ -423,6 +423,61 @@
                 "sendgrid"
             ],
             "time": "2017-07-01T04:30:16+00:00"
+        },
+        {
+            "name": "stripe/stripe-php",
+            "version": "v6.19.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/stripe/stripe-php.git",
+                "reference": "b1e9f8a25253de2cd527a5c776011ba9120f355a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/b1e9f8a25253de2cd527a5c776011ba9120f355a",
+                "reference": "b1e9f8a25253de2cd527a5c776011ba9120f355a",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "php-coveralls/php-coveralls": "1.*",
+                "phpunit/phpunit": "~4.0",
+                "squizlabs/php_codesniffer": "~2.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Stripe\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Stripe and contributors",
+                    "homepage": "https://github.com/stripe/stripe-php/contributors"
+                }
+            ],
+            "description": "Stripe PHP Library",
+            "homepage": "https://stripe.com/",
+            "keywords": [
+                "api",
+                "payment processing",
+                "stripe"
+            ],
+            "time": "2018-09-25T12:21:14+00:00"
         },
         {
             "name": "tcdent/php-restclient",
