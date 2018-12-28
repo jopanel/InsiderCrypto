@@ -52,7 +52,7 @@ class Market extends CryptocompareApi
      * @param bool $sign - server sided signing of request
      * @return mixed
      */
-    public function getTopVolumes($tsym = "EUR", $limit = 20, $sign = false) {
+    public function getTopVolumes($tsym = "EUR", $limit = 20, $sign = "false") {
 
         $extraParams = $this->appplicationName;;
 
@@ -70,7 +70,7 @@ class Market extends CryptocompareApi
      * @param bool $sign - server sided signing of request
      * @return mixed
      */
-    public function getList($sign = false) {
+    public function getList($sign = "false") {
 
         $extraParams = $this->appplicationName;;
 

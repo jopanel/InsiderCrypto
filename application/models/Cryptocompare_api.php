@@ -84,7 +84,7 @@ class Cryptocompare_api extends CI_Model {
 
         public function generateMarkets() {
         	$cryptocompareMarket = new Cryptocompare\Market();
-        	$dataObj = $cryptocompareMarket->getList(false);
+        	$dataObj = $cryptocompareMarket->getList();
         	// insert new exchanges
         	foreach ($dataObj as $k => $v) {
         		$sql = "SELECT 1 FROM markets WHERE name = ".$this->db->escape($k);
@@ -296,7 +296,7 @@ class Cryptocompare_api extends CI_Model {
         		//var_dump($calls); 
         		$cryptocomparePrice = new Cryptocompare\Price(); 
 
-	        			$getPrices = $cryptocomparePrice->getMultiPriceFull("1", $v["currency"], $v["symbols"],$v["market"], false); 
+	        			$getPrices = $cryptocomparePrice->getMultiPriceFull($v["currency"], $v["symbols"],$v["market"]); 
 	        			$disableDate = strtotime("-".$this->daysBeforeDisable." days"); 
 	        			if (!isset($getPrices->RAW) || empty($getPrices->RAW)) {
 	        				if (!isset($getPrices->Message) || empty($getPrices->Message)) {
@@ -413,7 +413,7 @@ class Cryptocompare_api extends CI_Model {
         public function getBitcoinValue() {
         	date_default_timezone_set('America/Los_Angeles');
         	$cryptocomparePrice = new Cryptocompare\Price();
-			$getPrice = $cryptocomparePrice->getSinglePrice("1","BTC","USD","Coinbase","false");
+			$getPrice = $cryptocomparePrice->getSinglePrice("BTC","USD","Coinbase"); 
 			$sql = "INSERT INTO bitcoin_value (fiat,cost,updated) VALUES ('USD', ".$this->db->escape($getPrice->USD).", ".$this->db->escape(time()).")";
 			$this->db->query($sql);
 			return TRUE;

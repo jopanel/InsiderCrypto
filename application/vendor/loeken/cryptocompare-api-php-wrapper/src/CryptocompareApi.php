@@ -14,7 +14,7 @@ class CryptocompareApi
     /**
      * @var string - defines the name of your application - change this
      */
-    public $appplicationName = "default_php_wrapper";
+    public $appplicationName = "ArbitrageCheck";
 
     /**
      * @var bool - if set to true will die() and print exception when http request fails -> not recommended in production enviroment
@@ -23,6 +23,10 @@ class CryptocompareApi
 
 
     // do not edit bellow unless you know what you are doing
+    /**
+     * @var string FUCKING API KEY 
+     */
+    public $api_key = "66b6b4967d59943d8faa12339395a0b8695222be7164f63f20df76b54be3e033";
 
     /**
      * @var string publicEndpoint applies to all requests that do not need a session key to work
@@ -76,7 +80,7 @@ class CryptocompareApi
     /**
      * @return bool|mixed - returns mining equipment added on website
      */
-    public function getNewsProviders($sign = false ) {
+    public function getNewsProviders($sign = "false" ) {
         $params = array(
             "sign" => $sign,
         );
@@ -87,7 +91,7 @@ class CryptocompareApi
     /**
      * @return bool|mixed - returns mining equipment added on website
      */
-    public function getNews($feeds = "ALL_NEWS_FEEDS", $lTs = false, $lang = "EN",$sign = false ) {
+    public function getNews($feeds = "ALL_NEWS_FEEDS", $lTs = false, $lang = "EN",$sign = "false" ) {
         $params = array(
             "feeds" => $feeds,
             "lTs" => $lTs,
@@ -148,7 +152,7 @@ class CryptocompareApi
             return false;
         }
         if ($type == "public" ) {
-            $uri = $this->publicEndpoint . $action;
+            $uri = $this->publicEndpoint . $action . "?api_key=" . $this->api_key;
         }
         elseif ($type == "private" ) {
             $uri = $this->privateEndpoint . $action;
@@ -161,7 +165,7 @@ class CryptocompareApi
             if ($this->debug == true ) {
                 echo "URI: " . $uri . "<br>";
             }
-            $client = new \GuzzleHttp\Client(['verify' => false]);
+            $client = new \GuzzleHttp\Client(['verify' => false]); 
             $res = $client->request('GET', $uri, array(
                 "query" => $options
             ));

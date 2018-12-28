@@ -13,7 +13,7 @@ class Coin extends CryptocompareApi
     /**
      * @return bool|mixed - returns general info for all the coins available on the website.
      */
-    public function getList($sign = false) {
+    public function getList($sign = "false") {
         $extraParams = $this->appplicationName;
         $params = array(
             "extraParams" => $extraParams,
