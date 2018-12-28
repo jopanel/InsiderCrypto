@@ -37,6 +37,7 @@ class Api extends CI_Controller {
 	        set_time_limit(0);
 			$this->load->model('Cryptocompare_api'); 
 			$this->load->model('Compare_model');
+			$this->Cryptocompare_api->build();
 			$followUps = $this->Compare_model->generateFollowUp();
 			if ($this->Cryptocompare_api->generatePrices($followUps) == TRUE) {
 				$this->Compare_model->generateArbitrageEvents();

@@ -48,7 +48,7 @@ class Compare_model extends CI_Model {
 							$percent = $this->calculatePercentage($vv["price"], $v[$i]["price"]);
 							if ($percent > 3) {
 								//check if match is active
-								$sql = "SELECT id FROM matches WHERE pair1_id = ".$this->db->escape($vv["pair_id"])." AND pair2_id = ".$this->db->escape($v[$i]["pair_id"])." AND finished IS NULL";
+								$sql = "SELECT id FROM matches WHERE pair2_id = ".$this->db->escape($vv["pair_id"])." AND pair1_id = ".$this->db->escape($v[$i]["pair_id"])." AND finished IS NULL";
 								$query = $this->db->query($sql);
 								if ($query->num_rows() > 0) {
 									// match is active
@@ -57,7 +57,7 @@ class Compare_model extends CI_Model {
 									$this->db->query($sql);
 								} else {
 									// match doesnt exist
-									$sql = "INSERT INTO matches (pair1_id, pair2_id, started, percent) VALUES (".$this->db->escape($vv["pair_id"]).", ".$this->db->escape($v[$i]["pair_id"]).", ".$this->db->escape($time).", ".$this->db->escape($percent).")";
+									$sql = "INSERT INTO matches (pair1_id, pair2_id, started, percent) VALUES (".$this->db->escape($v[$i]["pair_id"]).", ".$this->db->escape($vv["pair_id"]).", ".$this->db->escape($time).", ".$this->db->escape($percent).")";
 									$this->db->query($sql);
 								}
 							} else {
