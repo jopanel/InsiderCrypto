@@ -69,7 +69,7 @@ class Compare_model extends CI_Model {
 				}
 				
 			}
-		}
+		} 
 		return $this->generateFollowUp($followup);
 	}
 
@@ -253,8 +253,8 @@ class Compare_model extends CI_Model {
 				foreach ($query->result_array() as $res) {
 					foreach ($checkData as $d) {
 						if ($res["pair1_id"] == $d["pair1_id"] && $res["pair2_id"] == $d["pair2_id"]) {
-							$deleteIDs[] = $d["id"];
-							$deleteData[$d["id"]] = $d;
+							$deleteIDs[] = $res["id"];
+							$deleteData[$res["id"]] = $d;
 						}
 					}
 				}
@@ -265,10 +265,10 @@ class Compare_model extends CI_Model {
 				$instatement = implode(',',$deleteIDs);
 				$sql = "DELETE FROM matches WHERE id IN (".$instatement.")";
 				$this->db->query($sql); 
-				foreach ($deleteData as $k) {
-					$sql = "INSERT INTO match_history (match_id, pair1_id, pair2_id, started, finished, avg_percent, price_calls, avg_price_pair1, avg_price_pair2, low_price_pair1, low_price_pair2, high_price_pair1, high_price_pair2) VALUES (".$this->db->escape($k["id"]).", ".$this->db->escape($k["pair1_id"]).", ".$this->db->escape($k["pair2_id"]).", ".$this->db->escape($k["started"]).",".$this->db->escape(time()).", ".$this->db->escape(0).", ".$this->db->escape(0).", ".$this->db->escape(0).", ".$this->db->escape(0).", ".$this->db->escape(0).", ".$this->db->escape(0).", ".$this->db->escape(0).", ".$this->db->escape(0).")";
-					$this->db->query($sql);
-				}
+				//foreach ($deleteData as $k) {
+					//$sql = "INSERT INTO match_history (match_id, pair1_id, pair2_id, started, finished, avg_percent, price_calls, avg_price_pair1, avg_price_pair2, low_price_pair1, low_price_pair2, high_price_pair1, high_price_pair2) VALUES (".$this->db->escape($k["id"]).", ".$this->db->escape($k["pair1_id"]).", ".$this->db->escape($k["pair2_id"]).", ".$this->db->escape($k["started"]).",".$this->db->escape(time()).", ".$this->db->escape(0).", ".$this->db->escape(0).", ".$this->db->escape(0).", ".$this->db->escape(0).", ".$this->db->escape(0).", ".$this->db->escape(0).", ".$this->db->escape(0).", ".$this->db->escape(0).")";
+					//$this->db->query($sql);
+				//}
 			}
 			return TRUE;
 		} else {

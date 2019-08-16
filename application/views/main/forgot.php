@@ -20,7 +20,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <link href="<?=base_url()?>resources/main/css/sb-admin.css" rel="stylesheet">
 </head>
 
-<body style="background-image: url(<?=base_url()?>resources/img/homebg.png); background-position:center; background-color: #000;">
+<body style="background-image: url(<?=base_url()?>resources/img/homebg.png); background-position:center; background-color: white;">
   <div class="container">
     <div class="row">
       <div class="col text-center" style="padding-top:50px;">
@@ -29,7 +29,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </a>
       </div>
     </div>
-    <div class="card card-login mx-auto mt-5">
+    <div class="card card-login mx-auto mt-5" style="-webkit-box-shadow: 30px 30px 138px -32px rgba(0,0,0,0.75);
+-moz-box-shadow: 30px 30px 138px -32px rgba(0,0,0,0.75);
+box-shadow: 30px 30px 138px -32px rgba(0,0,0,0.75); border-radius:10px;">
       <div class="card-header">Reset Password</div>
       <div class="card-body">
         <div class="text-center mt-4 mb-5">

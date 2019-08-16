@@ -6,7 +6,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Api extends CI_Controller {
 
 	public function genArb($password=null) { 
-		if ($password == "checksum00") {
+		if ($password == API_PASSWORD) {
+			ini_set('max_execution_time', 0);
+	        set_time_limit(0);
 			$this->load->model('Compare_model');
 			$this->Compare_model->generateArbitrageEvents(); 
 		}
