@@ -52,9 +52,9 @@ justify;line-height:normal"><b style="mso-bidi-font-weight:normal"><span style="
 justify;line-height:normal"><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
 mso-bidi-font-family:&quot;Times New Roman&quot;">The following Terms of Service
 Agreement (the "TOS") is a legally binding agreement that shall govern the relationship
-with our users and others which may interact or interface with <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span>,
-also known as <span class="saved-var company_contact_short_name step-1">Lenapo</span>, located at <span class="saved-var company_contact_address step-1">PO Box 12366</span>,
-<span class="saved-var company_contact_city step-1">Westminster</span>, <span class="saved-var company_contact_state step-1">California</span> <span class="saved-var company_contact_zip_code step-1">92685</span> and our subsidiaries and affiliates, in association with the use of the <span class="saved-var company_contact_short_name step-1">Lenapo</span> website, which includes insidercrypto.com, (the "Site") and its Services,
+with our users and others which may interact or interface with <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span>,
+also known as <span class="saved-var company_contact_short_name step-1">MSA</span>, located at <span class="saved-var company_contact_address step-1">PO Box 12366</span>,
+<span class="saved-var company_contact_city step-1">Westminster</span>, <span class="saved-var company_contact_state step-1">California</span> <span class="saved-var company_contact_zip_code step-1">92685</span> and our subsidiaries and affiliates, in association with the use of the <span class="saved-var company_contact_short_name step-1">MSA</span> website, which includes insidercrypto.com, (the "Site") and its Services,
 which shall be defined below. <o:p></o:p></span></p>
 
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
@@ -120,18 +120,18 @@ provided and made available through our website and applications, which may
 include some mobile applications and that those applications may be made
 available on various social media networking sites and numerous other platforms
 and downloadable programs, are the sole property of </span><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;mso-bidi-font-family:
-&quot;Times New Roman&quot;"><span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span><span style="color:black;mso-themecolor:
-text1">. </span>At its discretion, <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span> may offer
+&quot;Times New Roman&quot;"><span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span><span style="color:black;mso-themecolor:
+text1">. </span>At its discretion, <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span> may offer
 additional website Services and/or products, or update, modify or revise any
 current content and Services, and this Agreement shall apply to any and all
 additional Services and/or products and any and all updated, modified or
-revised Services unless otherwise stipulated. <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span> does
+revised Services unless otherwise stipulated. <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span> does
 hereby reserve the right to cancel and cease offering any of the aforementioned
 Services and/or products. You, as the end user </span><span style="font-size:
 12.0pt;mso-bidi-font-size:11.0pt;font-family:&quot;Times New Roman&quot;;color:#F79646;
 mso-themecolor:accent6"> </span><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;mso-bidi-font-family:
 &quot;Times New Roman&quot;">and/or member, <span style="color:#F79646;mso-themecolor:
-accent6"> </span>acknowledge, accept and agree that <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span> shall not be held liable for any such updates, modifications, revisions,
+accent6"> </span>acknowledge, accept and agree that <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span> shall not be held liable for any such updates, modifications, revisions,
 suspensions or discontinuance of any of our Services and/or products. Your
 continued use of the Services provided, after such posting of any updates,
 changes, and/or modifications shall constitute your acceptance of such updates,
@@ -152,7 +152,7 @@ color:#F79646;mso-themecolor:accent6"></span><span style="font-size:12.0pt;
 font-family:&quot;Times New Roman&quot;;mso-bidi-font-family:&quot;Times New Roman&quot;">and/or
 member <span style="color:#F79646;mso-themecolor:accent6"></span>understands,
 acknowledges and agrees that the Services offered shall be provided "AS IS" and
-as such <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span> shall not assume any responsibility or
+as such <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span> shall not assume any responsibility or
 obligation for the timeliness, missed delivery, deletion and/or any failure to
 store user content, communication or personalization settings. <o:p></o:p></span></p>
 
@@ -177,7 +177,7 @@ justify;line-height:normal"><span style="font-size:12.0pt;font-family:&quot;Time
 mso-bidi-font-family:&quot;Times New Roman&quot;">To register and become a "member" of the
 Site, you must be at least 18 years of age to enter into and form a legally
 binding contract. In addition, you must be in good standing and not an
-individual that has been previously barred from receiving <span class="saved-var company_contact_short_name step-1">Lenapo</span>'s
+individual that has been previously barred from receiving <span class="saved-var company_contact_short_name step-1">MSA</span>'s
 Services under the laws and statutes of the United States or other applicable
 jurisdiction.<o:p></o:p></span></p>
 
@@ -188,12 +188,12 @@ mso-bidi-font-family:&quot;Times New Roman&quot;"><o:p>&nbsp;</o:p></span></p>
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
 justify;line-height:normal"><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
 mso-bidi-font-family:&quot;Times New Roman&quot;">When you register,
-<span class="saved-var company_contact_short_name step-1">Lenapo</span> may collect information such as your name,
+<span class="saved-var company_contact_short_name step-1">MSA</span> may collect information such as your name,
 e-mail address, birth date, gender, mailing address, occupation, industry and
 personal interests. </span><span style="font-size:12.0pt;mso-bidi-font-size:
 11.0pt;font-family:&quot;Times New Roman&quot;;mso-bidi-font-family:&quot;Times New Roman&quot;;
 color:#F79646;mso-themecolor:accent6"></span>You can edit your
-account information at any time. Once you register with <span class="saved-var company_contact_short_name step-1">Lenapo</span> and sign in to our Services, you are no longer anonymous to us.<o:p></o:p></p>
+account information at any time. Once you register with <span class="saved-var company_contact_short_name step-1">MSA</span> and sign in to our Services, you are no longer anonymous to us.<o:p></o:p></p>
 
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
 justify;line-height:normal"><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
@@ -235,9 +235,9 @@ mso-bidi-font-family:&quot;Times New Roman&quot;"><o:p>&nbsp;</o:p></span></p>
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
 justify;line-height:normal"><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
 mso-bidi-font-family:&quot;Times New Roman&quot;">If anyone knowingly provides any
-information of a false, untrue, inaccurate or incomplete nature, <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span> will have sufficient grounds and rights to suspend or terminate the member in
+information of a false, untrue, inaccurate or incomplete nature, <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span> will have sufficient grounds and rights to suspend or terminate the member in
 violation of this aspect of the Agreement, and as such refuse any and all
-current or future use of <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span> Services, or any portion
+current or future use of <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span> Services, or any portion
 thereof. <o:p></o:p></span></p>
 
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
@@ -246,11 +246,11 @@ mso-bidi-font-family:&quot;Times New Roman&quot;"><o:p>&nbsp;</o:p></span></p>
 
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
 justify;line-height:normal"><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
-mso-bidi-font-family:&quot;Times New Roman&quot;">It is <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span>'s
+mso-bidi-font-family:&quot;Times New Roman&quot;">It is <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span>'s
 priority to ensure the safety and privacy of all its visitors, users and
 members, especially that of children. Therefore, it is for this reason that the
 parents of any child under the age of 13 that permit their child or children
-access to the <span class="saved-var company_contact_short_name step-1">Lenapo</span> website platform Services must
+access to the <span class="saved-var company_contact_short_name step-1">MSA</span> website platform Services must
 create a "family" account, which will certify that the individual creating the
 "family" account is of 18 years of age and as such, the parent or legal
 guardian of any child or children registered under the "family" account. As the
@@ -283,11 +283,11 @@ mso-bidi-font-family:&quot;Times New Roman&quot;"><span style="mso-spacerun:yes"
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
 justify;line-height:normal"><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
 mso-bidi-font-family:&quot;Times New Roman&quot;">Every member's registration data and
-various other personal information are strictly protected by the <span style="color:black;mso-themecolor:text1"><span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span> Online
+various other personal information are strictly protected by the <span style="color:black;mso-themecolor:text1"><span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span> Online
 Privacy Policy (see the full Privacy Policy at https://insidercrypto.com/docs/privacy). As a
 member, you herein consent to the collection and use of the information
 provided, including the transfer of information within the United States and/or
-other countries for storage, processing or use by <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span> and/or our subsidiaries and affiliates. <o:p></o:p></span></span></p>
+other countries for storage, processing or use by <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span> and/or our subsidiaries and affiliates. <o:p></o:p></span></span></p>
 
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
 justify;line-height:normal"><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
@@ -322,9 +322,9 @@ responsible for maintaining the secrecy and confidentiality of your password
 and for all activities that transpire on or within your account. It is your
 responsibility for any act or omission of any user(s) that access your account
 information that, if undertaken by you, would be deemed a violation of the TOS.
-It shall be your responsibility to notify <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span> immediately
+It shall be your responsibility to notify <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span> immediately
 if you notice any unauthorized access or use of your account or password or any
-other breach of security. <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span> shall not be held liable for
+other breach of security. <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span> shall not be held liable for
 any loss and/or damage arising from any failure to comply with this term and/or
 condition of the TOS. <o:p></o:p></span></p>
 
@@ -358,12 +358,12 @@ or any other content, whether it is publicly or privately posted and/or
 transmitted, is the expressed sole responsibility of the individual from whom
 the content originated. In short, this means that you are solely responsible
 for any and all content posted, uploaded, emailed, transmitted or otherwise
-made available by way of the <span class="saved-var company_contact_short_name step-1">Lenapo</span> Services, and as
+made available by way of the <span class="saved-var company_contact_short_name step-1">MSA</span> Services, and as
 such, we do not guarantee the accuracy, integrity or quality of such content.
 It is expressly understood that by use of our Services, you may be exposed to
 content including, but not limited to, any errors or omissions in any content
 posted, and/or any loss or damage of any kind incurred as a result of the use
-of any content posted, emailed, transmitted or otherwise made available by <span class="saved-var company_contact_short_name step-1">Lenapo</span>.
+of any content posted, emailed, transmitted or otherwise made available by <span class="saved-var company_contact_short_name step-1">MSA</span>.
 <o:p></o:p></span></p>
 
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
@@ -373,7 +373,7 @@ mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
 justify;line-height:normal"><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
 mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1">Furthermore,
-you herein agree not to make use of <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span>'s Services for the
+you herein agree not to make use of <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span>'s Services for the
 purpose of:<o:p></o:p></span></p>
 
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
@@ -414,7 +414,7 @@ mso-add-space:auto;text-indent:-.25in;line-height:normal;mso-list:l1 level1 lfo2
 mso-themecolor:text1"><span style="mso-list:Ignore">c)<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span></span><!--[endif]--><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
 mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1">impersonating
-any individual or entity, including, but not limited to, any <span class="saved-var company_contact_short_name step-1">Lenapo</span> officials, forum leaders, guides or hosts or falsely stating or otherwise
+any individual or entity, including, but not limited to, any <span class="saved-var company_contact_short_name step-1">MSA</span> officials, forum leaders, guides or hosts or falsely stating or otherwise
 misrepresenting any affiliation with an individual or entity;<o:p></o:p></span></p>
 
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
@@ -514,7 +514,7 @@ mso-add-space:auto;text-indent:-.25in;line-height:normal;mso-list:l1 level1 lfo2
 mso-themecolor:text1"><span style="mso-list:Ignore">j)<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span></span><!--[endif]--><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
 mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1">interfering
-with or disrupting any <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span> Services, servers and/or networks
+with or disrupting any <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span> Services, servers and/or networks
 that may be connected or related to our website, including, but not limited to,
 the use of any device software and/or routine to bypass the robot exclusion
 headers;<o:p></o:p></span></p>
@@ -583,7 +583,7 @@ mso-add-space:auto;text-align:justify;line-height:normal"><span style="font-size
 
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
 justify;line-height:normal"><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
-mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1"><span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span> herein reserves the right to pre-screen, refuse and/or delete any content
+mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1"><span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span> herein reserves the right to pre-screen, refuse and/or delete any content
 currently available through our Services. In addition, we reserve the right to
 remove and/or delete any such content that would violate the TOS </span><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;mso-bidi-font-family:
 &quot;Times New Roman&quot;">or which would otherwise be considered offensive to other
@@ -595,7 +595,7 @@ mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text
 
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
 justify;line-height:normal"><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
-mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1"><span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span> herein reserves the right to access, preserve and/or disclose member account
+mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1"><span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span> herein reserves the right to access, preserve and/or disclose member account
 information and/or content if it is requested to do so by law or in good faith
 belief that any such action is deemed reasonably necessary for:<o:p></o:p></span></p>
 
@@ -661,7 +661,7 @@ mso-add-space:auto;text-indent:-.25in;line-height:normal;mso-list:l11 level1 lfo
 mso-themecolor:text1"><span style="mso-list:Ignore">e)<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span></span><!--[endif]--><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
 mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1">protecting
-the rights, property or the personal safety of <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span>, its
+the rights, property or the personal safety of <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span>, its
 visitors, users and members, including the general public.<o:p></o:p></span></p>
 
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
@@ -670,11 +670,11 @@ mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text
 
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
 justify;line-height:normal"><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
-mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1"><span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span> herein reserves the right to include the use of security components that may
+mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1"><span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span> herein reserves the right to include the use of security components that may
 permit digital information or material to be protected, and that such use of
 information and/or material is subject to usage guidelines and regulations
-established by <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span> or any other content providers
-supplying content services to <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span>. You are hereby
+established by <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span> or any other content providers
+supplying content services to <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span>. You are hereby
 prohibited from making any attempt to override or circumvent any of the
 embedded usage rules in our Services. Furthermore, unauthorized reproduction,
 publication, distribution, or exhibition of any information or materials
@@ -827,13 +827,13 @@ justify;line-height:normal"><b style="mso-bidi-font-weight:normal"><span style="
 
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
 justify;line-height:normal"><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
-mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1"><span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span> shall not lay claim to ownership of any content submitted by any visitor</span><span style="font-size:12.0pt;mso-bidi-font-size:11.0pt;font-family:&quot;Times New Roman&quot;;
+mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1"><span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span> shall not lay claim to ownership of any content submitted by any visitor</span><span style="font-size:12.0pt;mso-bidi-font-size:11.0pt;font-family:&quot;Times New Roman&quot;;
 color:#F79646;mso-themecolor:accent6"></span><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
 mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1">, member,</span><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;mso-bidi-font-family:
 &quot;Times New Roman&quot;;color:#F79646;mso-themecolor:accent6"></span><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;mso-bidi-font-family:
 &quot;Times New Roman&quot;"> <span style="color:black;mso-themecolor:text1">or user, nor
 make such content available for inclusion on our website Services. Therefore,
-you hereby grant and allow for <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span> the below listed
+you hereby grant and allow for <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span> the below listed
 worldwide, royalty-free and non-exclusive licenses, as applicable:</span><o:p></o:p></span></p>
 
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
@@ -847,12 +847,12 @@ mso-themecolor:text1"><span style="mso-list:Ignore">a)<span style="font:7.0pt &q
 </span></span></span><!--[endif]--><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
 mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1">The
 content submitted or made available for inclusion on the publicly accessible
-areas of <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span>'s sites, the license provided to permit to
+areas of <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span>'s sites, the license provided to permit to
 use, distribute, reproduce, modify, adapt, publicly perform and/or publicly
 display said Content on our network Services is for the sole purpose of
 providing and promoting the specific area to which this content was placed
 and/or made available for viewing. This license shall be available so long as
-you are a member of <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span>'s sites, and shall terminate at
+you are a member of <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span>'s sites, and shall terminate at
 such time when you elect to discontinue your membership.<o:p></o:p></span></p>
 
 <p class="MsoListParagraphCxSpMiddle" style="margin-bottom:0in;margin-bottom:
@@ -867,12 +867,12 @@ mso-themecolor:text1"><span style="mso-list:Ignore">b)<span style="font:7.0pt &q
 </span></span></span><!--[endif]--><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
 mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1">Photos,
 audio, video and/or graphics submitted or made available for inclusion on the
-publicly accessible areas of <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span>'s sites, the license
+publicly accessible areas of <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span>'s sites, the license
 provided to permit to use, distribute, reproduce, modify, adapt, publicly
 perform and/or publicly display said Content on our network Services are for
 the sole purpose of providing and promoting the specific area in which this
 content was placed and/or made available for viewing. This license shall be
-available so long as you are a member of <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span>'s sites and
+available so long as you are a member of <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span>'s sites and
 shall terminate at such time when you elect to discontinue your membership.<o:p></o:p></span></p>
 
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
@@ -886,7 +886,7 @@ mso-themecolor:text1"><span style="mso-list:Ignore">c)<span style="font:7.0pt &q
 </span></span></span><!--[endif]--><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
 mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1">For
 any other content submitted or made available for inclusion on the publicly
-accessible areas of <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span>'s sites, the continuous, binding
+accessible areas of <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span>'s sites, the continuous, binding
 and completely sub-licensable license which is meant to permit to use,
 distribute, reproduce, modify, adapt, publish, translate, publicly perform
 and/or publicly display said content, whether in whole or in part, and the
@@ -900,7 +900,7 @@ mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
 justify;line-height:normal"><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
 mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1">Those
-areas which may be deemed "publicly accessible" areas of <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span>'s
+areas which may be deemed "publicly accessible" areas of <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span>'s
 sites are those such areas of our network properties which are meant to be
 available to the general public, and which would include message boards and
 groups that are openly available to</span><span style="font-size:12.0pt;
@@ -944,7 +944,7 @@ mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text
 
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
 justify;line-height:normal"><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
-mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1"><span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span> provides an area for our users</span><span style="font-size:12.0pt;mso-bidi-font-size:
+mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1"><span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span> provides an area for our users</span><span style="font-size:12.0pt;mso-bidi-font-size:
 11.0pt;font-family:&quot;Times New Roman&quot;;color:#F79646;mso-themecolor:accent6"></span><span style="font-size:
 12.0pt;font-family:&quot;Times New Roman&quot;;mso-bidi-font-family:&quot;Times New Roman&quot;;
 color:black;mso-themecolor:text1"> and members</span><span style="font-size:
@@ -978,7 +978,7 @@ color:black;mso-themecolor:text1"><o:p>&nbsp;</o:p></span></p>
 &quot;Times New Roman&quot;;mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;
 mso-themecolor:text1"><span style="mso-list:Ignore">b)<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
 </span></span></span><!--[endif]--><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
-mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1"><span class="saved-var company_contact_short_name step-1">Lenapo</span> shall not be liable or under any obligation to ensure or maintain
+mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1"><span class="saved-var company_contact_short_name step-1">MSA</span> shall not be liable or under any obligation to ensure or maintain
 confidentiality, expressed or implied, related to any Contributions; <o:p></o:p></span></p>
 
 <p class="MsoListParagraphCxSpMiddle" style="margin-bottom:0in;margin-bottom:
@@ -991,7 +991,7 @@ color:black;mso-themecolor:text1"><o:p>&nbsp;</o:p></span></p>
 &quot;Times New Roman&quot;;mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;
 mso-themecolor:text1"><span style="mso-list:Ignore">c)<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span></span><!--[endif]--><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
-mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1"><span class="saved-var company_contact_short_name step-1">Lenapo</span> shall be entitled to make use of and/or disclose any such Contributions in any
+mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1"><span class="saved-var company_contact_short_name step-1">MSA</span> shall be entitled to make use of and/or disclose any such Contributions in any
 such manner as they may see fit; <o:p></o:p></span></p>
 
 <p class="MsoListParagraphCxSpMiddle" style="margin-bottom:0in;margin-bottom:
@@ -1005,7 +1005,7 @@ color:black;mso-themecolor:text1"><o:p>&nbsp;</o:p></span></p>
 mso-themecolor:text1"><span style="mso-list:Ignore">d)<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
 </span></span></span><!--[endif]--><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
 mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1">the
-contributor's Contributions shall automatically become the sole property of <span class="saved-var company_contact_short_name step-1">Lenapo</span>;
+contributor's Contributions shall automatically become the sole property of <span class="saved-var company_contact_short_name step-1">MSA</span>;
 and<o:p></o:p></span></p>
 
 <p class="MsoListParagraphCxSpMiddle" style="margin-bottom:0in;margin-bottom:
@@ -1018,7 +1018,7 @@ mso-add-space:auto;text-indent:-.25in;line-height:normal;mso-list:l0 level1 lfo7
 &quot;Times New Roman&quot;;mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;
 mso-themecolor:text1"><span style="mso-list:Ignore">e)<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span></span><!--[endif]--><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
-mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1"><span class="saved-var company_contact_short_name step-1">Lenapo</span> is under no obligation to either compensate or provide any form of
+mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1"><span class="saved-var company_contact_short_name step-1">MSA</span> is under no obligation to either compensate or provide any form of
 reimbursement in any manner or nature.<o:p></o:p></span></p>
 
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
@@ -1042,7 +1042,7 @@ mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text
 members</span><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
 mso-bidi-font-family:&quot;Times New Roman&quot;;color:#F79646;mso-themecolor:accent6"> </span><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;mso-bidi-font-family:
 &quot;Times New Roman&quot;;color:black;mso-themecolor:text1">herein agree to insure and
-hold <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span>, our subsidiaries, affiliates, agents, employees,
+hold <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span>, our subsidiaries, affiliates, agents, employees,
 officers, partners and/or licensors blameless or</span><span style="font-size:
 12.0pt;font-family:&quot;Times New Roman&quot;;mso-bidi-font-family:&quot;Times New Roman&quot;"> not
 liable <span style="color:black;mso-themecolor:text1">for any claim or demand,
@@ -1054,7 +1054,7 @@ member or</span><span style="font-size:12.0pt;font-family:&quot;Times New Roman&
 mso-bidi-font-family:&quot;Times New Roman&quot;;color:#F79646;mso-themecolor:accent6"></span><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;mso-bidi-font-family:
 &quot;Times New Roman&quot;"> <span style="color:black;mso-themecolor:text1">user of our
 site may submit, post, modify, transmit or otherwise make available through our
-Services, the use of <span style="mso-spacerun:yes">&nbsp;</span><span class="saved-var company_contact_short_name step-1">Lenapo</span> Services or your connection with these Services, your violations of the Terms
+Services, the use of <span style="mso-spacerun:yes">&nbsp;</span><span class="saved-var company_contact_short_name step-1">MSA</span> Services or your connection with these Services, your violations of the Terms
 of Service and/or your violation of any such rights of another person.</span><o:p></o:p></span></p>
 
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
@@ -1078,7 +1078,7 @@ member or</span><span style="font-size:12.0pt;font-family:&quot;Times New Roman&
 mso-bidi-font-family:&quot;Times New Roman&quot;;color:#F79646;mso-themecolor:accent6"></span><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;mso-bidi-font-family:
 &quot;Times New Roman&quot;"> <span style="color:black;mso-themecolor:text1">user herein
 agrees not to replicate, duplicate, copy, trade, sell, resell nor exploit for
-any commercial reason any part, use of, or access to <span class="saved-var company_contact_short_name step-1">Lenapo</span>'s
+any commercial reason any part, use of, or access to <span class="saved-var company_contact_short_name step-1">MSA</span>'s
 sites.</span><o:p></o:p></span></p>
 
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
@@ -1101,22 +1101,22 @@ mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
 justify;line-height:normal"><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
 mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1">You
-herein acknowledge that <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span> may set up any such practices
+herein acknowledge that <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span> may set up any such practices
 and/or limits regarding the use of our Services, without limitation of the
 maximum number of days that any email, message posting or any other uploaded
-content shall be retained by <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span>, nor the maximum number
+content shall be retained by <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span>, nor the maximum number
 of email messages that may be sent and/or received by any member, the maximum
 volume or size of any email message that may be sent from or may be received by
 an account on our Service, the maximum disk space allowable that shall be
-allocated on <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span>'s servers on the member's behalf, and/or
+allocated on <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span>'s servers on the member's behalf, and/or
 the maximum number of times and/or duration that any member may access our Services
 in a given period of time.<span style="mso-spacerun:yes">&nbsp; </span>In
-addition, you also agree that <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span> has absolutely no
+addition, you also agree that <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span> has absolutely no
 responsibility or liability for the removal or failure to maintain storage of
 any messages and/or other communications or content maintained or transmitted
 by our Services. You also herein acknowledge that we reserve the right to
 delete or remove any account that is no longer active for an extended period of
-time. Furthermore, <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span> shall reserve the right to modify,
+time. Furthermore, <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span> shall reserve the right to modify,
 alter and/or update these general practices and limits at our discretion.<o:p></o:p></span></p>
 
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
@@ -1141,11 +1141,11 @@ justify;line-height:normal"><span style="font-size:12.0pt;font-family:&quot;Time
 mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1">Any
 messenger service, which may include any web-based versions, shall allow you
 and the individuals with whom you communicate with the ability to save your
-conversations in your account located on <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span>'s servers. In
+conversations in your account located on <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span>'s servers. In
 this manner, you will be able to access and search your message history from
 any computer with internet access. You also acknowledge that others have the
 option to use and save conversations with you in their own personal account on insidercrypto.com.
-It is your agreement to this TOS which establishes your consent to allow <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span> to store any and all communications on its servers.<o:p></o:p></span></p>
+It is your agreement to this TOS which establishes your consent to allow <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span> to store any and all communications on its servers.<o:p></o:p></span></p>
 
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
 justify;line-height:normal"><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
@@ -1171,7 +1171,7 @@ mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text
 
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
 justify;line-height:normal"><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
-mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1"><span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span> shall reserve the right at any time it may deem fit, to modify, alter and or
+mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1"><span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span> shall reserve the right at any time it may deem fit, to modify, alter and or
 discontinue, whether temporarily or permanently, our service, or any part
 thereof, with or without prior notice. In addition, we shall not be held liable
 to you or to any third party for any such alteration, modification, suspension
@@ -1207,7 +1207,7 @@ mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
 justify;line-height:normal"><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
 mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1">As a
-member, you agree that <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span> may, without any prior written
+member, you agree that <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span> may, without any prior written
 notice, immediately suspend, terminate, discontinue and/or limit your account,
 any email associated with your account, and access to any of our Services. The
 cause for such termination, discontinuance, suspension and/or limitation of
@@ -1395,7 +1395,7 @@ promotions of, advertisers located on or through our Services, which may
 include the payment and/or delivery of such related goods and/or Services, and
 any such other term, condition, warranty and/or representation associated with
 such dealings, are and shall be solely between you and any such advertiser.
-Moreover, you herein agree that <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span> shall not be held
+Moreover, you herein agree that <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span> shall not be held
 responsible or liable for any loss or damage of any nature or manner incurred
 as a direct result of any such dealings or as a result of the presence of such
 advertisers on our website.<o:p></o:p></span></p>
@@ -1415,12 +1415,12 @@ mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
 justify;line-height:normal"><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
 mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1">Either
-<span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span> or any third parties may provide links to other websites
+<span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span> or any third parties may provide links to other websites
 and/or resources. Thus, you acknowledge and agree that we are not responsible
 for the availability of any such external sites or resources, and as such, we
 do not endorse nor are we responsible or liable for any content, products,
 advertising or any other materials, on or available from such third party sites
-or resources. Furthermore, you acknowledge and agree that <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span> shall not be responsible or liable, directly or indirectly, for any such damage
+or resources. Furthermore, you acknowledge and agree that <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span> shall not be responsible or liable, directly or indirectly, for any such damage
 or loss which may be a result of, caused or allegedly to be caused by or in
 connection with the use of or the reliance on any such content, goods or Services
 made available on or through any such site or resource.<o:p></o:p></span></p>
@@ -1440,7 +1440,7 @@ mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
 justify;line-height:normal"><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
 mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1">You do
-hereby acknowledge and agree that <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span>'s Services and any
+hereby acknowledge and agree that <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span>'s Services and any
 essential software that may be used in connection with our Services
 ("Software") shall contain proprietary and confidential material that is
 protected by applicable intellectual property rights and other laws.
@@ -1448,10 +1448,10 @@ Furthermore, you herein acknowledge and agree that any Content which may be
 contained in any advertisements or information presented by and through our Services
 or by advertisers is protected by copyrights, trademarks, patents or other
 proprietary rights and laws. Therefore, except for that which is expressly permitted
-by applicable law or as authorized by <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span> or such
+by applicable law or as authorized by <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span> or such
 applicable licensor, you agree not to alter, modify, lease, rent, loan, sell,
 distribute, transmit, broadcast, publicly perform and/or created any
-plagiaristic works which are based on <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span> Services (e.g.
+plagiaristic works which are based on <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span> Services (e.g.
 Content or Software), in whole or part.<o:p></o:p></span></p>
 
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
@@ -1460,7 +1460,7 @@ mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text
 
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
 justify;line-height:normal"><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
-mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1"><span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span> herein has granted you personal, non-transferable and non-exclusive rights
+mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1"><span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span> herein has granted you personal, non-transferable and non-exclusive rights
 and/or license to make use of the object code or our Software on a single
 computer, as long as you do not, and shall not, allow any third party to
 duplicate, alter, modify, create or plagiarize work from, reverse engineer,
@@ -1471,7 +1471,7 @@ to alter or change the Software in any manner, nature or form, and as such, not
 to use any modified versions of the Software, including and without limitation,
 for the purpose of obtaining unauthorized access to our Services. Lastly, you
 also agree not to access or attempt to access our Services through any means
-other than through the interface which is provided by <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span> for
+other than through the interface which is provided by <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span> for
 use in accessing our Services.<o:p></o:p></span></p>
 
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
@@ -1501,9 +1501,9 @@ mso-add-space:auto;text-indent:-.25in;line-height:normal;mso-list:l2 level1 lfo1
 mso-themecolor:text1"><span style="mso-list:Ignore">a)<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span></span><!--[endif]--><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
 mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1">THE
-USE OF <span class="saved-var company_contact_name_uc step-1">LENAPO SOLUTIONS LLC</span> SERVICES AND SOFTWARE ARE AT THE SOLE RISK
+USE OF <span class="saved-var company_contact_name_uc step-1">Make Smart Apps LLC</span> SERVICES AND SOFTWARE ARE AT THE SOLE RISK
 BY YOU. OUR SERVICES AND SOFTWARE SHALL BE PROVIDED ON AN "AS IS" AND/OR "AS
-AVAILABLE" BASIS. <span class="saved-var company_contact_name_uc step-1">LENAPO SOLUTIONS LLC</span> AND OUR SUBSIDIARIES, AFFILIATES,
+AVAILABLE" BASIS. <span class="saved-var company_contact_name_uc step-1">Make Smart Apps LLC</span> AND OUR SUBSIDIARIES, AFFILIATES,
 OFFICERS, EMPLOYEES, AGENTS, PARTNERS AND LICENSORS EXPRESSLY DISCLAIM ANY AND
 ALL WARRANTIES OF ANY KIND WHETHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT
 LIMITED TO ANY IMPLIED WARRANTIES OF TITLE, MERCHANTABILITY, FITNESS FOR A
@@ -1519,11 +1519,11 @@ mso-add-space:auto;text-indent:-.25in;line-height:normal;mso-list:l2 level1 lfo1
 &quot;Times New Roman&quot;;mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;
 mso-themecolor:text1"><span style="mso-list:Ignore">b)<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
 </span></span></span><!--[endif]--><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
-mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1"><span class="saved-var company_contact_name_uc step-1">LENAPO SOLUTIONS LLC</span> AND OUR SUBSIDIARIES, OFFICERS, EMPLOYEES, AGENTS, PARTNERS AND LICENSORS MAKE
-NO SUCH WARRANTIES THAT (i) <span class="saved-var company_contact_name_uc step-1">LENAPO SOLUTIONS LLC</span> SERVICES OR SOFTWARE
-WILL MEET YOUR REQUIREMENTS; (ii) <span class="saved-var company_contact_name_uc step-1">LENAPO SOLUTIONS LLC</span> SERVICES OR
+mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1"><span class="saved-var company_contact_name_uc step-1">Make Smart Apps LLC</span> AND OUR SUBSIDIARIES, OFFICERS, EMPLOYEES, AGENTS, PARTNERS AND LICENSORS MAKE
+NO SUCH WARRANTIES THAT (i) <span class="saved-var company_contact_name_uc step-1">Make Smart Apps LLC</span> SERVICES OR SOFTWARE
+WILL MEET YOUR REQUIREMENTS; (ii) <span class="saved-var company_contact_name_uc step-1">Make Smart Apps LLC</span> SERVICES OR
 SOFTWARE SHALL BE UNINTERRUPTED, TIMELY, SECURE OR ERROR-FREE; (iii) THAT SUCH
-RESULTS WHICH MAY BE OBTAINED FROM THE USE OF THE <span class="saved-var company_contact_name_uc step-1">LENAPO SOLUTIONS LLC</span> SERVICES
+RESULTS WHICH MAY BE OBTAINED FROM THE USE OF THE <span class="saved-var company_contact_name_uc step-1">Make Smart Apps LLC</span> SERVICES
 OR SOFTWARE WILL BE ACCURATE OR RELIABLE; (iv) QUALITY OF ANY PRODUCTS, SERVICES,
 ANY INFORMATION OR OTHER MATERIAL WHICH MAY BE PURCHASED OR OBTAINED BY YOU
 THROUGH OUR SERVICES OR SOFTWARE WILL MEET YOUR EXPECTATIONS; AND (v) THAT ANY
@@ -1539,7 +1539,7 @@ mso-add-space:auto;text-indent:-.25in;line-height:normal;mso-list:l2 level1 lfo1
 mso-themecolor:text1"><span style="mso-list:Ignore">c)<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span></span><!--[endif]--><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
 mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1">ANY
-INFORMATION OR MATERIAL DOWNLOADED OR OTHERWISE OBTAINED BY WAY OF <span class="saved-var company_contact_name_uc step-1">LENAPO SOLUTIONS LLC</span> SERVICES OR SOFTWARE SHALL BE ACCESSED BY YOUR SOLE DISCRETION AND SOLE RISK,
+INFORMATION OR MATERIAL DOWNLOADED OR OTHERWISE OBTAINED BY WAY OF <span class="saved-var company_contact_name_uc step-1">Make Smart Apps LLC</span> SERVICES OR SOFTWARE SHALL BE ACCESSED BY YOUR SOLE DISCRETION AND SOLE RISK,
 AND AS SUCH YOU SHALL BE SOLELY RESPONSIBLE FOR AND HEREBY WAIVE ANY AND ALL
 CLAIMS AND CAUSES OF ACTION WITH RESPECT TO ANY DAMAGE TO YOUR COMPUTER AND/OR
 INTERNET ACCESS, DOWNLOADING AND/OR DISPLAYING, OR FOR ANY LOSS OF DATA THAT
@@ -1556,7 +1556,7 @@ mso-themecolor:text1"><span style="mso-list:Ignore">d)<span style="font:7.0pt &q
 </span></span></span><!--[endif]--><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
 mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1">NO
 ADVICE AND/OR INFORMATION, DESPITE WHETHER WRITTEN OR ORAL, THAT MAY BE
-OBTAINED BY YOU FROM <span class="saved-var company_contact_name_uc step-1">LENAPO SOLUTIONS LLC</span> OR BY WAY OF OR FROM OUR SERVICES
+OBTAINED BY YOU FROM <span class="saved-var company_contact_name_uc step-1">Make Smart Apps LLC</span> OR BY WAY OF OR FROM OUR SERVICES
 OR SOFTWARE SHALL CREATE ANY WARRANTY NOT EXPRESSLY STATED IN THE TOS.<o:p></o:p></span></p>
 
 <p class="MsoListParagraphCxSpMiddle"><span style="font-size:12.0pt;line-height:
@@ -1594,7 +1594,7 @@ mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
 justify;line-height:normal"><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
 mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1">YOU EXPLICITLY
-ACKNOWLEDGE, UNDERSTAND AND AGREE THAT <span class="saved-var company_contact_name_uc step-1">LENAPO SOLUTIONS LLC</span> AND OUR SUBSIDIARIES,
+ACKNOWLEDGE, UNDERSTAND AND AGREE THAT <span class="saved-var company_contact_name_uc step-1">Make Smart Apps LLC</span> AND OUR SUBSIDIARIES,
 AFFILIATES, OFFICERS, EMPLOYEES, AGENTS, PARTNERS AND LICENSORS SHALL NOT BE LIABLE
 TO YOU FOR ANY PUNITIVE, INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL OR
 EXEMPLARY DAMAGES, INCLUDING, BUT NOT LIMITED TO, DAMAGES WHICH MAY BE RELATED
@@ -1678,7 +1678,7 @@ justify;line-height:normal"><b style="mso-bidi-font-weight:normal"><span style="
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
 justify;line-height:normal"><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
 mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1">In the
-event you have a dispute, you agree to release <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span> (and
+event you have a dispute, you agree to release <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span> (and
 its officers, directors, employees, agents, parent subsidiaries, affiliates,
 co-branders, partners and any other third parties) from claims, demands and
 damages (actual and consequential) of every kind and nature, known and unknown,
@@ -1706,9 +1706,9 @@ messages, alerts or other information from our Services concerning companies,
 stock quotes, investments or securities, please review the above Sections Warranty
 Disclaimers and Limitations of Liability again. In addition, for this
 particular type of information, the phrase "Let the investor beware" is
-appropriate. <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span>'s content is provided primarily for
+appropriate. <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span>'s content is provided primarily for
 informational purposes, and no content that shall be provided or included in
-our Services is intended for trading or investing purposes. <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span> and our licensors shall not be responsible or liable for the accuracy,
+our Services is intended for trading or investing purposes. <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span> and our licensors shall not be responsible or liable for the accuracy,
 usefulness or availability of any information transmitted and/or made available
 by way of our Services, and shall not be responsible or liable for any trading
 and/or investment decisions based on any such information.<o:p></o:p></span></p>
@@ -1765,7 +1765,7 @@ mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text
 
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
 justify;line-height:normal"><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
-mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1"><span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span> may furnish you with notices, including those with regards to any changes to
+mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1"><span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span> may furnish you with notices, including those with regards to any changes to
 the TOS, including but not limited to email, regular mail, MMS or SMS, text
 messaging, postings on our website Services, or other reasonable means
 currently known or any which may be herein after developed. Any such notices
@@ -1789,9 +1789,9 @@ mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
 justify;line-height:normal"><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
 mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1">You
-herein acknowledge, understand and agree that all of the <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span> trademarks, copyright, trade name, service marks, and other <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span> logos and any brand features, and/or product and service names are trademarks
-and as such, are and shall remain the property of <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span>. You
-herein agree not to display and/or use in any manner the <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span> logo or marks without obtaining <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span>'s prior written
+herein acknowledge, understand and agree that all of the <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span> trademarks, copyright, trade name, service marks, and other <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span> logos and any brand features, and/or product and service names are trademarks
+and as such, are and shall remain the property of <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span>. You
+herein agree not to display and/or use in any manner the <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span> logo or marks without obtaining <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span>'s prior written
 consent.<o:p></o:p></span></p>
 
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
@@ -1815,9 +1815,9 @@ mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text
 
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
 justify;line-height:normal"><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
-mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1"><span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span> will always respect the intellectual property of others, and we ask that all of
+mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1"><span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span> will always respect the intellectual property of others, and we ask that all of
 our users do the same. With regards to appropriate circumstances and at its
-sole discretion, <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span> may disable and/or terminate the
+sole discretion, <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span> may disable and/or terminate the
 accounts of any user who violates our TOS and/or infringes the rights of
 others. If you feel that your work has been duplicated in such a way that would
 constitute copyright infringement, or if you believe your intellectual property
@@ -1911,7 +1911,7 @@ mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text
 
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
 justify;line-height:normal"><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
-mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1">The <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span> Agent for notice of claims of copyright or other intellectual property
+mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1">The <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span> Agent for notice of claims of copyright or other intellectual property
 infringement can be contacted as follows:<o:p></o:p></span></p>
 
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
@@ -1925,7 +1925,7 @@ Address:<o:p></o:p></span></p>
 
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
 justify;line-height:normal"><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
-mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1"><span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span> <o:p></o:p></span></p>
+mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1"><span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span> <o:p></o:p></span></p>
 
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
 justify;line-height:normal"><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
@@ -1974,7 +1974,7 @@ mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
 justify;line-height:normal"><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
 mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1">BE IT
-KNOWN, that <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span> complies with all applicable Federal
+KNOWN, that <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span> complies with all applicable Federal
 Communications Commission rules and regulations regarding the closed captioning
 of video content. For more information, please visit our website at insidercrypto.com.<o:p></o:p></span></p>
 
@@ -1998,11 +1998,11 @@ mso-themecolor:text1">ENTIRE AGREEMENT <o:p></o:p></span></u></i></b></p>
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
 justify;line-height:normal"><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
 mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1">This
-TOS constitutes the entire agreement between you and <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span> and
+TOS constitutes the entire agreement between you and <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span> and
 shall govern the use of our Services, superseding any prior version of this TOS
-between you and us with respect to <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span> Services. You may
+between you and us with respect to <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span> Services. You may
 also be subject to additional terms and conditions that may apply when you use
-or purchase certain other <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span> Services, affiliate Services,
+or purchase certain other <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span> Services, affiliate Services,
 third-party content or third-party software.<o:p></o:p></span></p>
 
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
@@ -2017,13 +2017,13 @@ mso-themecolor:text1">CHOICE OF LAW AND FORUM<o:p></o:p></span></u></i></b></p>
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
 justify;line-height:normal"><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
 mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1">It is
-at the mutual agreement of both you and <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span> with regard to
+at the mutual agreement of both you and <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span> with regard to
 the TOS that the relationship between the parties shall be governed by the laws
 of the state of <span class="saved-var govern_agreement_state step-9">California</span> without regard to its conflict of
 law provisions and that any and <a name="OLE_LINK1">all claims, causes of
 action and/or disputes, arising out of or relating to the TOS</a>, or the
-relationship between you and <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span>, shall be filed within
-the courts having jurisdiction within the County of <span class="saved-var court_county step-10">Los Angeles</span>, <span class="saved-var court_state step-10">California</span> or the U.S. District Court located in said state. You and <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span> agree to submit to the jurisdiction of the courts as previously mentioned, and
+relationship between you and <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span>, shall be filed within
+the courts having jurisdiction within the County of <span class="saved-var court_county step-10">Los Angeles</span>, <span class="saved-var court_state step-10">California</span> or the U.S. District Court located in said state. You and <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span> agree to submit to the jurisdiction of the courts as previously mentioned, and
 agree to waive any and all objections to the exercise of jurisdiction over the
 parties by such courts and to venue in such courts.<o:p></o:p></span></p>
 
@@ -2039,7 +2039,7 @@ mso-themecolor:text1">WAIVER AND SEVERABILITY OF TERMS<o:p></o:p></span></u></i>
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
 justify;line-height:normal"><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
 mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1">At any
-time, should <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span> fail to exercise or enforce any right or
+time, should <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span> fail to exercise or enforce any right or
 provision of the TOS, such failure shall not constitute a waiver of such right
 or provision. If any provision of this TOS is found by a court of competent
 jurisdiction to be invalid, the parties nevertheless agree that the court
@@ -2105,7 +2105,7 @@ mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
 justify;line-height:normal"><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
 mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1">Please
-report any and all violations of this TOS to <span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span> as
+report any and all violations of this TOS to <span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span> as
 follows:<o:p></o:p></span></p>
 
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
@@ -2119,7 +2119,7 @@ Address:<o:p></o:p></span></p>
 
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
 justify;line-height:normal"><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;
-mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1"><span class="saved-var company_contact_name step-1">Lenapo Solutions LLC</span><o:p></o:p></span></p>
+mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-themecolor:text1"><span class="saved-var company_contact_name step-1">Make Smart Apps LLC</span><o:p></o:p></span></p>
 
 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:
 justify;line-height:normal"><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;

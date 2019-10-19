@@ -5,7 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <footer class="sticky-footer">
       <div class="container">
         <div class="text-center">
-          <small>© 2018 Lenapo Solutions LLC. DBA Insider Crypto</small>
+          <small>© <?=date('Y')?> Make Smart Apps LLC. DBA Insider Crypto</small>
         </div>
       </div>
     </footer>
