@@ -6,6 +6,16 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Cryptocompare\\CryptocompareApi' => $vendorDir . '/loeken/cryptocompare-api-php-wrapper/src/CryptocompareApi.php',
+    'Cryptocompare\\Historical' => $vendorDir . '/loeken/cryptocompare-api-php-wrapper/src/Historical.php',
+    'Cryptocompare\\InvalidRequest' => $vendorDir . '/loeken/cryptocompare-api-php-wrapper/src/InvalidRequest.php',
+    'Cryptocompare\\Market' => $vendorDir . '/loeken/cryptocompare-api-php-wrapper/src/Market.php',
+    'Cryptocompare\\News' => $vendorDir . '/loeken/cryptocompare-api-php-wrapper/src/News.php',
+    'Cryptocompare\\Other' => $vendorDir . '/loeken/cryptocompare-api-php-wrapper/src/Other.php',
+    'Cryptocompare\\Price' => $vendorDir . '/loeken/cryptocompare-api-php-wrapper/src/Price.php',
+    'Cryptocompare\\Social' => $vendorDir . '/loeken/cryptocompare-api-php-wrapper/src/Social.php',
+    'Cryptocompare\\Streaming' => $vendorDir . '/loeken/cryptocompare-api-php-wrapper/src/Streaming.php',
+    'Cryptocompare\\Toplists' => $vendorDir . '/loeken/cryptocompare-api-php-wrapper/src/Toplists.php',
     'File_Iterator' => $vendorDir . '/phpunit/php-file-iterator/src/Iterator.php',
     'File_Iterator_Facade' => $vendorDir . '/phpunit/php-file-iterator/src/Facade.php',
     'File_Iterator_Factory' => $vendorDir . '/phpunit/php-file-iterator/src/Factory.php',
