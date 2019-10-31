@@ -62,10 +62,9 @@ class Charge extends ApiResource
 
     /**
      * Possible string representations of decline codes.
-     * These strings are applicable to the decline_code property of the \Stripe\Exception\CardException exception.
+     * These strings are applicable to the decline_code property of the \Stripe\Error\Card exception.
      * @link https://stripe.com/docs/declines/codes
      */
-    const DECLINED_AUTHENTICATION_REQUIRED           = 'authentication_required';
     const DECLINED_APPROVE_WITH_ID                   = 'approve_with_id';
     const DECLINED_CALL_ISSUER                       = 'call_issuer';
     const DECLINED_CARD_NOT_SUPPORTED                = 'card_not_supported';
@@ -94,8 +93,6 @@ class Charge extends ApiResource
     const DECLINED_NEW_ACCOUNT_INFORMATION_AVAILABLE = 'new_account_information_available';
     const DECLINED_NO_ACTION_TAKEN                   = 'no_action_taken';
     const DECLINED_NOT_PERMITTED                     = 'not_permitted';
-    const DECLINED_OFFLINE_PIN_REQUIRED              = 'offline_pin_required';
-    const DECLINED_ONLINE_OR_OFFLINE_PIN_REQUIRED    = 'online_or_offline_pin_required';
     const DECLINED_PICKUP_CARD                       = 'pickup_card';
     const DECLINED_PIN_TRY_EXCEEDED                  = 'pin_try_exceeded';
     const DECLINED_PROCESSING_ERROR                  = 'processing_error';
@@ -124,7 +121,19 @@ class Charge extends ApiResource
      * @param array|null $params
      * @param array|string|null $options
      *
-     * @throws \Stripe\Exception\ApiErrorException if the request fails
+     * @return Charge The refunded charge.
+     */
+    public function refund($params = null, $options = null)
+    {
+        $url = $this->instanceUrl() . '/refund';
+        list($response, $opts) = $this->_request('post', $url, $params, $options);
+        $this->refreshFrom($response, $opts);
+        return $this;
+    }
+
+    /**
+     * @param array|null $params
+     * @param array|string|null $options
      *
      * @return Charge The captured charge.
      */
@@ -132,6 +141,65 @@ class Charge extends ApiResource
     {
         $url = $this->instanceUrl() . '/capture';
         list($response, $opts) = $this->_request('post', $url, $params, $options);
+        $this->refreshFrom($response, $opts);
+        return $this;
+    }
+
+    /**
+     * @param array|null $params
+     * @param array|string|null $options
+     *
+     * @deprecated Use the `save` method on the Dispute object
+     *
+     * @return array The updated dispute.
+     */
+    public function updateDispute($params = null, $options = null)
+    {
+        $url = $this->instanceUrl() . '/dispute';
+        list($response, $opts) = $this->_request('post', $url, $params, $options);
+        $this->refreshFrom(['dispute' => $response], $opts, true);
+        return $this->dispute;
+    }
+
+    /**
+     * @param array|string|null $options
+     *
+     * @deprecated Use the `close` method on the Dispute object
+     *
+     * @return Charge The updated charge.
+     */
+    public function closeDispute($options = null)
+    {
+        $url = $this->instanceUrl() . '/dispute/close';
+        list($response, $opts) = $this->_request('post', $url, null, $options);
+        $this->refreshFrom($response, $opts);
+        return $this;
+    }
+
+    /**
+     * @param array|string|null $opts
+     *
+     * @return Charge The updated charge.
+     */
+    public function markAsFraudulent($opts = null)
+    {
+        $params = ['fraud_details' => ['user_report' => 'fraudulent']];
+        $url = $this->instanceUrl();
+        list($response, $opts) = $this->_request('post', $url, $params, $opts);
+        $this->refreshFrom($response, $opts);
+        return $this;
+    }
+
+    /**
+     * @param array|string|null $opts
+     *
+     * @return Charge The updated charge.
+     */
+    public function markAsSafe($opts = null)
+    {
+        $params = ['fraud_details' => ['user_report' => 'safe']];
+        $url = $this->instanceUrl();
+        list($response, $opts) = $this->_request('post', $url, $params, $opts);
         $this->refreshFrom($response, $opts);
         return $this;
     }

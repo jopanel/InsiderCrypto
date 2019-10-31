@@ -61,8 +61,6 @@ class CreditNote extends ApiResource
      * @param array|null $params
      * @param array|string|null $opts
      *
-     * @throws \Stripe\Exception\ApiErrorException if the request fails
-     *
      * @return CreditNote The voided credit note.
      */
     public function voidCreditNote($params = null, $opts = null)

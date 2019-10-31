@@ -13,9 +13,7 @@ trait Create
      * @param array|null $params
      * @param array|string|null $options
      *
-     * @throws \Stripe\Exception\ApiErrorException if the request fails
-     *
-     * @return static The created resource.
+     * @return \Stripe\ApiResource The created resource.
      */
     public static function create($params = null, $options = null)
     {

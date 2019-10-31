@@ -17,8 +17,6 @@ namespace Stripe\Issuing;
  * @property string $dispute
  * @property bool $livemode
  * @property mixed $merchant_data
- * @property int $merchant_amount
- * @property string $merchant_currency
  * @property \Stripe\StripeObject $metadata
  * @property string $type
  *

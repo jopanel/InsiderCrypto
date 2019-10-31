@@ -48,8 +48,6 @@ class SetupIntent extends ApiResource
      * @param array|null $params
      * @param array|string|null $options
      *
-     * @throws \Stripe\Exception\ApiErrorException if the request fails
-     *
      * @return SetupIntent The canceled setup intent.
      */
     public function cancel($params = null, $options = null)
@@ -63,8 +61,6 @@ class SetupIntent extends ApiResource
     /**
      * @param array|null $params
      * @param array|string|null $options
-     *
-     * @throws \Stripe\Exception\ApiErrorException if the request fails
      *
      * @return SetupIntent The confirmed setup intent.
      */

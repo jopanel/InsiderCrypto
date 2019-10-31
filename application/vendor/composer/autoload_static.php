@@ -4,20 +4,16 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit87e1ba60f7cb1b74c2cdbba9deaa0438
+class ComposerStaticInit948348fa60d2394c25657f2a0769ce0f
 {
     public static $files = array (
-        '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
-        'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
-        '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
+        'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
-        '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         '97be8d00d4e1b8596dda683609f3dce2' => __DIR__ . '/..' . '/tcdent/php-restclient/restclient.php',
+        '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         '3f8bdd3b35094c73a26f0106e3c0f8b2' => __DIR__ . '/..' . '/sendgrid/sendgrid/lib/SendGrid.php',
         '9dda55337a76a24e949fbcc5d905a2c7' => __DIR__ . '/..' . '/sendgrid/sendgrid/lib/helpers/mail/Mail.php',
-        '5d7e2090c9a3b69b2ff2fceddeadca94' => __DIR__ . '/..' . '/sendgrid/sendgrid/lib/helpers/contacts/Recipients.php',
-        '04a9a7b26fb79fbd712347cc9bc9d9be' => __DIR__ . '/..' . '/sendgrid/sendgrid/lib/helpers/stats/Stats.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -31,14 +27,12 @@ class ComposerStaticInit87e1ba60f7cb1b74c2cdbba9deaa0438
         ),
         'S' => 
         array (
-            'Symfony\\Polyfill\\Ctype\\' => 23,
             'Stripe\\' => 7,
             'SendGrid\\' => 9,
         ),
         'P' => 
         array (
             'Psr\\Http\\Message\\' => 17,
-            'Prophecy\\' => 9,
         ),
         'L' => 
         array (
@@ -65,16 +59,12 @@ class ComposerStaticInit87e1ba60f7cb1b74c2cdbba9deaa0438
         'phpDocumentor\\Reflection\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
-            1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
-            2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
+            1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
+            2 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
         ),
         'Webmozart\\Assert\\' => 
         array (
             0 => __DIR__ . '/..' . '/webmozart/assert/src',
-        ),
-        'Symfony\\Polyfill\\Ctype\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
         ),
         'Stripe\\' => 
         array (
@@ -87,10 +77,6 @@ class ComposerStaticInit87e1ba60f7cb1b74c2cdbba9deaa0438
         'Psr\\Http\\Message\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/http-message/src',
-        ),
-        'Prophecy\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/phpspec/prophecy/src/Prophecy',
         ),
         'Lisk\\' => 
         array (
@@ -130,22 +116,19 @@ class ComposerStaticInit87e1ba60f7cb1b74c2cdbba9deaa0438
         array (
             'org\\bovigo\\vfs' => 
             array (
-                0 => __DIR__ . '/..' . '/mikey179/vfsstream/src/main/php',
+                0 => __DIR__ . '/..' . '/mikey179/vfsStream/src/main/php',
+            ),
+        ),
+        'P' => 
+        array (
+            'Prophecy\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/phpspec/prophecy/src',
             ),
         ),
     );
 
     public static $classMap = array (
-        'Cryptocompare\\CryptocompareApi' => __DIR__ . '/..' . '/loeken/cryptocompare-api-php-wrapper/src/CryptocompareApi.php',
-        'Cryptocompare\\Historical' => __DIR__ . '/..' . '/loeken/cryptocompare-api-php-wrapper/src/Historical.php',
-        'Cryptocompare\\InvalidRequest' => __DIR__ . '/..' . '/loeken/cryptocompare-api-php-wrapper/src/InvalidRequest.php',
-        'Cryptocompare\\Market' => __DIR__ . '/..' . '/loeken/cryptocompare-api-php-wrapper/src/Market.php',
-        'Cryptocompare\\News' => __DIR__ . '/..' . '/loeken/cryptocompare-api-php-wrapper/src/News.php',
-        'Cryptocompare\\Other' => __DIR__ . '/..' . '/loeken/cryptocompare-api-php-wrapper/src/Other.php',
-        'Cryptocompare\\Price' => __DIR__ . '/..' . '/loeken/cryptocompare-api-php-wrapper/src/Price.php',
-        'Cryptocompare\\Social' => __DIR__ . '/..' . '/loeken/cryptocompare-api-php-wrapper/src/Social.php',
-        'Cryptocompare\\Streaming' => __DIR__ . '/..' . '/loeken/cryptocompare-api-php-wrapper/src/Streaming.php',
-        'Cryptocompare\\Toplists' => __DIR__ . '/..' . '/loeken/cryptocompare-api-php-wrapper/src/Toplists.php',
         'File_Iterator' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Iterator.php',
         'File_Iterator_Facade' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Facade.php',
         'File_Iterator_Factory' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Factory.php',
@@ -682,10 +665,10 @@ class ComposerStaticInit87e1ba60f7cb1b74c2cdbba9deaa0438
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit87e1ba60f7cb1b74c2cdbba9deaa0438::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit87e1ba60f7cb1b74c2cdbba9deaa0438::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit87e1ba60f7cb1b74c2cdbba9deaa0438::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit87e1ba60f7cb1b74c2cdbba9deaa0438::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit948348fa60d2394c25657f2a0769ce0f::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit948348fa60d2394c25657f2a0769ce0f::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit948348fa60d2394c25657f2a0769ce0f::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit948348fa60d2394c25657f2a0769ce0f::$classMap;
 
         }, null, ClassLoader::class);
     }

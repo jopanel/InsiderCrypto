@@ -51,8 +51,9 @@ class TaxId extends ApiResource
         $id = $this['id'];
         $customer = $this['customer'];
         if (!$id) {
-            throw new Exception\UnexpectedValueException(
-                "Could not determine which URL to request: class instance has invalid ID: $id"
+            throw new Error\InvalidRequest(
+                "Could not determine which URL to request: class instance has invalid ID: $id",
+                null
             );
         }
         $id = Util\Util::utf8($id);
@@ -68,13 +69,12 @@ class TaxId extends ApiResource
      * @param array|string $_id
      * @param array|string|null $_opts
      *
-     * @throws \Stripe\Exception\BadMethodCallException
+     * @throws \Stripe\Error\InvalidRequest
      */
     public static function retrieve($_id, $_opts = null)
     {
-        $msg = "Tax IDs cannot be retrieved without a customer ID. Retrieve " .
-               "a tax ID using `Customer::retrieveTaxId('customer_id', " .
-               "'tax_id_id')`.";
-        throw new Exception\BadMethodCallException($msg);
+        $msg = "Tax Ids cannot be accessed without a customer ID. " .
+               "Retrieve a Tax Id using Customer::retrieveTaxId('tax_id') instead.";
+        throw new Error\InvalidRequest($msg, null);
     }
 }

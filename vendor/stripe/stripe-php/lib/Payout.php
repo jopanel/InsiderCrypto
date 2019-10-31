@@ -80,8 +80,6 @@ class Payout extends ApiResource
     const TYPE_CARD         = 'card';
 
     /**
-     * @throws \Stripe\Exception\ApiErrorException if the request fails
-     *
      * @return Payout The canceled payout.
      */
     public function cancel()

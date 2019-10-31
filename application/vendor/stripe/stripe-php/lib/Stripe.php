@@ -46,19 +46,13 @@ class Stripe
     // @var int Maximum number of request retries
     public static $maxNetworkRetries = 0;
 
-    // @var boolean Whether client telemetry is enabled. Defaults to true.
-    public static $enableTelemetry = true;
-
     // @var float Maximum delay between retries, in seconds
     private static $maxNetworkRetryDelay = 2.0;
-
-    // @var float Maximum delay between retries, in seconds, that will be respected from the Stripe API
-    private static $maxRetryAfter = 60.0;
 
     // @var float Initial delay between retries, in seconds
     private static $initialNetworkRetryDelay = 0.5;
 
-    const VERSION = '7.5.0';
+    const VERSION = '6.19.1';
 
     /**
      * @return string The API key used for requests.
@@ -239,38 +233,10 @@ class Stripe
     }
 
     /**
-     * @return float Maximum delay between retries, in seconds, that will be respected from the Stripe API
-     */
-    public static function getMaxRetryAfter()
-    {
-        return self::$maxRetryAfter;
-    }
-
-    /**
      * @return float Initial delay between retries, in seconds
      */
     public static function getInitialNetworkRetryDelay()
     {
         return self::$initialNetworkRetryDelay;
-    }
-
-    /**
-     * @return bool Whether client telemetry is enabled
-     */
-    public static function getEnableTelemetry()
-    {
-        return self::$enableTelemetry;
-    }
-
-    /**
-     * @param bool $enableTelemetry Enables client telemetry.
-     *
-     * Client telemetry enables timing and request metrics to be sent back to Stripe as an HTTP Header
-     * with the current request. This enables Stripe to do latency and metrics analysis without adding extra
-     * overhead (such as extra network calls) on the client.
-     */
-    public static function setEnableTelemetry($enableTelemetry)
-    {
-        self::$enableTelemetry = $enableTelemetry;
     }
 }

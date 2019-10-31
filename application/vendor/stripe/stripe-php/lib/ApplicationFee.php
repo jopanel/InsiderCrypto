@@ -24,6 +24,7 @@ namespace Stripe;
  */
 class ApplicationFee extends ApiResource
 {
+
     const OBJECT_NAME = "application_fee";
 
     use ApiOperations\All;
@@ -33,11 +34,22 @@ class ApplicationFee extends ApiResource
     const PATH_REFUNDS = '/refunds';
 
     /**
-     * @param string|null $id The ID of the application fee on which to create the refund.
      * @param array|null $params
      * @param array|string|null $opts
      *
-     * @throws \Stripe\Exception\ApiErrorException if the request fails
+     * @return ApplicationFee The refunded application fee.
+     */
+    public function refund($params = null, $opts = null)
+    {
+        $this->refunds->create($params, $opts);
+        $this->refresh();
+        return $this;
+    }
+
+    /**
+     * @param array|null $id The ID of the application fee on which to create the refund.
+     * @param array|null $params
+     * @param array|string|null $opts
      *
      * @return ApplicationFeeRefund
      */
@@ -47,12 +59,10 @@ class ApplicationFee extends ApiResource
     }
 
     /**
-     * @param string|null $id The ID of the application fee to which the refund belongs.
+     * @param array|null $id The ID of the application fee to which the refund belongs.
      * @param array|null $refundId The ID of the refund to retrieve.
      * @param array|null $params
      * @param array|string|null $opts
-     *
-     * @throws \Stripe\Exception\ApiErrorException if the request fails
      *
      * @return ApplicationFeeRefund
      */
@@ -62,12 +72,10 @@ class ApplicationFee extends ApiResource
     }
 
     /**
-     * @param string|null $id The ID of the application fee to which the refund belongs.
+     * @param array|null $id The ID of the application fee to which the refund belongs.
      * @param array|null $refundId The ID of the refund to update.
      * @param array|null $params
      * @param array|string|null $opts
-     *
-     * @throws \Stripe\Exception\ApiErrorException if the request fails
      *
      * @return ApplicationFeeRefund
      */
@@ -77,13 +85,11 @@ class ApplicationFee extends ApiResource
     }
 
     /**
-     * @param string|null $id The ID of the application fee on which to retrieve the refunds.
+     * @param array|null $id The ID of the application fee on which to retrieve the refunds.
      * @param array|null $params
      * @param array|string|null $opts
      *
-     * @throws \Stripe\Exception\ApiErrorException if the request fails
-     *
-     * @return Collection The list of refunds.
+     * @return ApplicationFeeRefund
      */
     public static function allRefunds($id, $params = null, $opts = null)
     {

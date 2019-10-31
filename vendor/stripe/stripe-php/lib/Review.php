@@ -45,8 +45,6 @@ class Review extends ApiResource
     /**
      * @param array|string|null $options
      *
-     * @throws \Stripe\Exception\ApiErrorException if the request fails
-     *
      * @return Review The approved review.
      */
     public function approve($params = null, $options = null)

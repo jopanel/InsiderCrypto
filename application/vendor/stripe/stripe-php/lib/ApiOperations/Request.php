@@ -12,7 +12,7 @@ trait Request
     /**
      * @param array|null|mixed $params The list of parameters to validate
      *
-     * @throws \Stripe\Exception\InvalidArgumentException if $params exists and is not an array
+     * @throws \Stripe\Error\Api if $params exists and is not an array
      */
     protected static function _validateParams($params = null)
     {
@@ -21,7 +21,7 @@ trait Request
                . "method calls.  (HINT: an example call to create a charge "
                . "would be: \"Stripe\\Charge::create(['amount' => 100, "
                . "'currency' => 'usd', 'source' => 'tok_1234'])\")";
-            throw new \Stripe\Exception\InvalidArgumentException($message);
+            throw new \Stripe\Error\Api($message);
         }
     }
 
@@ -30,8 +30,6 @@ trait Request
      * @param string $url URL for the request
      * @param array $params list of parameters for the request
      * @param array|string|null $options
-     *
-     * @throws \Stripe\Exception\ApiErrorException if the request fails
      *
      * @return array tuple containing (the JSON response, $options)
      */
@@ -48,8 +46,6 @@ trait Request
      * @param string $url URL for the request
      * @param array $params list of parameters for the request
      * @param array|string|null $options
-     *
-     * @throws \Stripe\Exception\ApiErrorException if the request fails
      *
      * @return array tuple containing (the JSON response, $options)
      */

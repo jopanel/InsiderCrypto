@@ -9,10 +9,8 @@ namespace Stripe;
  * @property string $object
  * @property int $created
  * @property string $filename
- * @property Collection $links
  * @property string $purpose
  * @property int $size
- * @property string $title
  * @property string $type
  * @property string $url
  *
@@ -42,8 +40,6 @@ class File extends ApiResource
      * @param array|null $params
      * @param array|string|null $options
      *
-     * @throws \Stripe\Exception\ApiErrorException if the request fails
-     *
      * @return \Stripe\File The created resource.
      */
     public static function create($params = null, $options = null)
@@ -52,9 +48,9 @@ class File extends ApiResource
         if (is_null($opts->apiBase)) {
             $opts->apiBase = Stripe::$apiUploadBase;
         }
-        // Manually flatten params, otherwise curl's multipart encoder will
-        // choke on nested arrays.
-        $flatParams = array_column(\Stripe\Util\Util::flattenParams($params), 1, 0);
-        return static::_create($flatParams, $opts);
+        return static::_create($params, $opts);
     }
 }
+
+// For backwards compatibility, the `File` class is aliased to `FileUpload`.
+class_alias('Stripe\\File', 'Stripe\\FileUpload');

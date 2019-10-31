@@ -7,24 +7,14 @@
  */
 namespace Cryptocompare;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException as GuzzleExceptionAlias;
-
 class CryptocompareApi
 {
-
-    const PUB = 'public';
-    const PRIV = 'private';
-
-    const PUBLIC_ENDPOINT = 'https://min-api.cryptocompare.com';
-    const PRIVATE_ENDPOINT = 'https://www.cryptocompare.com/api/data';
-
     // the following variables should be set by you
 
     /**
      * @var string - defines the name of your application - change this
      */
-    public $appplicationName = "default_php_wrapper";
+    public $appplicationName = "ArbitrageCheck";
 
     /**
      * @var bool - if set to true will die() and print exception when http request fails -> not recommended in production enviroment
@@ -33,63 +23,164 @@ class CryptocompareApi
 
 
     // do not edit bellow unless you know what you are doing
+    /**
+     * @var string FUCKING API KEY 
+     */
+    public $api_key = "66b6b4967d59943d8faa12339395a0b8695222be7164f63f20df76b54be3e033";
 
     /**
-     * @var string apiKey for your application from https://min-api.cryptocompare.com
+     * @var string publicEndpoint applies to all requests that do not need a session key to work
      */
-    private $apiKey;
+    public $publicEndpoint = "https://min-api.cryptocompare.com";
 
     /**
-     * @var
+     * @var string privateEndpoint applies to all requests that do need a session key to work
      */
-    protected $httpClient;
+    public $privateEndpoint ="https://www.cryptocompare.com/api/data";
 
     /**
-     * CryptocompareApi constructor.
-     *
-     * @param string $apiKey
-     * @param bool $debug
+     * @var array contains strings with errors
      */
-    function __construct($apiKey,$debug = false)
-    {
-        $this->setApiKey($apiKey);
-        $this->setDebug($debug);
+    public $errorMessages = array();
 
-        $this->httpClient = new Client(['verify' => false]);
+    /**
+     * @var string - http status code from server
+     */
+    public $statusCode = "unset";
+
+    /**
+     * @var string - http response body
+     */
+    public $body = "";
+
+    /**
+     * retrieves an array of objects listing all available api endpoints
+     */
+    public function getAvailableCalls() {
+        $calls = $this->getRequest("public","/");
+        return $calls;
+    }
+
+    /**
+     * @return bool|mixed - returns mining contracts
+     */
+    public function getMiningContracts() {
+        $contracts = $this->getRequest("private","/miningcontracts");
+        return $contracts;
+    }
+
+    /**
+     * @return bool|mixed - returns mining equipment added on website
+     */
+    public function getMiningEquipment() {
+        $equipment = $this->getRequest("private","/miningequipment");
+        return $equipment;
+    }
+
+    /**
+     * @return bool|mixed - returns mining equipment added on website
+     */
+    public function getNewsProviders($sign = "false" ) {
+        $params = array(
+            "sign" => $sign,
+        );
+        $equipment = $this->getRequest("public","/data/news/providers", $params);
+        return $equipment;
+    }
+
+    /**
+     * @return bool|mixed - returns mining equipment added on website
+     */
+    public function getNews($feeds = "ALL_NEWS_FEEDS", $lTs = false, $lang = "EN",$sign = "false" ) {
+        $params = array(
+            "feeds" => $feeds,
+            "lTs" => $lTs,
+            "lang" => $lang,
+            "sign" => $sign,
+        );
+        $equipment = $this->getRequest("public","/data/news", $params);
+        return $equipment;
+    }
+
+    /**
+     * @param string $timespan - available options: hour / second
+     * @return bool|mixed
+     */
+    public function getRateLimits($timespan = "hour" ) {
+        if (($timespan == "hour" )) {
+            $limits = $this->getRequest("public", "/stats/rate/hour/limit");
+            return $limits;
+        }elseif ($timespan == "second"){
+            $limits = $this->getRequest("public", "/stats/rate/second/limit");
+            return $limits;
+        }elseif ($timespan == "minute"){
+            $limits = $this->getRequest("public", "/stats/rate/minute/limit");
+            return $limits;
+        }elseif ($timespan == "all"){
+
+            $limits = (object) array();
+
+            $limits->minute = $this->getRequest("public", "/stats/rate/minute/limit");
+            $limits->second = $this->getRequest("public", "/stats/rate/second/limit");
+            $limits->hour = $this->getRequest("public", "/stats/rate/hour/limit");
+
+            return $limits;
+        }else {
+            $this->errorMessages[] = "avaiable options for timespan are hour or minute or second";
+            return false;
+        }
+    }
+
+    /**
+     * @return array returns array of strings with errors during the request
+     */
+    private function getErrorMessages() {
+        return $this->errorMessages;
     }
 
     /**
      * @param string $type
      * @param string $action
      * @param array $options
-     *
-     * @return mixed
-     * @throws GuzzleExceptionAlias
-     * @throws InvalidRequest
+     * @return bool|mixed
+     * Description:
+     * will send request to api endpoint
      */
-    public function getRequest($type, $action, $options = [])
-    {
-        $apiEndpoint = $this->getApiEndpoint($type, $action);
-
-        if ($apiEndpoint === null) {
-            throw new \Exception('Invalid type');
+    public function getRequest($type = "public", $action = "", $options = array()) {
+        if ($action == "" ) {
+            $this->errorMessages[] = "no action submitted";
+            return false;
         }
-
-        $result = $this->httpClient->request('GET', $apiEndpoint, [
-            "query" => $options,
-            'headers' => [
-                'authorization' => 'Apikey ' . $this->getApiKey()
-            ]
-        ]);
-
-        $statusCode = $result->getStatusCode();
-
-        if ($statusCode !== 200) {
-            throw new InvalidRequest('Request is invalid', $statusCode);
+        if ($type == "public" ) {
+            $uri = $this->publicEndpoint . $action . "?api_key=" . $this->api_key;
         }
-
-        $body = $result->getBody()->getContents();
-        return json_decode($body);
+        elseif ($type == "private" ) {
+            $uri = $this->privateEndpoint . $action;
+        }
+        else {
+            $this->errorMessages[] = "invalid type specified";
+            return false;
+        }
+        try {
+            if ($this->debug == true ) {
+                echo "URI: " . $uri . "<br>";
+            }
+            $client = new \GuzzleHttp\Client(['verify' => false]); 
+            $res = $client->request('GET', $uri, array(
+                "query" => $options
+            ));
+            $this->statusCode = $res->getStatusCode();
+            $this->header = $res->getHeader('content-type');
+            $this->body = $res->getBody()->getContents();
+            return json_decode($this->body);
+        }
+        catch (\Exception $e) {
+            if ($this->debug == true ) {
+                echo "HTTP response code:" . $this->statusCode;
+                print_r(json_decode($this->body));
+                die();
+            }
+        }
     }
 
     /**
@@ -97,22 +188,24 @@ class CryptocompareApi
      * @return string - "EUR,USD,BTC"
      */
     public function arrayToCommaSeperatedString ($input = array() ) {
-        $output = implode(",", $input);
+        $output = "";
+        foreach ($input as $i => $t ) {
+            if ($i == 0) {
+                $output = $t;
+            } else {
+                $output = $output . "," . $t;
+            }
+        }
         return $output;
     }
 
     /**
-     * @return string
+     * CryptocompareApi constructor.
+     * @param bool $debug
      */
-    public function getApiKey() {
-        return $this->apiKey;
-    }
-
-    /**
-     * @param string $apiKey
-     */
-    public function setApiKey($apiKey) {
-        $this->apiKey = $apiKey;
+    function __construct($debug = false)
+    {
+        $this->setDebug($debug);
     }
 
     /**
@@ -120,36 +213,5 @@ class CryptocompareApi
      */
     public function setDebug($debug) {
         $this->debug = $debug;
-    }
-
-    /**
-     * Generates the endpoint uri
-     *
-     * @param string $type
-     * @param string $action
-     *
-     * @return string|null
-     */
-    protected function getApiEndpoint($type, $action)
-    {
-        if ($type === self::PUB) {
-            return self::PUBLIC_ENDPOINT . $action;
-        } else if ($type === self::PRIV) {
-            return self::PRIVATE_ENDPOINT . $action;
-        }
-
-        return null;
-    }
-
-    /**
-     * logs the message if debug is enabled
-     *
-     * @param string $message
-     */
-    protected function log($message)
-    {
-        if ($this->debug === true ) {
-            echo $message;
-        }
     }
 }

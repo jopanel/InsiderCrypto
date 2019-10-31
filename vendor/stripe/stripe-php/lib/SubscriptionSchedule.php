@@ -42,8 +42,6 @@ class SubscriptionSchedule extends ApiResource
      * @param array|null $params
      * @param array|string|null $opts
      *
-     * @throws \Stripe\Exception\ApiErrorException if the request fails
-     *
      * @return SubscriptionSchedule The canceled subscription schedule.
      */
     public function cancel($params = null, $opts = null)
@@ -57,8 +55,6 @@ class SubscriptionSchedule extends ApiResource
     /**
      * @param array|null $params
      * @param array|string|null $opts
-     *
-     * @throws \Stripe\Exception\ApiErrorException if the request fails
      *
      * @return SubscriptionSchedule The released subscription schedule.
      */

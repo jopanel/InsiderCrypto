@@ -8,7 +8,6 @@ $baseDir = dirname($vendorDir);
 return array(
     'Cryptocompare\\CryptocompareApi' => $vendorDir . '/loeken/cryptocompare-api-php-wrapper/src/CryptocompareApi.php',
     'Cryptocompare\\Historical' => $vendorDir . '/loeken/cryptocompare-api-php-wrapper/src/Historical.php',
-    'Cryptocompare\\InvalidRequest' => $vendorDir . '/loeken/cryptocompare-api-php-wrapper/src/InvalidRequest.php',
     'Cryptocompare\\Market' => $vendorDir . '/loeken/cryptocompare-api-php-wrapper/src/Market.php',
     'Cryptocompare\\News' => $vendorDir . '/loeken/cryptocompare-api-php-wrapper/src/News.php',
     'Cryptocompare\\Other' => $vendorDir . '/loeken/cryptocompare-api-php-wrapper/src/Other.php',

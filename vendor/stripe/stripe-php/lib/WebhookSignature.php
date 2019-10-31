@@ -7,9 +7,9 @@ abstract class WebhookSignature
     const EXPECTED_SCHEME = "v1";
 
     /**
-     * Verifies the signature header sent by Stripe. Throws an
-     * Exception\SignatureVerificationException exception if the verification fails for
-     * any reason.
+     * Verifies the signature header sent by Stripe. Throws a
+     * SignatureVerification exception if the verification fails for any
+     * reason.
      *
      * @param string $payload the payload sent by Stripe.
      * @param string $header the contents of the signature header sent by
@@ -17,7 +17,7 @@ abstract class WebhookSignature
      * @param string $secret secret used to generate the signature.
      * @param int $tolerance maximum difference allowed between the header's
      *  timestamp and the current time
-     * @throws Exception\SignatureVerificationException if the verification fails.
+     * @throws \Stripe\Error\SignatureVerification if the verification fails.
      * @return bool
      */
     public static function verifyHeader($payload, $header, $secret, $tolerance = null)
@@ -26,17 +26,17 @@ abstract class WebhookSignature
         $timestamp = self::getTimestamp($header);
         $signatures = self::getSignatures($header, self::EXPECTED_SCHEME);
         if ($timestamp == -1) {
-            throw Exception\SignatureVerificationException::factory(
+            throw new Error\SignatureVerification(
                 "Unable to extract timestamp and signatures from header",
-                $payload,
-                $header
+                $header,
+                $payload
             );
         }
         if (empty($signatures)) {
-            throw Exception\SignatureVerificationException::factory(
+            throw new Error\SignatureVerification(
                 "No signatures found with expected scheme",
-                $payload,
-                $header
+                $header,
+                $payload
             );
         }
 
@@ -52,19 +52,19 @@ abstract class WebhookSignature
             }
         }
         if (!$signatureFound) {
-            throw Exception\SignatureVerificationException::factory(
+            throw new Error\SignatureVerification(
                 "No signatures found matching the expected signature for payload",
-                $payload,
-                $header
+                $header,
+                $payload
             );
         }
 
         // Check if timestamp is within tolerance
         if (($tolerance > 0) && (abs(time() - $timestamp) > $tolerance)) {
-            throw Exception\SignatureVerificationException::factory(
+            throw new Error\SignatureVerification(
                 "Timestamp outside the tolerance zone",
-                $payload,
-                $header
+                $header,
+                $payload
             );
         }
 

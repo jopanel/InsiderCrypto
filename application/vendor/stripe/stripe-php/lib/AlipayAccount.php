@@ -12,6 +12,7 @@ namespace Stripe;
  */
 class AlipayAccount extends ApiResource
 {
+
     const OBJECT_NAME = "alipay_account";
 
     use ApiOperations\Delete;
@@ -29,7 +30,7 @@ class AlipayAccount extends ApiResource
             $path = 'sources';
         } else {
             $msg = "Alipay accounts cannot be accessed without a customer ID.";
-            throw new Exception\UnexpectedValueException($msg);
+            throw new Error\InvalidRequest($msg, null);
         }
         $parentExtn = urlencode(Util\Util::utf8($parent));
         $extn = urlencode(Util\Util::utf8($this['id']));
@@ -40,17 +41,16 @@ class AlipayAccount extends ApiResource
      * @param array|string $_id
      * @param array|string|null $_opts
      *
-     * @throws \Stripe\Exception\BadMethodCallException
+     * @throws \Stripe\Error\InvalidRequest
      *
      * @deprecated Alipay accounts are deprecated. Please use the sources API instead.
      * @link https://stripe.com/docs/sources/alipay
      */
     public static function retrieve($_id, $_opts = null)
     {
-        $msg = "Alipay accounts cannot be retrieved without a customer ID. " .
-               "Retrieve an Alipay account using `Customer::retrieveSource(" .
-               "'customer_id', 'alipay_account_id')`.";
-        throw new Exception\BadMethodCallException($msg);
+        $msg = "Alipay accounts cannot be accessed without a customer ID. " .
+               "Retrieve an Alipay account using \$customer->sources->retrieve('alipay_account_id') instead.";
+        throw new Error\InvalidRequest($msg, null);
     }
 
     /**
@@ -58,16 +58,15 @@ class AlipayAccount extends ApiResource
      * @param array|null $_params
      * @param array|string|null $_options
      *
-     * @throws \Stripe\Exception\BadMethodCallException
+     * @throws \Stripe\Error\InvalidRequest
      *
      * @deprecated Alipay accounts are deprecated. Please use the sources API instead.
      * @link https://stripe.com/docs/sources/alipay
      */
     public static function update($_id, $_params = null, $_options = null)
     {
-        $msg = "Alipay accounts cannot be updated without a customer ID. " .
-               "Update an Alipay account using `Customer::updateSource(" .
-               "'customer_id', 'alipay_account_id', \$updateParams)`.";
-        throw new Exception\BadMethodCallException($msg);
+        $msg = "Alipay accounts cannot be accessed without a customer ID. " .
+               "Call save() on \$customer->sources->retrieve('alipay_account_id') instead.";
+        throw new Error\InvalidRequest($msg, null);
     }
 }

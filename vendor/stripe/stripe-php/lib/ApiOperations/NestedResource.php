@@ -49,8 +49,6 @@ trait NestedResource
      * @param array|null $params
      * @param array|string|null $options
      *
-     * @throws \Stripe\Exception\ApiErrorException if the request fails
-     *
      * @return \Stripe\StripeObject
      */
     protected static function _createNestedResource($id, $nestedPath, $params = null, $options = null)
@@ -65,8 +63,6 @@ trait NestedResource
      * @param string|null $nestedId
      * @param array|null $params
      * @param array|string|null $options
-     *
-     * @throws \Stripe\Exception\ApiErrorException if the request fails
      *
      * @return \Stripe\StripeObject
      */
@@ -83,8 +79,6 @@ trait NestedResource
      * @param array|null $params
      * @param array|string|null $options
      *
-     * @throws \Stripe\Exception\ApiErrorException if the request fails
-     *
      * @return \Stripe\StripeObject
      */
     protected static function _updateNestedResource($id, $nestedPath, $nestedId, $params = null, $options = null)
@@ -100,8 +94,6 @@ trait NestedResource
      * @param array|null $params
      * @param array|string|null $options
      *
-     * @throws \Stripe\Exception\ApiErrorException if the request fails
-     *
      * @return \Stripe\StripeObject
      */
     protected static function _deleteNestedResource($id, $nestedPath, $nestedId, $params = null, $options = null)
@@ -115,8 +107,6 @@ trait NestedResource
      * @param string $nestedPath
      * @param array|null $params
      * @param array|string|null $options
-     *
-     * @throws \Stripe\Exception\ApiErrorException if the request fails
      *
      * @return \Stripe\StripeObject
      */

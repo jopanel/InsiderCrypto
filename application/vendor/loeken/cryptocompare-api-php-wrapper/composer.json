@@ -6,8 +6,7 @@
     "guzzlehttp/guzzle": "6.3.*"
   },
   "require-dev": {
-    "guzzlehttp/guzzle": "6.3.*",
-    "phpunit/phpunit": "^7"
+    "guzzlehttp/guzzle": "6.3.*"
   },
   "license": "BSD-3-Clause",
   "authors": [{
@@ -18,9 +17,6 @@
   "autoload": {
     "psr-4": {
       "Cryptocompare\\": "src/"
-    },
-    "classmap": [
-      "src/"
-    ]
+    }
   }
 }

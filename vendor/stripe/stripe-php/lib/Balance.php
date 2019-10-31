@@ -20,8 +20,6 @@ class Balance extends SingletonApiResource
     /**
      * @param array|string|null $opts
      *
-     * @throws \Stripe\Exception\ApiErrorException if the request fails
-     *
      * @return Balance
      */
     public static function retrieve($opts = null)
