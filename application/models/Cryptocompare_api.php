@@ -413,7 +413,7 @@ class Cryptocompare_api extends CI_Model {
         public function getBitcoinValue() {
         	date_default_timezone_set('America/Los_Angeles');
         	$cryptocomparePrice = new Cryptocompare\Price();
-			$getPrice = $cryptocomparePrice->getSinglePrice("BTC","USD","Coinbase"); 
+			$getPrice = $cryptocomparePrice->getSingleSymbolPriceEndpoint(true, "BTC","USD","Coinbase"); 
 			$sql = "INSERT INTO bitcoin_value (fiat,cost,updated) VALUES ('USD', ".$this->db->escape($getPrice->USD).", ".$this->db->escape(time()).")";
 			$this->db->query($sql);
 			return TRUE;

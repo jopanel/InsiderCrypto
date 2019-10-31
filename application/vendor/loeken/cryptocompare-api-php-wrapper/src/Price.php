@@ -31,7 +31,20 @@ class Price extends CryptocompareApi
         $r = $this->getRequest("public", "/data/price", $params);
         return $r;
     }
-
+    public function getSingleSymbolPriceEndpoint($tryConversion = "true", $fsym = "BTC", $tsyms = array("USD", "EUR"), $e = "CCCAGG", $sign = false)
+    {
+        $extraParams = $this->appplicationName;;
+        $params = array(
+            "tryConversion" => $tryConversion,
+            "fsym" => $fsym,
+            "tsyms" => $tsyms,
+            "e" => $e,
+            "extraParams" => $extraParams,
+            "sign" => $sign
+        );
+        $r = $this->getRequest("public", "/data/price", $params);
+        return $r;
+    }
     /**
      * @param string $tryConversion - type of currency to convert from - default: BTC
      * @param array $fsym - base currencies to convert from
