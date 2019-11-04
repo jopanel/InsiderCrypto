@@ -96,15 +96,11 @@ class Compare_model extends CI_Model {
 	        	//echo 1;
 	        	$query = $this->db->query($sql);
 	        	if ($query->num_rows() > 0) {
-	        		$orgArr = [];
-	        		$symbols = [];
-	        		$presymbols = [];
-	        		$presymbolsnoescape = [];
+	        		$orgArr = []; 
+	        		$presymbolsid = []; 
 	        		foreach ($query->result_array() as $res) {
-	        			$orgArr[$res["market_id"]][$res["symbol_id"]][$res["currency_id"]] = $res;
-	        			$presymbols[$res["symbol_id"]] = "'".$res["symbol_abbr"]."'";
-	        			$presymbolsid[$res["symbol_id"]] = "'".$res["symbol_id"]."'";
-	        			$presymbolsnoescape[$res["symbol_id"]] = $res["symbol_abbr"];
+	        			$orgArr[$res["market_id"]][$res["symbol_id"]][$res["currency_id"]] = $res; 
+	        			$presymbolsid[$res["symbol_id"]] = "'".$res["symbol_id"]."'"; 
 	        		} 
 	        		//echo 2;
 	        		// get bitcoin symbol_id 
@@ -135,10 +131,10 @@ class Compare_model extends CI_Model {
 	        		}
 	        		//echo 5;
 						$sql = "SELECT
-									ROUND(mp.price, 2)AS 'price',
+									ROUND(AVG(mp.price), 2) AS 'price',
 									mp.symbol_id
 								FROM
-									markets_pairs mp 
+									(SELECT symbol_id, MAX(volume24hour) as 'volume24hour', currency_id, price, active, lastupdate FROM markets_pairs WHERE currency_id = ".$this->db->escape($btc_currency_id)." and price > 0 and lastupdate > ".strtotime("-1 day")." GROUP BY symbol_id) mp 
 								WHERE
 									mp.symbol_id IN(
 										".implode(",",$presymbolsid)."
@@ -146,11 +142,13 @@ class Compare_model extends CI_Model {
 								AND mp.currency_id = ".$this->db->escape($btc_currency_id)."
 								AND mp.volume24hour > 0
 								AND mp.price > 0
-								AND mp.active = '1'";
-							//echo $sql;
-							//echo "<br><br><br>";
+								AND mp.active = '1'
+								GROUP BY 
+								mp.symbol_id";
+							echo $sql; 
+					// the script above gets how many of a specific currency is needed to equal 1 bitcoin. BUT its all over the place because I get the data from my internal data sources. Different exchanges contain different prices, an average of all is still very different from USD to USDT even.
 	        		$query2 = $this->db->query($sql);
-	        		$presymbols = $presymbolsid = $presymbolsnoescape = null;
+	        		$presymbolsid = null;
 	        		if ($query2->num_rows() > 0) {
 	        			foreach ($query2->result_array() as $res) {
 	        				$symbols[$res["symbol_id"]] = array("symbol_id" => $res["symbol_id"], "btc_cost" => $res["price"]);
@@ -182,7 +180,9 @@ class Compare_model extends CI_Model {
 				        				foreach ($cArr2 as $cur_id2 => $cur_data2) {
 				        					if ($sym_id2 != $sym_id && $cur_id2 == $cur_id) {
 				        						$percent = $this->calculatePercentage($cur_data["usd_cost"],$cur_data2["usd_cost"]); 
-				        						$pairsFound[] = array("pair1_id" => $cur_data["pair_id"], "pair1_price" => $cur_data["market_price"], "pair2_id" => $cur_data2["pair_id"], "pair2_price" => $cur_data2["market_price"], "percent" => $percent); 
+				        						if ($percent > 3) {
+				        							$pairsFound[] = array("pair1_id" => $cur_data["pair_id"], "pair1_price" => $cur_data["market_price"], "pair2_id" => $cur_data2["pair_id"], "pair2_price" => $cur_data2["market_price"], "percent" => $percent); 
+				        						} 
 				        					}
 				        				}
 				        			}

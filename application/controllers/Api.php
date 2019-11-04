@@ -142,6 +142,13 @@ class Api extends CI_Controller {
 		
 	}
 
-
+	public function testStripe($password=null) {
+		if ($password == API_PASSWORD) { 
+			if ($this->input->post()) { 
+				$this->load->model('Stripe_model');
+				$this->Stripe_model->test();
+			}
+		} 
+	}
 
 }
