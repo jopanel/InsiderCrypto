@@ -16,7 +16,8 @@
 		"tcdent/php-restclient": "^0.1.6",
 		"cb0/lisk-php-api": "^0.1.1",
 		"sendgrid/sendgrid": "~6.0",
-		"stripe/stripe-php": "^6.19"
+		"stripe/stripe-php": "^6.19",
+		"ujjwal/currency-converter":"2.2.*"
 	}, 
 	"suggest": {
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"

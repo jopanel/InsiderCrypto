@@ -247,11 +247,11 @@ class Cryptocompare_api extends CI_Model {
 	        		$calls = $this->cleanPriceData($calls); 
 	        		$sortcalls = null;
 	        		$callcounter = 0;
-
+	        		echo "calls: ".count($calls)."<br>";
 	        		foreach ($calls as $v) {
 	        			$callcounter += 1;
-	        			if ($callcounter == 40) {
-	        				sleep(3);
+	        			if ($callcounter == 20) {
+	        				sleep(1);
 	        				$callcounter = 1;
 	        			}
 	        			$this->curl_post_async(base_url().'api/asyncPriceRequest/'.API_PASSWORD, $v);

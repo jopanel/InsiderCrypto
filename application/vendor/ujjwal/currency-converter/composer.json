@@ -1,0 +1,32 @@
+{
+    "name": "ujjwal/currency-converter",
+    "description": "Currency Converter Class with features of caching and identifying currency from country Code",
+    "license": "MIT",
+    "keywords": [
+        "money",
+        "currency",
+        "currency-converter",
+        "converter",
+        "exchange-rates"
+    ],
+    "autoload": {
+        "psr-4": {
+            "CurrencyConverter\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "ojhaujjwal",
+            "email": "bring2uo@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "ext-curl": "*",
+        "zendframework/zend-cache": "2.*",
+        "phpunit/phpunit": "4.*"
+    },
+    "suggest": {
+        "ext-curl": "Using the rate provider for gettting the rate from yahoo using curl extension",
+        "zendframework/zend-cache": "To use Zend Cache component for caching"
+    }  
+}

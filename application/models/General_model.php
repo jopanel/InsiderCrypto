@@ -96,23 +96,96 @@ class General_model extends CI_Model {
 
         public function checkExchanges() {
             // inactivate exchanges with less than X btc volume
-            $sql = "UPDATE markets SET active = '1'";
-            $this->db->query($sql);
             $marketsID = [];
-            $sql2 = "SELECT mp.market_id, SUM(mp.volume24hour) as 'mama' FROM markets_pairs mp GROUP BY mp.market_id HAVING mama < 50
-                UNION 
-                SELECT r.id as 'market_id', '' as 'mama' FROM markets r WHERE NOT EXISTS(SELECT 1 FROM markets_pairs mpr WHERE mpr.market_id = r.id)";
+            $sql = "SELECT id FROM markets";
+            $query = $this->db->query($sql);
+            if ($query->num_rows() > 0) {
+                foreach ($query->result_array() as $res) {
+                    $marketsID[$res["id"]] = $res["id"];
+                }
+            }
+            $sql2 = "
+            SELECT
+                mp.market_id,
+                SUM(mp.volume24hour)AS 'mama'
+            FROM
+                markets_pairs mp
+            GROUP BY
+                mp.market_id
+            HAVING
+                mama < 500
+            UNION
+                SELECT
+                    r.id AS 'market_id',
+                    '' AS 'mama'
+                FROM
+                    markets r
+                WHERE
+                    NOT EXISTS(
+                        SELECT
+                            1
+                        FROM
+                            markets_pairs mpr
+                        WHERE
+                            mpr.market_id = r.id
+                    )
+            ";
             $query = $this->db->query($sql2);
             if ($query->num_rows() > 0) {
                 foreach ($query->result_array() as $res) {
-                    $marketsID[] = $res["market_id"];
-                }
-                if (count($marketsID) > 0) {
-                    $ids = implode(',',$marketsID);
-                    $sql3 = "UPDATE markets SET active = '0' WHERE id IN (".$ids.")";
-                    $this->db->query($sql3);
+                    //$marketsID[$res["market_id"]] = $res["market_id"];
+                    unset($marketsID[$res["market_id"]]);
+                } 
+            }
+            // set exchanges to inactive based on last update of price for exchange by x amount of days 
+            date_default_timezone_set( 'America/Los_Angeles' );
+            $today = date("F d Y H:i:s", time()); 
+            $expireDate = strtotime($today . " -3 day");
+            $sql = "
+                    SELECT
+                        market_id,
+                        MAX(lastupdate)AS 'lastupdate'
+                    FROM
+                        markets_pairs
+                    WHERE
+                        lastupdate < '".$expireDate."'
+                    GROUP BY
+                        market_id
+            ";  
+            echo $sql;
+            $query = $this->db->query($sql);
+            if ($query->num_rows() > 0) {
+                foreach ($query->result_array() as $res) {
+                    //$marketsID[$res["market_id"]] = $res["market_id"];
+                    unset($marketsID[$res["market_id"]]);
                 }
             }
+            if (count($marketsID) > 0) {
+                $ids = implode(",", $marketsID);
+                $sql2 = "UPDATE markets SET active = '0' WHERE id NOT IN (".$ids.")";
+                $this->db->query($sql2);
+                $sql3 = "UPDATE markets SET active = '1' WHERE id IN (".$ids.")";
+                $this->db->query($sql3);
+            }
+            return TRUE;
+        }
+
+        public function checkMarketPairs() {
+            // set inactive to market pairs that have inactive exchanges
+            $markets = [];
+            $sql = "SELECT id FROM markets WHERE active = '0'";
+            $query = $this->db->query($sql);
+            foreach($query->result_array() as $res) {
+                $markets[] = $res["id"];
+            }
+            if (count($markets) > 0) {
+                $ids = implode(",", $markets);
+                $sql2 = "UPDATE markets_pairs SET active = '0' WHERE id IN (".$ids.")";
+                $this->db->query($sql2);
+            }
+            // set inactive to markets pairs that have 0 price and 0 last update
+            $sql = "UPDATE markets_pairs SET active = '0' WHERE price = '0' AND lastupdate = '0'";
+            $this->db->query($sql);
             return TRUE;
         }
 

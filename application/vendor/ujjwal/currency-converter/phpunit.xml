@@ -1,0 +1,21 @@
+﻿<phpunit bootstrap="tests/Bootstrap.php"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         stopOnFailure="false"
+         backupGlobals="false"
+         syntaxCheck="true"
+>
+    <testsuite name="CurrencyConverterTest">
+        <directory>tests/CurrencyConverterTest/</directory>
+    </testsuite>
+    <filter>
+        <whitelist>
+            <directory suffix=".php">src</directory>
+        </whitelist>
+    </filter>
+    <logging>
+        <log type="coverage-text" target="php://stdout"/>
+        <log type="coverage-clover" target="build/logs/clover.xml"/>
+    </logging>
+</phpunit>

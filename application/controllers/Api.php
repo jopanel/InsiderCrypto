@@ -54,20 +54,23 @@ class Api extends CI_Controller {
 		$output["error"] = true;
 		if ($password == API_PASSWORD) {
 			$this->load->model('General_model');
-			$fixexchanges = $this->General_model->checkExchanges();
-			$updatehome = $this->General_model->updateHomePage();
+			$this->General_model->checkExchanges(); 
+			$this->General_model->updateHomePage();
+			$this->General_model->checkMarketPairs();
 			$output["error"] = false;
 		}
 		echo json_encode($output);
+	}
+
+	public function fix() {
+		$this->load->model('Cryptocompare_api'); 
+		$this->load->model('Compare_model');
+		$this->Compare_model->generatePairEvents();
 	}
 	
 /*
 	CRON Job Related Functions
 */
-
-	
-
-	
 
 	public function asyncPriceRequest($password=null) {
 		if ($password == API_PASSWORD) { 
@@ -150,5 +153,6 @@ class Api extends CI_Controller {
 			}
 		} 
 	}
+
 
 }
