@@ -1,14 +1,19 @@
-<?php
+<?php declare(strict_types=1);
 /*
- * This file is part of the Comparator package.
+ * This file is part of sebastian/comparator.
  *
  * (c) Sebastian Bergmann <sebastian@phpunit.de>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace SebastianBergmann\Comparator;
+
+use function get_class;
+use function in_array;
+use function is_object;
+use function sprintf;
+use function substr_replace;
 
 /**
  * Compares objects for equality.
@@ -40,7 +45,7 @@ class ObjectComparator extends ArrayComparator
      *
      * @throws ComparisonFailure
      */
-    public function assertEquals($expected, $actual, $delta = 0.0, $canonicalize = false, $ignoreCase = false, array &$processed = [])
+    public function assertEquals($expected, $actual, $delta = 0.0, $canonicalize = false, $ignoreCase = false, array &$processed = [])/*: void*/
     {
         if (get_class($actual) !== get_class($expected)) {
             throw new ComparisonFailure(
