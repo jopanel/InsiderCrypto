@@ -23,22 +23,24 @@ class Control extends Controller
 	{  
 		if ($this->General->verifyUser() == FALSE) {
 			$data["data"]["programcost"] = $this->General->getProgramCost();
+			$data["stats"] = $this->General->getHomeStats(); 
+			$data["markets"] = $this->General->getExchanges();
 			$data["page"] = "landing.welcome";
-			$this->load->view('landing_layout', $data); 
+		    return view('landing.header', $data) . view('landing.welcome', $data) . view('landing.footer', $data);  
 		} else {
 			if ($this->General->getPaidStatus() == TRUE) {
 				// paid and verified member
 				$head["navbartoggle"] = "sidenav-toggled";
-				$this->load->view('main/header', $head);
-				$this->load->view('main/history');
-				$this->load->view('main/footer');
+				view('main/header', $head);
+				return view('main/history');
+				return view('main/footer');
 
 			} else {
 				// unpaid membership
 				$head["navbartoggle"] = "";
-				$this->load->view('main/header', $head);
-				$this->load->view('main/unpaid-dashboard');
-				$this->load->view('main/footer');
+				return view('main/header', $head);
+				return view('main/unpaid-dashboard');
+				return view('main/footer');
 			}
 		}
 	}

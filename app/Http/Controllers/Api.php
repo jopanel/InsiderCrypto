@@ -5,15 +5,17 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Api;
-
+use App\Models\Api_model;
+use App\Models\Cryptocompareapi;
 
 class Api extends Controller
 {
     protected $request;
+    protected $Compare_model;
 
     public function __construct(Request $request) {
         $this->request = $request;
+        $this->Compare_model = new Cryptocompareapi();
     }
 
     public function genArb($password=null) { 
@@ -33,11 +35,8 @@ class Api extends Controller
     CRON Job Calls
 */
 
-    public function getAllPriceData($password=""){
-        if ($password == API_PASSWORD) {
-            $this->load->model('Cryptocompare_api'); 
-            $this->Cryptocompare_api->build(); 
-        }
+    public function getAllPriceData(){ 
+            $this->Compare_model->build(); 
     }
 
     public function checkForPayments() {
@@ -107,7 +106,7 @@ class Api extends Controller
         }
     }
 
-    public function validate($email=null) {
+    public function validater($email=null) {
         if ($email == null) {
             echo "Sorry there was a problem.";
         } else {

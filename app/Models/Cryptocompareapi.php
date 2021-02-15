@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+use Cryptocompare;
 
 class Cryptocompareapi extends Model
 {
@@ -47,13 +49,13 @@ class Cryptocompareapi extends Model
         	// check if the last call is older than timeout period
         	$timeoutPeriod = strtotime("-".$this->timeoutPeriod." minutes");
         	$sql = "SELECT lastupdate FROM last_update ORDER BY id DESC LIMIT 1";
-        	$query = $this->db->query($sql);
-        	if ($query->num_rows() > 0) {
-        		$lastupdate = $query->row()->lastupdate;
+        	$query = DB::select($sql);
+        	if (count($query) > 0) {
+        		$lastupdate = $query[0]->lastupdate;
         		// check last update table again for the reset column
         		$sql2 = "SELECT lastupdate FROM last_update WHERE reset = '1' ORDER BY id DESC LIMIT 1";
-        		$query2 = $this->db->query($sql2);
-        		$lastreset = $query2->row()->lastupdate;
+        		$query2 = DB::select($sql2);
+        		$lastreset = $query2[0]->lastupdate;
         		if ($lastreset < strtotime("-".$this->weeksBeforeReset." week")) {
         			$this->generateCurrency();
         			return TRUE;
@@ -75,11 +77,11 @@ class Cryptocompareapi extends Model
         	$cryptocompareCoin = new Cryptocompare\Coin();
         	$dataObj = $cryptocompareCoin->getList();
         	foreach ($dataObj->Data as $k => $v) {
-        		$sql = "SELECT 1 FROM currency WHERE name = ".$this->db->escape($v->Name)." AND abbr = ".$this->db->escape($v->Symbol);
-        		$query = $this->db->query($sql);
-        		if ($query->num_rows() == 0) {
-        			$sql = "INSERT INTO currency (name, abbr) VALUES (".$this->db->escape($v->Name).", ".$this->db->escape($v->Symbol).")";
-        			$this->db->query($sql);
+        		$sql = "SELECT 1 FROM currency WHERE name = :name AND abbr = :symbol";
+        		$query = DB::select($sql, ["name" => $v->Name, "symbol" => $v->Symbol]);
+        		if (count($query) == 0) {
+        			$sql = "INSERT INTO currency (name, abbr) VALUES (?, ?)";
+        			DB::insert($sql, [$v->Name, $v->Symbol]);
         		}
         	}
         	$dataObj = null;
@@ -89,14 +91,14 @@ class Cryptocompareapi extends Model
 
         public function generateMarkets() {
         	$cryptocompareMarket = new Cryptocompare\Market();
-        	$dataObj = $cryptocompareMarket->getList();
-        	// insert new exchanges
+        	$dataObj = $cryptocompareMarket->getList(); 
+        	// insert new exchanges 
         	foreach ($dataObj as $k => $v) {
-        		$sql = "SELECT 1 FROM markets WHERE name = ".$this->db->escape($k);
-        		$query = $this->db->query($sql);
-        		if ($query->num_rows() == 0) {
-        			$sql = "INSERT INTO markets (name, active) VALUES (".$this->db->escape($k).", '1')";
-        			$this->db->query($sql);
+        		$sql = "SELECT 1 FROM markets WHERE name = ?";
+        		$query = DB::select($sql, [$k]);
+        		if (count($query) == 0) {
+        			$sql = "INSERT INTO markets (name, active) VALUES (?, '1')";
+        			DB::insert($sql, [$k]);
         		}
         	}
         	// insert new pairs for exchanges
@@ -105,46 +107,46 @@ class Cryptocompareapi extends Model
         		foreach ($v as $kk => $vv) {
         			$requirements = 0;
         			// get currency_id
-        			$sql = "SELECT id FROM currency WHERE abbr = ".$this->db->escape($kk);
-        			$query = $this->db->query($sql);
-        			if ($query->num_rows() > 0) {
-        				$currency_id = $query->row()->id;
+        			$sql = "SELECT id FROM currency WHERE abbr = ?";
+        			$query = DB::select($sql, [$kk]);
+        			if (count($query) > 0) {
+        				$currency_id = $query[0]->id;
         				$requirements += 1;
         			} 
         			// get market_id
-        			$sql2 = "SELECT id FROM markets WHERE name = ".$this->db->escape($k);
-        			$query2 = $this->db->query($sql2);
-        			if ($query->num_rows() > 0) {
-        				$market_id = $query2->row()->id;
+        			$sql2 = "SELECT id FROM markets WHERE name = ?";
+        			$query2 = DB::select($sql2, [$k]);
+        			if (count($query2) > 0) {
+        				$market_id = $query2[0]->id;
         				$requirements += 1;
         			}
         			if ($requirements == 2) {
         				// get symbol_id, if not exist, create
 	        			foreach ($vv as $sym) {
 	        				$continue = 0;
-	        				$sql3 = "SELECT id FROM symbols WHERE abbr = ".$this->db->escape($sym);
-	        				$query3 = $this->db->query($sql3);
-	        				if ($query3->num_rows() > 0) {
-	        					$symbol_id = $query3->row()->id;
+	        				$sql3 = "SELECT id FROM symbols WHERE abbr = ?";
+	        				$query3 = DB::select($sql3, [$sym]);
+	        				if (count($query3) > 0) {
+	        					$symbol_id = $query3[0]->id;
 	        					$continue = 1;
 	        				} else {
-	        					$sql4 = "INSERT INTO symbols (abbr) VALUES (".$this->db->escape($sym).")";
-	        					$this->db->query($sql4);
-	        					$sql5 = "SELECT id FROM symbols WHERE abbr = ".$this->db->escape($sym);
-	        					$query5 = $this->db->query($sql5);
-	        					if ($query5->num_rows() > 0) {
+	        					$sql4 = "INSERT INTO symbols (abbr) VALUES (?)";
+	        					DB::insert($sql4, [$sym]);
+	        					$sql5 = "SELECT id FROM symbols WHERE abbr = ?";
+	        					$query5 = DB::select($sql5, [$sym]);
+	        					if (count($query5) > 0) {
 	        						$continue = 1;
-	        						$symbol_id = $query5->row()->id;
+	        						$symbol_id = $query5[0]->id;
 	        					}
 	        				}
 	        				if ($continue == 1) {
 	        					// check if the market pair already exists
-	        					$sql6 = "SELECT 1 FROM markets_pairs WHERE market_id = ".$this->db->escape($market_id)." AND currency_id = ".$this->db->escape($currency_id)." AND symbol_id = ".$this->db->escape($symbol_id);
-	        					$query6 = $this->db->query($sql6);
-	        					if ($query6->num_rows() == 0) {
+	        					$sql6 = "SELECT 1 FROM markets_pairs WHERE market_id = ? AND currency_id = ? AND symbol_id = ?";
+	        					$query6 = DB::select($sql6, [$market_id, $currency_id, $symbol_id]);
+	        					if (count($query6) == 0) {
 	        						// doesnt exist, insert
-	        						$sql7 = "INSERT INTO markets_pairs (market_id, currency_id, symbol_id) VALUES (".$this->db->escape($market_id).", ".$this->db->escape($currency_id).", ".$this->db->escape($symbol_id).")";
-	        						$this->db->query($sql7);
+	        						$sql7 = "INSERT INTO markets_pairs (market_id, currency_id, symbol_id) VALUES (?, ?, ?)";
+	        						DB::insert($sql7, [$market_id, $currency_id, $symbol_id]);
 	        					}
 	        				} else {
 	        					// something went wrong with the symbols
@@ -157,8 +159,8 @@ class Cryptocompareapi extends Model
         	}
         	//$this->activateExchanges(); 
         	date_default_timezone_set('America/Los_Angeles');
-        	$sql = "INSERT INTO last_update (lastupdate, reset) VALUES (".$this->db->escape(time()).", '1')";
-        	$this->db->query($sql);
+        	$sql = "INSERT INTO last_update (lastupdate, reset) VALUES (?, '1')";
+        	DB::insert($sql, [time()]);
         	$this->generatePrices();
         }
 
@@ -179,10 +181,11 @@ class Cryptocompareapi extends Model
 				        	LEFT JOIN symbols s ON s.id = mp.symbol_id  
 				        	WHERE 
 				        	EXISTS(SELECT 1 FROM markets mm WHERE mm.id = mp.market_id AND mm.active = '1')
-				        	AND mp.id IN (".implode(",",$followUps).")
+				        	AND mp.id IN (?)
 				        	AND mp.active = '1'
 				        	ORDER BY s.abbr ASC
 	        	";
+	        	$query = DB::select($sql, [implode(",",$followUps)]);
         	} else {
 				$sql = "SELECT 
 				        	mp.market_id, 
@@ -200,12 +203,12 @@ class Cryptocompareapi extends Model
 				        	AND mp.active = '1'
 				        	ORDER BY s.abbr ASC
 	        	";
-	        }
-	        	$query = $this->db->query($sql);
-	        	if ($query->num_rows() > 0) {
+	        	$query = DB::select($sql);
+	        } 
+	        	if (count($query) > 0) {
 	        		$sortcalls = [];
 	        		$sortcallsSym = [];
-	        		foreach ($query->result_array() as $v) {  
+	        		foreach (json_decode(json_encode($query), true) as $v) {  
 	        			// to minimize the amount of calls I make to crypto compare I must first organize calls
 	        			$sortcalls[$v["market_id"].$v["currency_id"]] = array(
 	        				"market_id" => $v["market_id"],
@@ -264,8 +267,8 @@ class Cryptocompareapi extends Model
 	        	}
 
 	        
-        	$sql = "INSERT INTO last_update (lastupdate) VALUES (".$this->db->escape(time()).")";
-        	$this->db->query($sql);
+        	$sql = "INSERT INTO last_update (lastupdate) VALUES (?)";
+        	DB::insert($sql, [time()]);
         	return TRUE;
         }
 
@@ -419,8 +422,8 @@ class Cryptocompareapi extends Model
         	date_default_timezone_set('America/Los_Angeles');
         	$cryptocomparePrice = new Cryptocompare\Price();
 			$getPrice = $cryptocomparePrice->getSingleSymbolPriceEndpoint(true, "BTC","USD","Coinbase"); 
-			$sql = "INSERT INTO bitcoin_value (fiat,cost,updated) VALUES ('USD', ".$this->db->escape($getPrice->USD).", ".$this->db->escape(time()).")";
-			$this->db->query($sql);
+			$sql = "INSERT INTO bitcoin_value (fiat,cost,updated) VALUES ('USD', ?, ?)";
+			DB::insert($sql, [$getPrice->USD, time()]);
 			return TRUE;
         }
 

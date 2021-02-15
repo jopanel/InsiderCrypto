@@ -12,11 +12,10 @@ class Market extends CryptocompareApi
 {
     /**
      * @param string $fsym
+     * @param string $tsym
      * @param int $limit
      * @param bool $sign
-     * @return mixed
-     * @throws InvalidRequest
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @return bool|mixed
      */
     public function getTopPairs($fsym = "BTC", $limit = 5, $sign = false ) {
         $params = array(
@@ -24,18 +23,15 @@ class Market extends CryptocompareApi
             "limit" => $limit,
             "sign" => $sign,
         );
-        $pairs = $this->getRequest(CryptocompareApi::PUB,"/data/top/pairs", $params);
+        $pairs = $this->getRequest("public","/data/top/pairs", $params);
         return $pairs;
     }
-
     /**
-     * @param string $fsym
-     * @param string $tsym
-     * @param int $limit
-     * @param bool $sign
+     * @param string $fsym - base currency to convert from
+     * @param string $tsym - currency to convert to
+     * @param int $limit - limit of results
+     * @param bool $sign - server sided signing of request
      * @return mixed
-     * @throws InvalidRequest
-     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function getTopExchanges($fsym = "BTC", $tsym = "EUR", $limit = 5, $sign = false) {
 
@@ -48,19 +44,15 @@ class Market extends CryptocompareApi
             "extraParams" => $extraParams,
             "sign" => $sign
         );
-        $r = $this->getRequest(CryptocompareApi::PUB, "/data/top/exchanges", $params);
+        $r = $this->getRequest("public", "/data/top/exchanges", $params);
         return $r;
     }
-
     /**
-     * @param string $tsym
-     * @param int $limit
-     * @param bool $sign
+     * @param string $tsym - currency to convert to
+     * @param bool $sign - server sided signing of request
      * @return mixed
-     * @throws InvalidRequest
-     * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function getTopVolumes($tsym = "EUR", $limit = 20, $sign = false) {
+    public function getTopVolumes($tsym = "EUR", $limit = 20, $sign = "false") {
 
         $extraParams = $this->appplicationName;;
 
@@ -70,17 +62,15 @@ class Market extends CryptocompareApi
             "extraParams" => $extraParams,
             "sign" => $sign
         );
-        $r = $this->getRequest(CryptocompareApi::PUB, "/data/top/volumes", $params);
+        $r = $this->getRequest("public", "/data/top/volumes", $params);
         return $r;
     }
 
     /**
-     * @param bool $sign
+     * @param bool $sign - server sided signing of request
      * @return mixed
-     * @throws InvalidRequest
-     * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function getList($sign = false) {
+    public function getList($sign = "false") {
 
         $extraParams = $this->appplicationName;;
 
@@ -88,7 +78,9 @@ class Market extends CryptocompareApi
             "extraParams" => $extraParams,
             "sign" => $sign
         );
-        $r = $this->getRequest(CryptocompareApi::PUB, "/data/all/exchanges", $params);
+        $r = $this->getRequest("public", "/data/all/exchanges", $params);
         return $r;
     }
+
+
 }

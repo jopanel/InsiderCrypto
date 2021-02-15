@@ -17,3 +17,5 @@ use App\Http\Controllers\Control;
 
 
 Route::get('/', 'App\Http\Controllers\Control@index');
+
+Route::get('/api/getpricedata', 'App\Http\Controllers\Api@getAllPriceData');

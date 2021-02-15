@@ -3,10 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class General extends Model
 {
-
 
         protected function generateSalt() {
                 $salt = "MA04UTNYG8251DDGHKK0582F2KGOUV29FG0YJT4JHW82OTJ20TJ02UHNJSPY853TT9M69RGYOYRT83PBUO3UN9PRYU0";
@@ -202,8 +203,8 @@ class General extends Model
 
         public function getHomeStats() {
             $sql = "SELECT total_matches, num_exchanges, num_markets_pairs, avg_profit FROM home_stats ORDER BY id DESC LIMIT 1";
-            $query = $this->db->query($sql);
-            return (array)$query->row();
+            $query = DB::select($sql);
+            return (array)$query[0];
         }
 
         public function getExchangesByRequest($postData=array()) {
@@ -279,10 +280,10 @@ class General extends Model
         public function getExchanges() {
             $markets = [];
             $sql = "SELECT * FROM markets WHERE active = '1' ORDER BY name ASC";
-            $query = $this->db->query($sql);
-            if ($query->num_rows() > 0) {
-                foreach ($query->result_array() as $res) {
-                    $markets[$res["id"]] = $res["name"];
+            $query = DB::select($sql);
+            if (count($query) > 0) {
+                foreach ($query as $res) {
+                    $markets[$res->id] = $res->name;
                 }
             } else {
                 return [];
@@ -690,21 +691,21 @@ class General extends Model
                     LEFT JOIN symbols s ON s.id = p.symbol_id 
                     WHERE c.abbr = "LSK" AND m.name = "Poloniex" AND s.abbr = "BTC"
                     ORDER BY p.id DESC 
-                    LIMIT 1';
-            $query = $this->db->query($sql);
-            if ($query->num_rows() > 0) {
-                $lsk_price = $query->row()->price;
+                    LIMIT 1'; 
+            $query = DB::select($sql);
+            if (count($query) > 0) { 
+                $lsk_price = $query[0]->price;
             } else {
                 $lsk_price = 0.0021; // cant get accurate lsk price, fuck it - 1/14/2018
             }
             $sql = "SELECT cost FROM bitcoin_value WHERE fiat = 'USD' ORDER BY id DESC LIMIT 1";
-            $query = $this->db->query($sql);
-            if ($query->num_rows() > 0) {
-                $bitcoin_value = $query->row()->cost;
+            $query = DB::select($sql);
+            if (count($query) > 0) {
+                $bitcoin_value = $query[0]->cost;
             } else {
                 $bitcoin_value = 10000; // cant get accurate bitcoin price, fuck it 
             }
-            return array("beginner" => (round(((BEGINNER_PACKAGE_USD / $bitcoin_value) / $lsk_price),2)+0.1), "trader" => (round(((TRADER_PACKAGE_USD / $bitcoin_value) / $lsk_price),2)+0.1), "vip" => (round(((VIP_PACKAGE_USD / $bitcoin_value) / $lsk_price),2)+0.1));
+            return array("beginner" => (round(((30 / $bitcoin_value) / $lsk_price),2)+0.1), "trader" => (round(((50 / $bitcoin_value) / $lsk_price),2)+0.1), "vip" => (round(((1000 / $bitcoin_value) / $lsk_price),2)+0.1));
         }
 
 
@@ -893,10 +894,9 @@ class General extends Model
         }
 
         public function verifyUser() {
-        	if ($this->session->userdata("email") && $this->session->userdata("verification_key") && $this->session->userdata("loggedin")) {
-        		$sql = "SELECT * FROM users WHERE verification_key = ".$this->db->escape(strip_tags($this->session->userdata("verification_key")))." AND email = ".$this->db->escape(strip_tags($this->session->userdata("email")));
-        		$query = $this->db->query($sql);
-        		if ($query->num_rows() > 0) {
+        	if (session("email") && session("verification_key") && session("loggedin")) { 
+        		$query =  DB::select("SELECT * FROM users WHERE verification_key = :verification_key AND email = :email", ["verification_key" => session("verification_key"), "email" => session("email")]);
+        		if (count($query) > 0) {
         			return TRUE;
         		} else {
         			return FALSE;
