@@ -12,40 +12,34 @@ use App\Models\General;
 class Control extends Controller
 {
     protected $request;
-    protected $General;
+    protected $General_model;
 
     public function __construct(Request $request) {
         $this->request = $request;
-        $this->General = new General();
+        $this->General_model = new General();
     }
 
 	public function index()
 	{  
-		if ($this->General->verifyUser() == FALSE) {
-			$data["data"]["programcost"] = $this->General->getProgramCost();
-			$data["stats"] = $this->General->getHomeStats(); 
-			$data["markets"] = $this->General->getExchanges();
-			$data["page"] = "landing.welcome";
-		    return view('landing.header', $data) . view('landing.welcome', $data) . view('landing.footer', $data);  
-		} else {
-			if ($this->General->getPaidStatus() == TRUE) {
-				// paid and verified member
-				$head["navbartoggle"] = "sidenav-toggled";
-				view('main/header', $head);
-				return view('main/history');
-				return view('main/footer');
 
-			} else {
-				// unpaid membership
-				$head["navbartoggle"] = "";
-				return view('main/header', $head);
-				return view('main/unpaid-dashboard');
-				return view('main/footer');
-			}
+
+		$data["programcost"] = $this->General_model->getProgramCost();
+		if ($this->General_model->verifyUser() == FALSE) {
+			$data["stats"] = $this->General_model->getHomeStats(); 
+			$data["markets"] = $this->General_model->getExchanges();
+			return view('landing.header') . view('landing.welcome', $data) . view('landing.footer');
+		} else {
+			$head["navbartoggle"] = "sidenav-toggled";
+			$data["paidstatus"] = $this->General_model->getPaidStatus();
+			$data["userData"] = $this->General_model->getUserData();
+			$data["chatlog"] = $this->General_model->getChat();
+			$data["matchData"] = $this->General_model->getMatchData(); 
+			return view('main.header', $head) . view('main.dashboard', $data) . view('main.footer');
 		}
+
 	}
 
-	public function account() {
+	public function account(Request $request) {
 		if ($this->General_model->verifyUser() == FALSE) {
 			redirect(base_url(), "auto");
 		} else {
@@ -53,8 +47,8 @@ class Control extends Controller
 				$data["error_style"] = "display: none;";
 				$data["success"] = "";
 				$data["success_style"] = "display:none;";
-				if ($this->input->post()) {
-					$postData = $this->input->post();
+				if ($request->post()) {
+					$postData = $request->post();
 					$result = $this->General_model->modifyAccount($postData, $postData["action"]);
 					$data["error"] = $result["error"];
 					$data["error_style"] = $result["error_style"];
@@ -68,20 +62,18 @@ class Control extends Controller
 					$data["paidstatus"] = FALSE;
 				}
 				$data["userdata"] = $this->General_model->getUserData();
-				$this->load->view('main/header', $head);
-				$this->load->view('main/account_settings', $data);
-				$this->load->view('main/footer');
+				return view('main.header', $head) . view('main.account_settings', $data) . view('main.footer');
 		}
 	}
 
-	public function preferences() {
+	public function preferences(Request $request) {
 		if ($this->General_model->verifyUser() == FALSE) {
-			redirect(base_url(), "auto");
+			redirect(url('/'));
 		} else {
 				$data["success"] = "";
 				$data["success_style"] = "display: none;";
-				if ($this->input->post()) {
-					$postData = $this->input->post();
+				if ($request->post()) {
+					$postData = $request->post();
 					if ($this->General_model->modifyPreferences($postData, $postData["action"]) == TRUE) {
 						$data["success"] = "Success! Your preferences have been updated.";
 						$data["success_style"] = "";
@@ -91,9 +83,7 @@ class Control extends Controller
 				$data["exchanges"] = $this->General_model->getUserExchanges();
 				$data["userdata"] = $this->General_model->getUserData();
 				$head["navbartoggle"] = "";
-				$this->load->view('main/header', $head);
-				$this->load->view('main/account_preferences', $data);
-				$this->load->view('main/footer');
+				return view('main.header', $head) . view('main.account_preferences', $data) . view('main.footer');
 		}
 	}
 }

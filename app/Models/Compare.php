@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+use Cryptocompare;
 
 class Compare extends Model
 {
@@ -36,9 +38,9 @@ private function calculatePercentage($price1=null, $price2=null) {
 					m.active = '1'
 					AND
 					m.price > '0'";
-		$query = $this->db->query($sql);
-		if ($query->num_rows() > 0) {
-			foreach ($query->result_array() as $res) {
+		$query = DB::select($sql);
+		if (count($query) > 0) {
+			foreach (json_decode(json_encode($query), true) as $res) {
 				$data[$res["currency_id"].$res["symbol_id"]][] = array("price"=>$res["price"], "market_id"=>$res["market_id"], "lastupdate"=>$res["lastupdate"], "pair_id" => $res["pair_id"]);
 			}
 		}
@@ -52,17 +54,17 @@ private function calculatePercentage($price1=null, $price2=null) {
 							$percent = $this->calculatePercentage($vv["price"], $v[$i]["price"]);
 							if ($percent > 3) {
 								//check if match is active
-								$sql = "SELECT id FROM matches WHERE pair2_id = ".$this->db->escape($vv["pair_id"])." AND pair1_id = ".$this->db->escape($v[$i]["pair_id"])." AND finished IS NULL";
-								$query = $this->db->query($sql);
-								if ($query->num_rows() > 0) {
+								$sql = "SELECT id FROM matches WHERE pair2_id = ? AND pair1_id = ? AND finished IS NULL";
+								$query = DB::select($sql, [$vv["pair_id"], $v[$i]["pair_id"]]);
+								if (count($query) > 0) {
 									// match is active
-									$match_id = $query->row()->id;
-									$sql = "UPDATE matches SET percent = ".$this->db->escape($percent)." WHERE id = ".$this->db->escape($query->row()->id);
-									$this->db->query($sql);
+									$match_id = $query[0]->id;
+									$sql = "UPDATE matches SET percent = ? WHERE id = ?";
+									DB::update($sql, [$percent, $query[0]->id]);
 								} else {
 									// match doesnt exist
-									$sql = "INSERT INTO matches (pair1_id, pair2_id, started, percent) VALUES (".$this->db->escape($v[$i]["pair_id"]).", ".$this->db->escape($vv["pair_id"]).", ".$this->db->escape($time).", ".$this->db->escape($percent).")";
-									$this->db->query($sql);
+									$sql = "INSERT INTO matches (pair1_id, pair2_id, started, percent) VALUES (?, ?, ?)";
+									DB::insert($sql, [$v[$i]["pair_id"], $vv["pair_id"], $time, $percent]);
 								}
 							} else {
 								// save pair to check if match is active to end
@@ -98,38 +100,38 @@ private function calculatePercentage($price1=null, $price2=null) {
 				        	AND mp.price > '0'
 	        	";
 	        	//echo 1;
-	        	$query = $this->db->query($sql);
-	        	if ($query->num_rows() > 0) {
+	        	$query = DB::select($sql);
+	        	if (count($query) > 0) {
 	        		$orgArr = []; 
 	        		$presymbolsid = []; 
-	        		foreach ($query->result_array() as $res) {
+	        		foreach (json_decode(json_encode($query), true) as $res) {
 	        			$orgArr[$res["market_id"]][$res["symbol_id"]][$res["currency_id"]] = $res; 
 	        			$presymbolsid[$res["symbol_id"]] = "'".$res["symbol_id"]."'"; 
 	        		} 
 	        		//echo 2;
 	        		// get bitcoin symbol_id 
 	        		$sql = "SELECT id FROM symbols WHERE abbr = 'BTC' LIMIT 1";
-	        		$query2 = $this->db->query($sql);
-	        		if ($query2->num_rows() > 0) {
-	        			$btc_symbol_id = $query2->row()->id;
+	        		$query2 = DB::select($sql);
+	        		if (count($query2) > 0) {
+	        			$btc_symbol_id = $query2[0]->id;
 	        		} else {
 	        			return FALSE;
 	        		}
 	        		//echo 3;
 	        		// get bitcoin currency_id
 	        		$sql = "SELECT id FROM currency WHERE abbr = 'BTC' LIMIT 1";
-	        		$query2 = $this->db->query($sql);
-	        		if ($query2->num_rows() > 0) {
-	        			$btc_currency_id = $query2->row()->id;
+	        		$query2 = DB::select($sql);
+	        		if (count($query2) > 0) {
+	        			$btc_currency_id = $query2[0]->id;
 	        		} else {
 	        			return FALSE;
 	        		}
 	        		//echo 4;
 	        		// get btc current usd price
 	        		$sql = "SELECT cost FROM bitcoin_value ORDER BY id DESC LIMIT 1";
-	        		$query2 = $this->db->query($sql);
-	        		if ($query2->num_rows() > 0) {
-	        			$bitcoin_usd_value = $query2->row()->cost;
+	        		$query2 = DB::select($sql);
+	        		if (count($query2) > 0) {
+	        			$bitcoin_usd_value = $query2[0]->cost;
 	        		} else {
 	        			return FALSE;
 	        		}
@@ -138,23 +140,23 @@ private function calculatePercentage($price1=null, $price2=null) {
 									ROUND(AVG(mp.price), 2) AS 'price',
 									mp.symbol_id
 								FROM
-									(SELECT symbol_id, MAX(volume24hour) as 'volume24hour', currency_id, price, active, lastupdate FROM markets_pairs WHERE currency_id = ".$this->db->escape($btc_currency_id)." and price > 0 and lastupdate > ".strtotime("-1 day")." GROUP BY symbol_id) mp 
+									(SELECT symbol_id, MAX(volume24hour) as 'volume24hour', currency_id, price, active, lastupdate FROM markets_pairs WHERE currency_id = ? and price > 0 and lastupdate > ? GROUP BY symbol_id) mp 
 								WHERE
 									mp.symbol_id IN(
-										".implode(",",$presymbolsid)."
+										?
 									)
-								AND mp.currency_id = ".$this->db->escape($btc_currency_id)."
+								AND mp.currency_id = ?
 								AND mp.volume24hour > 0
 								AND mp.price > 0
 								AND mp.active = '1'
 								GROUP BY 
 								mp.symbol_id";
-							echo $sql; 
+							//echo $sql; 
 					// the script above gets how many of a specific currency is needed to equal 1 bitcoin. BUT its all over the place because I get the data from my internal data sources. Different exchanges contain different prices, an average of all is still very different from USD to USDT even.
-	        		$query2 = $this->db->query($sql);
+	        		$query2 = DB::select($sql, [$btc_currency_id, strtotime("-1 day"), implode(",",$presymbolsid), $btc_currency_id]);
 	        		$presymbolsid = null;
-	        		if ($query2->num_rows() > 0) {
-	        			foreach ($query2->result_array() as $res) {
+	        		if (count($query2) > 0) {
+	        			foreach (json_decode(json_encode($query2), true) as $res) {
 	        				$symbols[$res["symbol_id"]] = array("symbol_id" => $res["symbol_id"], "btc_cost" => $res["price"]);
 	        			}
 	        		} else {
@@ -166,7 +168,6 @@ private function calculatePercentage($price1=null, $price2=null) {
 	        			foreach ($mArr as $sym_id => $cArr) {
 	        				foreach ($cArr as $cur_id => $cur_data) {
 	        					if (isset($symbols[$sym_id]["btc_cost"]) || !empty($symbols[$sym_id]["btc_cost"])) {
-
 		        					$usd_val = (($bitcoin_usd_value / $symbols[$sym_id]["btc_cost"]) * $cur_data["price"]);  
 		        					$marketData[$market_id][$sym_id][$cur_id] = array("market_price" => $cur_data["price"], "usd_cost" => $usd_val, "pair_id" => $cur_data["market_pair"]);
 	        					}
@@ -205,38 +206,38 @@ private function calculatePercentage($price1=null, $price2=null) {
 										FROM
 											matches m
 										WHERE
-											m.pair1_id = ".$this->db->escape($m["pair1_id"])."
-										AND m.pair2_id = ".$this->db->escape($m["pair2_id"])."
+											m.pair1_id = ?
+										AND m.pair2_id = ?
 										AND m.finished IS NULL
 										LIMIT 1
 									)AS 'e' 
 								";
-	        			$query = $this->db->query($sql);
-	        			if ($query->row()->e == 1) {
+	        			$query = DB::select($sql, [$m["pair1_id"], $m["pair2_id"]]);
+	        			if ($query[0]->e == 1) {
 	        				// has open match,  check if percent > 3, if so insert history new row else close match
 	        				if ($m["percent"] > 3) {
-	        					$sql = "SELECT id FROM matches WHERE pair1_id = ".$this->db->escape($m["pair1_id"])." AND pair2_id = ".$this->db->escape($m["pair2_id"])." AND finished IS NULL";
-	        					$query2 = $this->db->query($sql);
-	        					$match_id = $query2->row()->id;
-	        					$sql = "UPDATE matches SET percent = ".$this->db->escape($m["percent"])." WHERE id = ".$this->db->escape($match_id);
-	        					$this->db->query($sql);
+	        					$sql = "SELECT id FROM matches WHERE pair1_id = ? AND pair2_id = ? AND finished IS NULL";
+	        					$query2 = DB::select($sql, [$m["pair1_id"], $m["pair2_id"]]);
+	        					$match_id = $query2[0]->id;
+	        					$sql = "UPDATE matches SET percent = ? WHERE id = ?";
+	        					DB::update($sql, [$m["percent"], $match_id]);
 	        				} else {
 
-	        					$sql = "SELECT id, started FROM matches WHERE pair1_id = ".$this->db->escape($m["pair1_id"])." AND pair2_id = ".$this->db->escape($m["pair2_id"])." AND finished IS NULL";
-	        					$query2 = $this->db->query($sql);
-	        					$match_id = $query2->row()->id;
-	        					$started = $query2->row()->started; 
-								$query3 = $this->db->query($sql); 
-								$sql = "INSERT INTO match_history (match_id, pair1_id, pair2_id, started, finished, avg_percent, price_calls, avg_price_pair1, avg_price_pair2, low_price_pair1, low_price_pair2, high_price_pair1, high_price_pair2) VALUES (".$this->db->escape($match_id).", ".$this->db->escape($m["pair1_id"]).", ".$this->db->escape($m["pair2_id"]).", ".$this->db->escape($started).",".$this->db->escape(time()).", ".$this->db->escape(0).", ".$this->db->escape($query3->row()->price_calls).", ".$this->db->escape(0).", ".$this->db->escape(0).", ".$this->db->escape(0).", ".$this->db->escape(0).", ".$this->db->escape(0).", ".$this->db->escape(0).")";
-								$this->db->query($sql);
-								$sql = "DELETE FROM matches WHERE match_id = ".$this->db->escape($match_id);
-								$this->db->query($sql); 
+	        					$sql = "SELECT id, started FROM matches WHERE pair1_id = ? AND pair2_id = ? AND finished IS NULL";
+	        					$query2 = DB::select($sql, [$m["pair1_id"], $m["pair2_id"]]);
+	        					$match_id = $query2[0]->id;
+	        					$started = $query2[0]->started; 
+								$query3 = DB::select($sql, [$m["pair1_id"], $m["pair2_id"]]); 
+								$sql = "INSERT INTO match_history (match_id, pair1_id, pair2_id, started, finished, avg_percent, price_calls, avg_price_pair1, avg_price_pair2, low_price_pair1, low_price_pair2, high_price_pair1, high_price_pair2) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+								DB::insert($sql, [$match_id, $m["pair1_id"], $m["pair2_id"], $started, time(), 0, $query3[0]->price_calls, 0, 0, 0, 0, 0, 0]);
+								$sql = "DELETE FROM matches WHERE match_id = ?";
+								DB::delete($sql, [$match_id]); 
 	        				}
 	        			} else { 
 	        				// if percent > 3 insert new row
 	        				if ($m["percent"] > 3) {
-	        					$sql = "INSERT INTO matches (pair1_id, pair2_id, started, percent) VALUES (".$this->db->escape($m["pair1_id"]).", ".$this->db->escape($m["pair2_id"]).", ".$this->db->escape($started).", ".$this->db->escape($m["percent"]).")";
-	        					$this->db->query($sql);
+	        					$sql = "INSERT INTO matches (pair1_id, pair2_id, started, percent) VALUES (?, ?, ?, ?)";
+	        					DB::insert($sql, [$m["pair1_id"], $m["pair2_id"], $started, $m["percent"]]);
 	        				}
 	        			}
 	        		} 
@@ -252,9 +253,9 @@ private function calculatePercentage($price1=null, $price2=null) {
 			$time = time();
 			$deleteIDs = [];
 			$sql = "SELECT id, pair1_id, pair2_id, started, finished, percent FROM matches WHERE finished IS NULL";
-			$query = $this->db->query($sql);
-			if ($query->num_rows() > 0) {
-				foreach ($query->result_array() as $res) {
+			$query = DB::select($sql);
+			if (count($query) > 0) {
+				foreach (json_decode(json_encode($query), true) as $res) {
 					foreach ($checkData as $d) {
 						if ($res["pair1_id"] == $d["pair1_id"] && $res["pair2_id"] == $d["pair2_id"]) {
 							$deleteIDs[] = $res["id"];
@@ -267,8 +268,8 @@ private function calculatePercentage($price1=null, $price2=null) {
 			}
 			if (count($deleteIDs) > 0) {
 				$instatement = implode(',',$deleteIDs);
-				$sql = "DELETE FROM matches WHERE id IN (".$instatement.")";
-				$this->db->query($sql); 
+				$sql = "DELETE FROM matches WHERE id IN (?)";
+				DB::delete($sql, [$instatement]); 
 				//foreach ($deleteData as $k) {
 					//$sql = "INSERT INTO match_history (match_id, pair1_id, pair2_id, started, finished, avg_percent, price_calls, avg_price_pair1, avg_price_pair2, low_price_pair1, low_price_pair2, high_price_pair1, high_price_pair2) VALUES (".$this->db->escape($k["id"]).", ".$this->db->escape($k["pair1_id"]).", ".$this->db->escape($k["pair2_id"]).", ".$this->db->escape($k["started"]).",".$this->db->escape(time()).", ".$this->db->escape(0).", ".$this->db->escape(0).", ".$this->db->escape(0).", ".$this->db->escape(0).", ".$this->db->escape(0).", ".$this->db->escape(0).", ".$this->db->escape(0).", ".$this->db->escape(0).")";
 					//$this->db->query($sql);
@@ -278,9 +279,9 @@ private function calculatePercentage($price1=null, $price2=null) {
 		} else {
 			$output = [];
 			$sql = "SELECT pair1_id, pair2_id FROM matches WHERE finished IS NULL";
-			$query = $this->db->query($sql);
-			if ($query->num_rows() > 0) {
-				foreach ($query->result_array() as $res) {
+			$query = DB::select($sql);
+			if (count($query) > 0) {
+				foreach (json_decode(json_encode($query), true) as $res) {
 					$output[$res["pair1_id"]] = $res["pair1_id"];
 					$output[$res["pair2_id"]] = $res["pair2_id"];
 				}

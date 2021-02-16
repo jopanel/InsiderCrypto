@@ -261,8 +261,9 @@ class Cryptocompareapi extends Model
 	        			if ($callcounter == 5) {
 	        				sleep(1);
 	        				$callcounter = 1;
-	        			}
-	        			$this->curl_post_async(base_url().'api/asyncPriceRequest/'.API_PASSWORD, $v);
+	        			} 
+
+	        			$this->curl_post_async(url('/').'/api/asyncPriceRequest', $v);
 	        		}
 	        	}
 
@@ -308,12 +309,12 @@ class Cryptocompareapi extends Model
 	        			$disableDate = strtotime("-".$this->daysBeforeDisable." days"); 
 	        			if (!isset($getPrices->RAW) || empty($getPrices->RAW)) {
 	        				if (!isset($getPrices->Message) || empty($getPrices->Message)) {
-	        					$sql = "INSERT INTO api_errors (error, json, created) VALUES ('No Message, Price API', ".$this->db->escape(json_encode($v)).", ".$this->db->escape(time()).")";
-	        					$this->db->query($sql);
+	        					$sql = "INSERT INTO api_errors (error, json, created) VALUES ('No Message, Price API', ?, ?)";
+	        					DB::insert($sql, [json_encode($v), time()]);
 	        				} else {
 	        					if ($this->handle_price_error($getPrices->Message, $v) == FALSE) {
-	        						$sql = "INSERT INTO api_errors (error, json, created) VALUES ('Price API', ".$this->db->escape(json_encode($getPrices)).", ".$this->db->escape(time()).")";
-									$this->db->query($sql);
+	        						$sql = "INSERT INTO api_errors (error, json, created) VALUES ('Price API', ?, ?)";
+									$this->db->query($sql, [json_encode($getPrices), time()]);
 	        					}
 	        				} 
 	        			} else {
@@ -341,7 +342,7 @@ class Cryptocompareapi extends Model
 			        							"symbol_id" => $symbol_id
 			        						);
 			        					} else {
-			        						$insertSQL[] ="
+			        						/*$insertSQL[] ="
 			        						(".$this->db->escape($v["market_id"]).",
 			        						".$this->db->escape($currency_id).",
 			        						".$this->db->escape($symbol_id).",
@@ -351,7 +352,7 @@ class Cryptocompareapi extends Model
 			        						".$this->db->escape($pairData->HIGH24HOUR).",
 			        						".$this->db->escape($pairData->CHANGEPCT24HOUR).",
 			        						".$this->db->escape($pairData->VOLUME24HOURTO).",
-			        						".$this->db->escape(time()).")";
+			        						".$this->db->escape(time()).")";*/
 			        						$updateSQL[] = array(
 			        							"currency_id" => $currency_id,
 			        							"market_id" => $v["market_id"],
@@ -370,7 +371,7 @@ class Cryptocompareapi extends Model
 	        			
 	        		
 
-	        		if (count($insertSQL) > 0) {
+	        		if (count($updateSQL) > 0) {
 			      //   	$sql = "INSERT INTO price_chart 
 					    //     						(market_id, 
 					    //     						currency_id,
@@ -385,14 +386,14 @@ class Cryptocompareapi extends Model
 					    // $this->db->query($sql);
 					    if (count($updateSQL) > 0) {
 					    	foreach ($updateSQL as $q) {
-						    	$sql = "UPDATE markets_pairs SET volume24hour = ".$this->db->escape($q["volume24hour"]).", price = ".$this->db->escape($q["price"]).", lastupdate = ".$this->db->escape($q["lastupdate"])." WHERE market_id = ".$this->db->escape($q["market_id"])." AND currency_id = ".$this->db->escape($q["currency_id"])." AND symbol_id = ".$this->db->escape($q["symbol_id"]);
-						    	$this->db->query($sql);
+						    	$sql = "UPDATE markets_pairs SET volume24hour = ?, price = ?, lastupdate = ? WHERE market_id = ? AND currency_id = ? AND symbol_id = ?";
+						    	DB::update($sql, [$q["volume24hour"], $q["price"], $q["lastupdate"], $q["market_id"], $q["currency_id"], $q["symbol_id"]]);
 						    }
 					    }
 					    if (count($updateSQLBAD) > 0) {
 					    	foreach ($updateSQLBAD as $q) {
-					    		$sql = "UPDATE markets_pairs SET active = '0' WHERE market_id = ".$this->db->escape($q["market_id"])." AND currency_id = ".$this->db->escape($q["currency_id"])." AND symbol_id = ".$this->db->escape($q["symbol_id"]);
-						    	$this->db->query($sql);
+					    		$sql = "UPDATE markets_pairs SET active = '0' WHERE market_id = ? AND currency_id = ? AND symbol_id = ?";
+						    	DB::update($sql, [$q["market_id"], $q["currency_id"], $q["symbol_id"]]);
 					    	}
 					    }
 			        }
@@ -405,8 +406,7 @@ class Cryptocompareapi extends Model
 	            $fp = fsockopen($parts['host'],
 	                isset($parts['port'])?$parts['port']:80,
 	                $errno, $errstr, 30);
-				$content = http_build_query($params);
-
+				$content = http_build_query($params); 
 				fwrite($fp, "POST ".$parts['path']." HTTP/1.1\r\n");
 				fwrite($fp, "Host: ".$parts['host']."\r\n");
 				fwrite($fp, "Content-Type: application/x-www-form-urlencoded\r\n");
@@ -453,8 +453,8 @@ class Cryptocompareapi extends Model
 				
 				if ($symbol_id > 0 && $currency_id > 0) {
 					$market_id = $price_array["market_id"];
-					$sql = "UPDATE markets_pairs SET active = '0' WHERE market_id = ".$this->db->escape($market_id)." AND symbol_id = ".$this->db->escape($symbol_id)." AND currency_id = ".$this->db->escape($currency_id);
-					$this->db->query($sql);
+					$sql = "UPDATE markets_pairs SET active = '0' WHERE market_id = ? AND symbol_id = ? AND currency_id = ?";
+					DB::update($sql, [$market_id, $symbol_id, $currency_id]);
 					return TRUE;
 				} else {
 					return FALSE;

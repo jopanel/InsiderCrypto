@@ -7,24 +7,21 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Api_model;
 use App\Models\Cryptocompareapi;
+use App\Models\Compare;
+use App\Models\General;
 
 class Api extends Controller
 {
     protected $request;
     protected $Compare_model;
+    protected $Cryptocompareapi_model;
+    protected $General_model;
 
     public function __construct(Request $request) {
         $this->request = $request;
-        $this->Compare_model = new Cryptocompareapi();
-    }
-
-    public function genArb($password=null) { 
-        if ($password == API_PASSWORD) {
-            ini_set('max_execution_time', 0);
-            set_time_limit(0);
-            $this->load->model('Compare_model');
-            $this->Compare_model->generateArbitrageEvents(); 
-        }
+        $this->Cryptocompareapi_model = new Cryptocompareapi();
+        $this->Compare_model = new Compare();
+        $this->General_model = new General();
     }
 
     public function index()
@@ -35,39 +32,33 @@ class Api extends Controller
     CRON Job Calls
 */
 
-    public function getAllPriceData(){ 
-            $this->Compare_model->build(); 
+    public function getAllPriceData(){  
+        $this->Cryptocompareapi_model->build();  
     }
 
     public function checkForPayments() {
         $this->General_model->checkPayments();
     }
 
-    public function updateMatches($password=null) {
-        if ($password == API_PASSWORD) {
-            ini_set('max_execution_time', 0);
-            set_time_limit(0);
-            $this->load->model('Cryptocompare_api'); 
-            $this->load->model('Compare_model');
-            $this->Cryptocompare_api->build();
-            $followUps = $this->Compare_model->generateFollowUp();
-            if ($this->Cryptocompare_api->generatePrices($followUps) == TRUE) {
-                $this->Compare_model->generateArbitrageEvents();
-                $this->Compare_model->generatePairEvents();
-            }
+    public function updateMatches() {
+        ini_set('max_execution_time', 0);
+        set_time_limit(0); 
+        $this->Cryptocompareapi_model->build();
+        $followUps = $this->Compare_model->generateFollowUp();
+        if ($this->Cryptocompareapi_model->generatePrices($followUps) == TRUE) {
+            $this->Compare_model->generateArbitrageEvents();
+            $this->Compare_model->generatePairEvents();
         }
+        
     } 
 
-    public function maintenance($password=null) {
+    public function maintenance() {
         $output = [];
         $output["error"] = true;
-        if ($password == API_PASSWORD) {
-            $this->load->model('General_model');
-            $this->General_model->checkExchanges(); 
-            $this->General_model->updateHomePage();
-            $this->General_model->checkMarketPairs();
-            $output["error"] = false;
-        }
+        $this->General_model->checkExchanges(); 
+        $this->General_model->updateHomePage();
+        $this->General_model->checkMarketPairs();
+        $output["error"] = false;
         echo json_encode($output);
     }
 
@@ -81,12 +72,9 @@ class Api extends Controller
     CRON Job Related Functions
 */
 
-    public function asyncPriceRequest($password=null) {
-        if ($password == API_PASSWORD) { 
-            if ($this->input->post()) { 
-                $this->load->model('Cryptocompare_api');
-                $this->Cryptocompare_api->priceDataParse(json_encode($this->input->post()));
-            }
+    public function asyncPriceRequest(Request $request) { 
+        if ($request->post()) {  
+            $this->Cryptocompareapi_model->priceDataParse(json_encode($request->post()));
         } 
     }
 
