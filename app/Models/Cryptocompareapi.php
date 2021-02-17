@@ -261,9 +261,9 @@ class Cryptocompareapi extends Model
 	        			if ($callcounter == 5) {
 	        				sleep(1);
 	        				$callcounter = 1;
-	        			} 
-
+	        			}   
 	        			$this->curl_post_async(url('/').'/api/asyncPriceRequest', $v);
+	        			
 	        		}
 	        	}
 
@@ -301,8 +301,7 @@ class Cryptocompareapi extends Model
 
         public function priceDataParse($calls=array()) { 
         		$insertSQL = [];
-        		$v = json_decode($calls, TRUE); 
-        		//var_dump($calls); 
+        		$v = json_decode($calls, TRUE);  
         		$cryptocomparePrice = new Cryptocompare\Price(); 
 
 	        			$getPrices = $cryptocomparePrice->getMultiPriceFull($v["currency"], $v["symbols"],$v["market"]); 
@@ -413,9 +412,9 @@ class Cryptocompareapi extends Model
 				fwrite($fp, "Content-Length: ".strlen($content)."\r\n");
 				fwrite($fp, "Connection: close\r\n");
 				fwrite($fp, "\r\n");
-
 				fwrite($fp, $content);
 				fclose($fp); 
+				return;
 	    }
 
         public function getBitcoinValue() {

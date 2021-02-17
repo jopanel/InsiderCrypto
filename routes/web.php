@@ -42,4 +42,3 @@ Route::get('/api/maintenance', 'App\Http\Controllers\Api@maintenance');
 
 Route::get('/api/getpricedata', 'App\Http\Controllers\Api@getAllPriceData');
 
-Route::post('/api/asyncPriceRequest', 'App\Http\Controllers\Api@asyncPriceRequest');
