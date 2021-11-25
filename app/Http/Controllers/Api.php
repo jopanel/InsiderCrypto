@@ -49,8 +49,11 @@ class Api extends Controller
             $this->Compare_model->generateArbitrageEvents();
             $this->Compare_model->generatePairEvents();
         }
-        
     } 
+    public function testmatchdata() {
+        $this->Compare_model->generateArbitrageEvents();
+        //$this->Compare_model->generatePairEvents();
+    }
 
     public function maintenance() {
         $output = [];

@@ -18,28 +18,18 @@ class Docs extends Controller
 
 	public function privacy() {
 		$head["navbartoggle"] = "";
-		$this->load->view('main/header', $head);
-		$this->load->view('main/docsheader');
-		$this->load->view('main/privacy');
-		$this->load->view('main/footer');
+		return view('main.header', $head) . view('main.docsheader') . view('main.privacy') . view('main.footer');
 	}
 
 	public function terms() {
 		$head["navbartoggle"] = "";
-		$this->load->view('main/header', $head);
-		$this->load->view('main/docsheader');
-		$this->load->view('main/terms');
-		$this->load->view('main/footer');
+		return view('main.header', $head) . view('main.docsheader') . view('main.terms') . view('main.footer');
 
 	}
 
 	public function faq() {
 		$head["navbartoggle"] = "";
-		$this->load->view('main/header', $head);
-		$this->load->view('main/docsheader');
-		$this->load->view('main/faq');
-		$this->load->view('main/footer');
-
+		return view('main.header', $head) . view('main.docsheader') . view('main.faq') . view('main.footer');
 	}
 
 }

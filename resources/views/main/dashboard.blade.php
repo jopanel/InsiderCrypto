@@ -42,19 +42,28 @@ function get_friendly_time_ago($distant_timestamp, $max_units = 3) {
     <div class="container-fluid">
       <div class="row">
         <div class="col-lg-12">  
-
           <?php if ($paidstatus == TRUE) { ?>
           <div class="card-columns">
-
-
-           <?php  
-           foreach ($matchData as $v) {
-            
-            ?> 
+          <?php  
+          foreach ($matchData as $v) {
+            if ($v["pair1_price"] < 1) {
+              $price1 = ($v["pair1_price"] + 1);
+              $price1 = str_replace("1.", "0.", $price1);
+            } else {
+              $price1 = $v["pair1_price"];
+            }
+            if ($v["pair2_price"] < 1) {
+              $price2 = ($v["pair2_price"] + 1);
+              $price2 = str_replace("1.", "0.", $price2);
+            } else {
+              $price2 = $v["pair2_price"];
+            }
+            //$price1 = $v["pair1_price"];
+            //$price2 = $v["pair2_price"];
+          ?> 
             <div class="card mb-3">
               <div class="card-body">
                 <div class="row">
-                  
                   <div class="col-md-1"> 
                     #<?=$v["identifier"]?>
                   </div>
@@ -65,9 +74,10 @@ function get_friendly_time_ago($distant_timestamp, $max_units = 3) {
                     </p>
                   </div>
                   <div class="col">
-                    <p><strong style="color:green">Buy @</strong> <br><?=$v["pair1_price"]?>
+                    <p>
+                      <strong style="color:green">Buy @</strong> <br><?=$price1?>
                       <br>
-                    <strong style="color:red">Sell @ </strong> <br><?=$v["pair2_price"]?>
+                      <strong style="color:red">Sell @ </strong> <br><?=$price2?>
                     </p>
                   </div>
                   <div class="col">
@@ -77,18 +87,10 @@ function get_friendly_time_ago($distant_timestamp, $max_units = 3) {
               </div>
               <div class="card-footer small text-muted">Updated <?=get_friendly_time_ago($v["updated"])?></div>
             </div>
-
            <?php }
 
            ?>
             
-
-
-
-
-
-
-
           </div>
           <?php } else { ?>
             <div class="jumbotron">

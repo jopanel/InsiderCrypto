@@ -41,7 +41,7 @@ private function calculatePercentage($price1=null, $price2=null) {
 		$query = DB::select($sql);
 		if (count($query) > 0) {
 			foreach (json_decode(json_encode($query), true) as $res) {
-				$data[$res["currency_id"].$res["symbol_id"]][] = array("price"=>$res["price"], "market_id"=>$res["market_id"], "lastupdate"=>$res["lastupdate"], "pair_id" => $res["pair_id"]);
+				$data[$res["currency_id"].$res["symbol_id"]][] = array("price"=>(float)$res["price"], "market_id"=>$res["market_id"], "lastupdate"=>$res["lastupdate"], "pair_id" => $res["pair_id"]);
 			}
 		}
 
@@ -51,7 +51,9 @@ private function calculatePercentage($price1=null, $price2=null) {
 				foreach ($v as $kk => $vv) {
 					for ($i = 0; $i < $forcount; $i++) {
 						if ($kk != $i) {
-							$percent = $this->calculatePercentage($vv["price"], $v[$i]["price"]);
+
+							$percent = $this->calculatePercentage((float)$vv["price"], (float)$v[$i]["price"]);
+							//dd(["first_price"=>$vv["price"], "second_price"=>$v[$i]["price"], "percent"=>$percent]);
 							if ($percent > 3) {
 								//check if match is active
 								$sql = "SELECT id FROM matches WHERE pair2_id = ? AND pair1_id = ? AND finished IS NULL";
@@ -63,7 +65,7 @@ private function calculatePercentage($price1=null, $price2=null) {
 									DB::update($sql, [$percent, $query[0]->id]);
 								} else {
 									// match doesnt exist
-									$sql = "INSERT INTO matches (pair1_id, pair2_id, started, percent) VALUES (?, ?, ?)";
+									$sql = "INSERT INTO matches (pair1_id, pair2_id, started, percent) VALUES (?, ?, ?, ?)";
 									DB::insert($sql, [$v[$i]["pair_id"], $vv["pair_id"], $time, $percent]);
 								}
 							} else {

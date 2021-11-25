@@ -34,11 +34,9 @@ Route::post('/control/preferences', 'App\Http\Controllers\Control@preferences');
 Route::get('/control/account', 'App\Http\Controllers\Control@account');
 Route::post('/control/account', 'App\Http\Controllers\Control@account');
 
-/// api 
 
-Route::get('/api/update', 'App\Http\Controllers\Api@updateMatches');
+Route::get('/docs/privacy', 'App\Http\Controllers\Docs@privacy');
+Route::get('/docs/terms', 'App\Http\Controllers\Docs@terms');
+Route::get('/docs/faq', 'App\Http\Controllers\Docs@faq');
 
-Route::get('/api/maintenance', 'App\Http\Controllers\Api@maintenance');
-
-Route::get('/api/getpricedata', 'App\Http\Controllers\Api@getAllPriceData');
 

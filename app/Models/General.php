@@ -406,11 +406,11 @@ class General extends Model
                 if ($e["selected"] == TRUE) {
                     $userExchanges[] = $e["market_id"];
                 }
-            }
+            } 
             $userExchangesCall = null;
             if (count($userExchanges) == 0) { return $output; }
-            $sql = "SELECT id FROM markets_pairs WHERE market_id IN (?)";
-            $query = DB::select($sql, [implode(",", $userExchanges)]);
+            $sql = "SELECT id FROM markets_pairs WHERE market_id IN (".implode(",", $userExchanges).")";
+            $query = DB::select($sql);
             $userExchanges = null;
             if (count($query) > 0) {
                 foreach (json_decode(json_encode($query), true) as $res) {
@@ -479,14 +479,16 @@ class General extends Model
                 LEFT JOIN markets_pairs mp1 ON mp1.id = m.pair1_id
                 LEFT JOIN markets_pairs mp2 ON mp2.id = m.pair2_id
                 WHERE
-                    m.pair1_id IN(?)
-                AND m.pair2_id IN(?)
+                    m.pair1_id IN (".implode(", ",$userPairs).") 
+                AND m.pair2_id IN (".implode(", ",$userPairs).") 
                 AND m.finished IS NULL
                 GROUP BY
                     m.id
                 ORDER BY
                     percent ASC";
-            $query = DB::select($sql, [implode(", ",$userPairs), implode(", ",$userPairs)]); 
+                    /*echo $sql;
+                    exit();*/
+            $query = DB::select($sql); 
             if (count($query) > 0) {
                 foreach (json_decode(json_encode($query), true) as $res) {
                     $output[] = $res;
@@ -665,22 +667,21 @@ class General extends Model
                 $sql = "DELETE FROM users_markets WHERE uid = ?";
                 DB::delete($sql, [$userData["uid"]]);
                 if (!isset($postData["exchanges"])) { return TRUE; }
-                $sql = "SELECT p.market_id, m.name, count(p.id) FROM markets_pairs p 
+                /*$sql = "SELECT p.market_id, m.name, count(p.id) FROM markets_pairs p 
                     LEFT JOIN markets m ON p.market_id = m.id AND m.active = '1'
                     WHERE p.active = '1'
-                    AND p.price != '0'
                     GROUP BY p.market_id;";
                 $query = DB::select($sql);
                 if (count($query) > 0) {
-                    foreach (json_decode(json_encode($query), true) as $v) {
+                    foreach (json_decode(json_encode($query), true) as $v) {*/
                         foreach ($postData["exchanges"] as $x) {
-                            if ($x == $v["market_id"]) {
+                            //if ($x == $v["market_id"]) {
                                 $sql2 = "INSERT INTO users_markets (uid, market_id) VALUES (?, ?)";
                                 DB::insert($sql2, [$userData["uid"], $x]);
-                            }
+                            //}
                         }
-                    }
-                }
+                    /*}
+                }*/
                 return TRUE;
             }
         }
