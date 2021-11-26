@@ -133,6 +133,16 @@ class General extends Model
                     $marketsID[$res["market_id"]] = $res["market_id"]; 
                 } 
             }
+            foreach ($marketsID as $k) {
+                $sql1 = "UPDATE markets SET active = 0 WHERE id = ?";
+                DB::update($sql1, [$k]);
+                DB::table('markets_pairs')->where('market_id', $k)->delete();
+            }
+            DB::table('markets_pairs')->where('active', 0)->delete();
+            /*
+
+            // ------- 11/25/2021 --- commented this out, it just wasnt working and i dont know what the fuck i was thinking when i made it. just make it simple. delete the fucking shit. from market_pairs and disable the fucking markets
+
             // set exchanges to inactive based on last update of price for exchange by x amount of days 
             date_default_timezone_set( 'America/Los_Angeles' );
             $today = date("F d Y H:i:s", time()); 
@@ -168,7 +178,7 @@ class General extends Model
                 $ids = implode(",", $marketsID);
                 $sql2 = "UPDATE markets SET active = '0' WHERE id IN (?)";
                 DB::update($sql2, [$ids]);
-            }
+            }*/
             return TRUE;
         }
 

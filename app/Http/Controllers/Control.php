@@ -41,7 +41,7 @@ class Control extends Controller
 
 	public function account(Request $request) {
 		if ($this->General_model->verifyUser() == FALSE) {
-			redirect(base_url(), "auto");
+			redirect(url('/'));
 		} else {
 				$data["error"] = "";
 				$data["error_style"] = "display: none;";

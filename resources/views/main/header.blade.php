@@ -14,6 +14,9 @@
   <link href="<?=URL::to('/')?>/resources/main/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <!-- Custom styles for this template-->
   <link href="<?=URL::to('/')?>/resources/main/css/sb-admin.css" rel="stylesheet">
+  <script>
+    var base_url = "<?php echo url('/'); ?>";
+  </script>
 </head>
 
 <body class="fixed-nav sticky-footer bg-dark <?=$navbartoggle?>" id="page-top">

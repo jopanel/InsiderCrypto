@@ -35,6 +35,5 @@ class Welcome extends Controller
 			$this->load->view('main/dashboard', $data);
 			$this->load->view('main/footer');
 		}
-		
 	}
 }

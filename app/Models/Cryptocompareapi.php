@@ -25,7 +25,7 @@ class Cryptocompareapi extends Model
 			// set the exchanges that should be set to active
 			// active exchanges actively pull price information
 			// database may be manually changed to on position but this works for initial setup
-			$exchanges = array(
+			/*$exchanges = array(
 				"Poloniex" => 1,
 				"Binance" => 1,
 				"YoBit" => 1,
@@ -34,7 +34,8 @@ class Cryptocompareapi extends Model
 				"Liqui" => 1,
 				"Coinbase" => 1
 
-			);
+			);*/
+			$exchanges = [];
 			foreach ($exchanges as $k => $v) {
 				$sql = "UPDATE markets SET active = ".$this->db->escape($v)." WHERE name = ".$this->db->escape($k);
 				$this->db->query($sql);
